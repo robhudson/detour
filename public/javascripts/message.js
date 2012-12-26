@@ -1,13 +1,13 @@
 'use strict';
 
-'use strict';
-
 define(['jquery'],
   function($) {
 
   var Message = function() {};
   var form = $('form');
   var messageView = $('#message-view');
+
+  var MAX_TTL = 10000;
 
   Message.prototype.send = function(data) {
     $.ajax({
@@ -35,7 +35,7 @@ define(['jquery'],
       setTimeout(function() {
         messageView.text('');
         preview.parent().remove();
-      }, 10000);
+      }, MAX_TTL);
     }).error(function(data) {
       console.log(data.responseText);
     });
