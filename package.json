@@ -1,0 +1,28 @@
+{
+  "name": "detour",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">= 0.8.9",
+    "npm": "1.1.x"
+  },
+  "dependencies": {
+    "client-sessions": ">= 0.0.9",
+    "connect": ">= 2.4.5",
+    "express": ">= 3.0.0beta7",
+    "jade": ">= 0.27.2",
+    "request": "2.9.153",
+    "gravatar": "1.0.6",
+    "nconf": "git://github.com/flatiron/nconf.git",
+    "redis": "0.7.2",
+    "express-persona": "0.0.7"
+  },
+  "devDependencies": {
+    "mocha": "1.4.2",
+    "nock": ">= 0.13.4",
+    "should": ">= 1.1.1"
+  },
+  "scripts": {
+    "test": "make test"
+  }
+}

@@ -1,0 +1,19 @@
+extend layout
+
+block content
+  h1 Dashboard
+
+  ol.messages
+    for message in messages
+      li
+        a(href='javascript:;', data-action='view', data-key='#{message}')= message
+
+  #message-view
+
+  form(method='post')
+    label(for='message')
+      input(type='text', name='message')
+    label(for='email')
+      input(type='text', name='email')
+    input(type='hidden', value='#{session._csrf}', name='_csrf')
+    button(type='submit') Send
