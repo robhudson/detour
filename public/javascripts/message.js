@@ -5,9 +5,12 @@ define(['jquery'],
 
   var Message = function() {};
   var form = $('form');
-  var messageView = $('#message-view');
+  var messageDetail = $('#message-detail');
 
   var MAX_TTL = 10000;
+
+  var countdownInterval;
+  var countdownDisplay;
 
   Message.prototype.send = function(data) {
     $.ajax({
@@ -17,10 +20,14 @@ define(['jquery'],
       dataType: 'json',
       cache: false
     }).done(function(data) {
-      form.find('input[name="message"]').val('');
+      form.find('textarea').val('');
       form.find('input[name="email"]').val('');
+      form.find('#message-status').text('Sent!');
+      setTimeout(function() {
+        form.find('#message-status').empty();
+      }, 2500);
     }).error(function(data) {
-      console.log(data.responseText);
+      form.find('#message-status').text(data.responseText);
     });
   };
 
@@ -31,13 +38,23 @@ define(['jquery'],
       dataType: 'json',
       cache: false
     }).done(function(data) {
-      messageView.text(data.message);
-      setTimeout(function() {
-        messageView.text('');
+      var seconds = (MAX_TTL / 1000) - 1;
+
+      messageDetail.find('p').text(data.message);
+      messageDetail.fadeIn();
+      countdownInterval = setInterval(function() {
+        messageDetail.find('.countdown').text(seconds--);
+      }, 1000);
+      countdownDisplay = setTimeout(function() {
+        messageDetail.find('p').empty();
+        messageDetail.fadeOut();
         preview.parent().remove();
+        //messageDetail.find('.countdown').text('10');
+        clearInterval(countdownInterval);
+        clearInterval(countdownDisplay);
       }, MAX_TTL);
     }).error(function(data) {
-      console.log(data.responseText);
+      form.find('#message-status').text(data.responseText);
     });
   };
 

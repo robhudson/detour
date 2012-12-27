@@ -1,19 +1,19 @@
 extend layout
 
 block content
-  h1 Dashboard
-
-  ol.messages
-    for message in messages
-      li
-        a(href='javascript:;', data-action='view', data-key='#{message}')= message
-
   #message-view
+    ol.messages
+      for message in messages
+        li
+          a(href='javascript:;', data-action='view', data-key='#{message.key}')= message.name
+
+  #message-detail
+    p
+    .countdown 10
 
   form(method='post')
-    label(for='message')
-      input(type='text', name='message')
-    label(for='email')
-      input(type='text', name='email')
+    textarea(name='message', placeholder='write your message')
+    input(type='text', name='email', placeholder='email address of recipient')
     input(type='hidden', value='#{session._csrf}', name='_csrf')
+    #message-status
     button(type='submit') Send

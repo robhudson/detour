@@ -56,6 +56,14 @@ module.exports = function(app, configurations, express) {
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
   });
 
+  app.configure('development', function() {
+    app.set('redis-detour', nconf.get('redis_dev'));
+  });
+
+  app.configure('test', function() {
+    app.set('redis-detour', nconf.get('redis_test'));
+  });
+
   app.configure('prod', function(){
     app.use(express.errorHandler());
 

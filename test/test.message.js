@@ -11,7 +11,7 @@ var nconf = require('nconf');
 
 nconf.argv().env().file({ file: 'local-test.json' });
 
-client.select(app.set('redisnoodle'), function(errDb, res) {
+client.select(app.set('redis-detour'), function(errDb, res) {
   console.log('TEST database connection status: ', res);
 });
 
@@ -50,11 +50,11 @@ describe('message', function() {
     });
   });
 
-  it('views a message list for a user and is deleted after 10 seconds', function(done) {
+  it('views a message list for a user and is deleted after viewing', function(done) {
     this.timeout(2800);
     req.body.email = 'alice@test.org';
     req.params = {
-      key: 'detour-message:alice@test.org:alice@test.org'
+      key: 'detour-message:alice@test.org:alice@test.org:3'
     };
 
     message.create(req, client, function(err, resp) {

@@ -1,4 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -12,8 +12,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
     margin: 0;
@@ -24,7 +24,7 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
@@ -45,4 +45,165 @@ q:before, q:after {
 table {
     border-collapse: collapse;
     border-spacing: 0;
+}
+
+html, body {
+    height: 100%;
+    position: relative;
+}
+
+body {
+    background-color: #f9f9f9;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+body, textarea {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+textarea, input, button {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #1a85b6;
+    text-decoration: none;
+}
+
+#wrapper {
+    background-color: #f1f1f1;
+    box-shadow: #bbb 0 0 6px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    width: 310px;
+}
+
+#header, #messages {
+    clear: both;
+    float: left;
+    padding: 10px;
+    position: relative;
+}
+
+h1, h2 {
+    font-size: 20px;
+}
+
+h1 {
+    color: #fff;
+    text-shadow: #ccc 1px 1px 1px;
+    text-transform: uppercase;
+}
+
+#logout, #login {
+    background-color: #fff;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: #888 1px 1px 2px;
+    color: #aaa;
+    font-size: 13px;
+    padding: 4px 6px;
+    position: absolute;
+    right: 10px;
+    top: 0;
+}
+
+#logout:hover, #login:hover {
+    background-color: #007eb8;
+    color: #fff;
+}
+
+textarea, input[type="text"] {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #007eb8;
+    font-size: 15px;
+    padding: 5px;
+    width: 280px;
+}
+
+textarea {
+    height: 35px;
+    overflow: hidden;
+    resize: none;
+}
+
+button {
+    background-color: transparent;
+    border: 0;
+    color: #111;
+    float: right;
+    font-size: 18px;
+}
+
+#message-view {
+    clear: both;
+    float: left;
+    height: 255px;
+    margin-bottom: 10px;
+    width: 290px;
+}
+
+.messages {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: block;
+    float: left;
+    height: 100%;
+    width: 100%;
+}
+
+.messages li:first-child {
+    border-top: 0;
+}
+
+.messages li:last-child {
+    border-bottom: 0;
+}
+
+.messages li {
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #fff;
+    clear: both;
+    float: left;
+    padding: 5px;
+    width: 280px;
+}
+
+#message-detail {
+    background-color: rgba(1, 1, 1, 0.85);
+    box-shadow: inset #000 0 0 3px;
+    bottom: 0;
+    color: #eee;
+    display: none;
+    font-size: 16px;
+    left: 0;
+    padding: 20px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    z-index: 2;
+}
+
+#message-detail .countdown {
+    bottom: 10px;
+    border: 5px solid #eee;
+    border-radius: 100px;
+    color: #eee;
+    font-size: 30px;
+    height: 50px;
+    line-height: 52px;
+    left: -25px;
+    margin-left: 50%;
+    position: absolute;
+    width: 50px;
+}
+
+#message-status {
+    display: inline-block;
+    float: left;
+    padding-top: 5px;
 }

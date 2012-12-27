@@ -9,15 +9,17 @@ html
     link(rel='stylesheet', href='/stylesheets/main.css')
 
   body(data-csrf='#{session._csrf}')
-    #header
-      h1 Detour
+    #wrapper
+      #header
+        h1 Detour
 
-    if session.email
-      a(href='javascript:;', data-action='logout') Log out
-    else
-      a(href='javascript:;', data-action='login') Log in
+      if session.email
+        a(href='javascript:;', data-action='logout', id='logout') Sign out
+      else
+        a(href='javascript:;', data-action='login', id='login') Sign in with Persona
 
-    block content
+      #messages
+        block content
     #footer
 
     script(src='https://login.persona.org/include.js', type='text/javascript')

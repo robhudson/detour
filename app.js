@@ -9,7 +9,7 @@ var nconf = require('nconf');
 
 nconf.argv().env().file({ file: 'local.json' });
 
-client.select(app.set('redisdetour'), function(errDb, res) {
+client.select(app.set('redis-detour'), function(errDb, res) {
   console.log(process.env.NODE_ENV || 'dev' + ' database connection status: ', res);
 });
 
