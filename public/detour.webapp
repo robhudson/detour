@@ -1,0 +1,15 @@
+{
+  "version": "0.0.1",
+  "name": "Detour",
+  "default_locale": "en-US",
+  "icons": {
+    "72": "/images/logo-72.png",
+    "128": "/images/logo-128.png"
+  },
+  "description": "Ephemeral messaging app",
+  "launch_path": "/",
+  "developer": {
+    "url": "http://detour.noodleindustries.com",
+    "name": "Edna Piranha"
+  }
+}
