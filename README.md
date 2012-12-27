@@ -1,3 +1,7 @@
 # Detour
 
-This is just an experiment with ephemeral messaging (and maybe encryption later). I don't need no guff from you crazy crypto people right now so step off!
+An experiment with ephemeral messaging using email addresses.
+
+# Running Tests
+
+NODE_ENV=test make test
