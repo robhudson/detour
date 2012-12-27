@@ -15,7 +15,8 @@
     "gravatar": "1.0.6",
     "nconf": "git://github.com/flatiron/nconf.git",
     "redis": "0.7.2",
-    "express-persona": "0.0.7"
+    "express-persona": "0.0.7",
+    "requirejs": ">= 2.1.0"
   },
   "devDependencies": {
     "mocha": "1.4.2",

@@ -47,14 +47,23 @@ table {
     border-spacing: 0;
 }
 
+
+@font-face {
+    font-family: 'Oswald';
+    src: url('../fonts/Oswald-Regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html, body {
     height: 100%;
     position: relative;
 }
 
 body {
-    background-color: #f9f9f9;
+    background-image: url(/images/background.jpg);
     font-family: Helvetica, Arial, sans-serif;
+    overflow: hidden;
 }
 
 body, textarea {
@@ -71,12 +80,10 @@ a {
 }
 
 #wrapper {
-    background-color: #f1f1f1;
-    box-shadow: #bbb 0 0 6px;
+    background-color: rgba(2, 2, 2, 0.25);
     height: 100%;
     margin: 0 auto;
     position: relative;
-    width: 310px;
 }
 
 #header, #messages {
@@ -84,43 +91,92 @@ a {
     float: left;
     padding: 10px;
     position: relative;
+    width: 300px;
 }
 
 h1, h2 {
-    font-size: 20px;
-}
-
-h1 {
-    color: #fff;
-    text-shadow: #ccc 1px 1px 1px;
+    color: #333;
+    display: block;
+    font-family: 'Oswald';
+    font-size: 25px;
+    margin: 20px 0;
+    text-align: center;
     text-transform: uppercase;
 }
 
-#logout, #login {
-    background-color: #fff;
+ol.home {
+    clear: both;
+    display: block;
+    list-style-position: inside;
+    list-style-type: decimal;
+    margin: 30px auto;
+    padding: 0;
+    width: 270px;
+}
+
+ol.home li {
+    color: #555;
+    font-size: 15px;
+    margin-bottom: 8px;
+    text-shadow: #111 1px 1px 2px;
+}
+
+#login {
+    background-color: #1d92b3;
+    border: 1px solid #668790;
+    border-radius: 5px;
+    box-shadow: inset #154952 1px 1px 5px;
+    clear: both;
+    color: #67d0ee;
+    display: block;
+    font-family: 'Oswald';
+    font-size: 25px;
+    margin: 0 auto;
+    padding: 25px 10px;
+    text-align: center;
+    text-shadow: #257380 -1px -1px 0;
+    text-transform: uppercase;
+    width: 265px;
+}
+
+#login:hover {
+    background-color: #24a8cd;
+    color: #8be4fd;
+    text-shadow: #399cac -1px -1px 0;
+}
+
+#logout {
+    background-color: #111;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    box-shadow: #888 1px 1px 2px;
-    color: #aaa;
+    color: #777;
     font-size: 13px;
-    padding: 4px 6px;
+    padding: 4px 8px 6px;
     position: absolute;
     right: 10px;
     top: 0;
 }
 
-#logout:hover, #login:hover {
-    background-color: #007eb8;
-    color: #fff;
+#logout:hover {
+    background-color: #59ccdf;
+    color: #333;
 }
 
 textarea, input[type="text"] {
-    border: 1px solid #ddd;
+    background-color: #59ccdf;
+    border: 1px solid #73cbda;
     border-radius: 5px;
-    color: #007eb8;
+    box-shadow: inset #378896 1px 1px 2px;
+    color: #24535b;
     font-size: 15px;
     padding: 5px;
-    width: 280px;
+    width: 290px;
+}
+
+textarea:focus, input[type="text"]:focus {
+    background-color: #fff;
+    border: 1px solid #fff;
+    box-shadow: inset #ccc 1px 1px 2px;
 }
 
 textarea {
@@ -130,11 +186,19 @@ textarea {
 }
 
 button {
-    background-color: transparent;
+    background-color: rgba(1, 1, 1, 0.75);
     border: 0;
-    color: #111;
+    border-radius: 5px;
+    color: #555;
+    cursor: pointer;
     float: right;
     font-size: 18px;
+    padding: 3px 7px;
+}
+
+button:hover {
+    background-color: #59ccdf;
+    color: #333;
 }
 
 #message-view {
@@ -142,12 +206,12 @@ button {
     float: left;
     height: 255px;
     margin-bottom: 10px;
-    width: 290px;
+    width: 300px;
 }
 
 .messages {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: rgba(2, 2, 2, 0.25);
+    border: 1px solid #191919;
     border-radius: 5px;
     display: block;
     float: left;
@@ -164,12 +228,16 @@ button {
 }
 
 .messages li {
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #fff;
+    border-bottom: 1px solid #111;
+    border-top: 1px solid #191919;
     clear: both;
     float: left;
-    padding: 5px;
-    width: 280px;
+    padding: 10px 8px;
+    width: 290px;
+}
+
+.messages li a:hover {
+    color: #fff;
 }
 
 #message-detail {
@@ -184,7 +252,7 @@ button {
     position: absolute;
     right: 0;
     text-align: center;
-    top: 0;
+    top: -10px;
     z-index: 2;
 }
 
@@ -203,6 +271,7 @@ button {
 }
 
 #message-status {
+    color: #f0ca19;
     display: inline-block;
     float: left;
     padding-top: 5px;

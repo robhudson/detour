@@ -1,9 +1,11 @@
 extend layout
 
-block content
-  p This is the main page
+block header
+  h1 Detour
 
-  if session.email
-    p
-      = 'You are logged in as '
-      span= session.email
+block content
+  ol.home
+    li Send a message to an email address
+    li Recipient views message
+    li Message is deleted after 10 seconds
+    li Rinse and repeat.

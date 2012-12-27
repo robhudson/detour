@@ -11,7 +11,7 @@ html
   body(data-csrf='#{session._csrf}')
     #wrapper
       #header
-        h1 Detour
+        block header
 
       if session.email
         a(href='javascript:;', data-action='logout', id='logout') Sign out

@@ -15,23 +15,22 @@ client.select(app.set('redis-detour'), function(errDb, res) {
   console.log('TEST database connection status: ', res);
 });
 
-var req = {
-  body: {
-    message: 'some message',
-    email: 'bob@test.com'
-  },
-  session: {
-    email: 'alice@test.org'
-  }
-};
-
 describe('message', function() {
-  after(function() {
+  afterEach(function() {
     client.flushdb();
     console.log('cleared test database');
   });
 
-  it('creates a message', function(done) {
+  it('creates a message for another user', function(done) {
+    var req = {
+      body: {
+        message: 'some message',
+        email: 'bob@test.com'
+      },
+      session: {
+        email: 'alice@test.org'
+      }
+    };
     message.create(req, client, function(err, resp) {
       should.not.exist(err);
       resp.should.equal('OK');
@@ -39,8 +38,38 @@ describe('message', function() {
     });
   });
 
+  it('creates a message that defaults to the sender', function(done) {
+    var req = {
+      body: {
+        message: 'some message',
+        email: ''
+      },
+      session: {
+        email: 'alice@test.org'
+      },
+      params: {
+        key: 'detour-message:alice@test.org:alice@test.org:1'
+      }
+    };
+
+    message.create(req, client, function(err, resp) {
+      message.view(req, client, function(err, message) {
+        message.should.equal(req.body.message);
+        done();
+      });
+    });
+  });
+
   it('gets a message list for a user', function(done) {
-    req.body.email = 'alice@test.org';
+    var req = {
+      body: {
+        message: 'some message',
+        email: 'alice@test.org'
+      },
+      session: {
+        email: 'alice@test.org'
+      }
+    };
 
     message.create(req, client, function(err, resp) {
       message.getRecent(req, client, function(err, messages) {
@@ -51,10 +80,19 @@ describe('message', function() {
   });
 
   it('views a message list for a user and is deleted after viewing', function(done) {
-    this.timeout(2800);
-    req.body.email = 'alice@test.org';
-    req.params = {
-      key: 'detour-message:alice@test.org:alice@test.org:3'
+    this.timeout(3000);
+
+    var req = {
+      body: {
+        message: 'some message',
+        email: 'alice@test.org'
+      },
+      session: {
+        email: 'alice@test.org'
+      },
+      params: {
+        key: 'detour-message:alice@test.org:alice@test.org:1'
+      }
     };
 
     message.create(req, client, function(err, resp) {
