@@ -61,13 +61,20 @@ define(['jquery'],
       dataType: 'json',
       cache : false
     }).done(function(data) {
-      self.form.find('#contact-status').text('Added!');
+      self.form.find('#contact-status')
+        .text('Added!')
+        .addClass('on');
       self.form.find('input[name="email"]').val('');
       setTimeout(function() {
         self.form.fadeOut();
+        self.form.find('#contact-status')
+          .empty()
+          .removeClass('on');
       }, 1000);
     }).error(function(data) {
-      self.form.find('#contact-status').text(JSON.parse(data.responseText).message);
+      self.form.find('#contact-status')
+        .text(JSON.parse(data.responseText).message)
+        .addClass('on');
     });
   };
 
@@ -92,6 +99,9 @@ define(['jquery'],
       dataType: 'html',
       cache : false
     }).done(function(data) {
+      self.form.find('#contact-status')
+        .empty()
+        .removeClass('on');
       self.form.find('#contacts').html(data);
     });
   };

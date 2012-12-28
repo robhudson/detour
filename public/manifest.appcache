@@ -11,7 +11,7 @@ images/logo-128.png
 images/logo-72.png
 javascripts/jquery.js
 javascripts/require.js
-stylesheets/main.css
+
 
 # catch-all for anything else
 NETWORK:

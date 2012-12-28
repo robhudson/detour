@@ -29,13 +29,19 @@ define(['jquery'],
       self.form
         .find('#current-contact, #contacts').empty();
       self.form.find('textarea, input[name="email"]').val('');
-      self.form.find('#message-status').text('Sent!');
+      self.form.find('#message-status')
+        .text('Sent!')
+        .addClass('on');
       setTimeout(function() {
-        self.form.find('#message-status').empty();
+        self.form.find('#message-status')
+          .empty()
+          .removeClass('on');
         self.form.fadeOut();
       }, 1000);
     }).error(function(data) {
-      self.form.find('#message-status').text(JSON.parse(data.responseText).message);
+      self.form.find('#message-status')
+        .text(JSON.parse(data.responseText).message)
+        .addClass('on');
     });
   };
 
@@ -69,7 +75,9 @@ define(['jquery'],
         self.clear();
       }, MAX_TTL);
     }).error(function(data) {
-      form.find('#message-status').text(JSON.parse(data.responseText).message);
+      form.find('#message-status')
+        .text(JSON.parse(data.responseText).message)
+        .addClass('on');
     });
   };
 

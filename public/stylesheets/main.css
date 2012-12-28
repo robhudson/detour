@@ -79,7 +79,8 @@ a {
 }
 
 form {
-    background-color: rgba(1, 1, 1, 0.85);
+    background-color: rgba(1, 1, 1, 0.45);
+    border-radius: 5px;
     clear: both;
     display: none;
     float: left;
@@ -195,13 +196,13 @@ textarea {
 button {
     background-color: #85b033;
     border: 0;
-    border-radius: 5px;
+    border-radius: 10px;
     color: #333;
     cursor: pointer;
     float: right;
     font-family: 'Oswald';
-    font-size: 17px;
-    margin: 10px 0 0;
+    font-size: 16px;
+    margin: 12px 0 0;
     padding: 2px 7px;
 }
 
@@ -326,10 +327,27 @@ button:hover, #message-detail .actions:hover {
 }
 
 #message-status, #contact-status {
-    color: #f0ca19;
+    background-color: #c92020;
+    border-radius: 3px;
+    color: #ffcece;
+    display: none;
+    font-size: 12px;
+    padding: 5px;
+    position: absolute;
+}
+
+#message-status {
+    right: 10px;
+    top: 118px;
+}
+
+#contact-status {
+    left: 10px;
+    top: 58px;
+}
+
+#message-status.on, #contact-status.on {
     display: inline-block;
-    float: left;
-    padding-top: 5px;
 }
 
 #footer {
@@ -424,13 +442,13 @@ button:hover, #message-detail .actions:hover {
     display: block;
     font-size: 13px;
     font-weight: bold;
-    height: 20px;
-    line-height: 22px;
+    height: 21px;
+    line-height: 24px;
     margin-top: 5px;
     position: absolute;
-    right: 13px;
+    right: 8px;
     text-align: center;
-    width: 20px;
+    width: 21px;
 }
 
 #contacts li span.delete:hover {

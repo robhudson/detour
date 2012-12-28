@@ -58,10 +58,14 @@ define(['jquery', 'user', 'message'],
       case 'cancel':
         self.parent().fadeOut();
         contacts.empty();
-        contactsForm.find('#contact-status').empty();
+        contactsForm.find('#contact-status')
+          .empty()
+          .removeClass('on');
         messageForm
-          .find('#message-status, #current-contact').empty();
-        messageForm.find('textarea').val('');
+          .find('#message-status, #current-contact')
+          .empty()
+          .removeClass('on');
+        messageForm.find('textarea, input[name="email"]').val('');
         break;
 
       case 'reply':
@@ -78,6 +82,9 @@ define(['jquery', 'user', 'message'],
         var email = self.data('email') || self.parent().data('email');
         insertContact(email);
         contacts.empty();
+        messageForm.find('#message-status')
+          .empty()
+          .removeClass('on');
         message.clear();
         break;
 

@@ -33,7 +33,7 @@ module.exports = function(app, client, isLoggedIn) {
     message.create(req, client, function (err, resp) {
       if (err) {
         res.status(500);
-        res.json({ message: 'could not post message' });
+        res.json({ message: 'please choose a contact' });
       } else {
         res.json({ message: 'okay' });
       }
