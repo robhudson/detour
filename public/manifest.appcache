@@ -2,6 +2,7 @@ CACHE MANIFEST
 # v 0.0.9
 
 CACHE:
+fonts/Oswald-Regular-webfont.woff
 images/background.jpg
 images/background@2x.jpg
 images/favicon.png

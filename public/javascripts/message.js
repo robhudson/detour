@@ -27,7 +27,8 @@ define(['jquery'],
       cache: false
     }).done(function(data) {
       self.form
-        .find('textarea, input[name="email"], #current-contact, #contacts').empty();
+        .find('#current-contact, #contacts').empty();
+      self.form.find('textarea, input[name="email"]').val('');
       self.form.find('#message-status').text('Sent!');
       setTimeout(function() {
         self.form.find('#message-status').empty();

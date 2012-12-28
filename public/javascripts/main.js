@@ -59,9 +59,9 @@ define(['jquery', 'user', 'message'],
         self.parent().fadeOut();
         contacts.empty();
         contactsForm.find('#contact-status').empty();
-        messageForm.find('#message-status').empty();
-        messageForm.find('#current-contact').empty();
-        messageForm.find('textarea').empty();
+        messageForm
+          .find('#message-status, #current-contact').empty();
+        messageForm.find('textarea').val('');
         break;
 
       case 'reply':
