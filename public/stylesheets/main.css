@@ -365,7 +365,7 @@ button:hover, #message-detail .actions:hover {
 
 #contacts {
     margin-top: 8px;
-    max-height: 130px;
+    max-height: 160px;
     overflow: hidden;
     overflow-y: auto;
 }
