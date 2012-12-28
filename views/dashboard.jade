@@ -27,7 +27,7 @@ block content
     a(href='javascript:;', data-action='cancel', class='cancel') Cancel
 
   form(method='post', id='contacts-form')
-    input(type='text', name='email', placeholder='email address of contact')
+    input(type='text', name='email', placeholder='add a new email address')
     input(type='hidden', value='#{session._csrf}', name='_csrf')
     #contact-status
     button(type='submit') Add
