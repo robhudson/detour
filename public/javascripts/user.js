@@ -65,6 +65,15 @@ define(['jquery'],
       });
     },
 
+    deleteContact: function(data) {
+      $.ajax({
+        url: '/contact',
+        data: data,
+        type: 'DELETE',
+        dataType: 'json'
+      });
+    },
+
     getContacts: function() {
       $.ajax({
         url: '/contacts',

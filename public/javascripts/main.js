@@ -69,6 +69,11 @@ define(['jquery', 'user', 'message'],
         message.clear();
         break;
 
+      case 'contact-delete':
+        user.deleteContact({ email: self.data('email'), _csrf: body.data('csrf') });
+        self.closest('li').remove();
+        break;
+
       case 'add-contact-form':
         messageForm.hide();
         messageDetail.hide();

@@ -190,6 +190,7 @@ button {
     color: #333;
     cursor: pointer;
     float: right;
+    font-family: 'Oswald';
     font-size: 17px;
     margin: 20px 0 0;
     padding: 2px 7px;
@@ -340,7 +341,8 @@ button:hover, #message-detail .actions:hover {
     border-radius: 5px;
     display: block;
     float: left;
-    font-size: 14px;
+    font-family: 'Oswald';
+    font-size: 15px;
     margin: 2px 2px;
     padding: 6px 5px;
     text-align: center;
@@ -367,9 +369,11 @@ button:hover, #message-detail .actions:hover {
 }
 
 #contacts li a {
+    background-color: #111;
     border-radius: 5px;
     display: block;
     float: left;
+    margin-bottom: 2px;
     padding: 3px;
     width: 275px;
 }
@@ -387,7 +391,7 @@ button:hover, #message-detail .actions:hover {
     float: left;
     font-size: 16px;
     line-height: 30px;
-    width: 200px;
+    width: 170px;
 }
 
 .avatar {
@@ -396,4 +400,25 @@ button:hover, #message-detail .actions:hover {
     float: left;
     margin-right: 10px;
     width: 35px;
+}
+
+#contacts li span.delete {
+    background-color: #222;
+    border-radius: 100px;
+    color: #555;
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    height: 20px;
+    line-height: 22px;
+    margin-top: 5px;
+    position: absolute;
+    right: 13px;
+    text-align: center;
+    width: 20px;
+}
+
+#contacts li span.delete:hover {
+    background-color: #e51616;
+    color: #ffb7b7;
 }

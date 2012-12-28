@@ -65,6 +65,17 @@ module.exports = function(app, client, isLoggedIn) {
     });
   });
 
+  app.delete('/contact', isLoggedIn, function (req, res) {
+    contact.delete(req, client, function (err, resp) {
+      if (err) {
+        res.status(500);
+        res.json({ message: 'something went wrong' });
+      } else {
+        res.json({ message: 'okay' });
+      }
+    });
+  });
+
   app.get('/contacts', isLoggedIn, function (req, res) {
     contact.getAll(req, client, function (err, contacts) {
       if (err) {
