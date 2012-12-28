@@ -84,6 +84,8 @@ define(['jquery'],
   User.prototype.getContacts = function () {
     var self = this;
 
+    this.form = $('#message-form');
+
     $.ajax({
       url: '/contacts',
       type: 'GET',
