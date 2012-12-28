@@ -11,6 +11,7 @@ define(['jquery'],
 
   var countdownInterval;
   var countdownDisplay;
+  var currentView;
 
   Message.prototype.send = function(data) {
     $.ajax({
@@ -25,37 +26,52 @@ define(['jquery'],
       form.find('#message-status').text('Sent!');
       setTimeout(function() {
         form.find('#message-status').empty();
-      }, 2500);
+        form.fadeOut();
+      }, 1000);
     }).error(function(data) {
       form.find('#message-status').text(data.responseText);
     });
   };
 
   Message.prototype.view = function(preview) {
+    var self = this;
+
+    if (preview.parent().hasClass('message-root')) {
+      currentView = preview.parent();
+    } else {
+      currentView = preview.parent().parent();
+    }
     $.ajax({
-      url: '/message/' + preview.data('key'),
+      url: '/message/' + currentView[0].id,
       type: 'GET',
       dataType: 'json',
       cache: false
     }).done(function(data) {
       var seconds = (MAX_TTL / 1000) - 1;
-
+      messageDetail.attr('data-email', currentView[0].id.split(':')[1]); // reply to email
       messageDetail.find('p').text(data.message);
       messageDetail.fadeIn();
+
       countdownInterval = setInterval(function() {
         messageDetail.find('.countdown').text(seconds--);
       }, 1000);
+
       countdownDisplay = setTimeout(function() {
-        messageDetail.find('p').empty();
-        messageDetail.fadeOut();
-        preview.parent().remove();
-        //messageDetail.find('.countdown').text('10');
-        clearInterval(countdownInterval);
-        clearInterval(countdownDisplay);
+        self.clear();
       }, MAX_TTL);
     }).error(function(data) {
       form.find('#message-status').text(data.responseText);
     });
+  };
+
+  Message.prototype.clear = function() {
+    messageDetail.find('p').empty();
+    messageDetail.fadeOut();
+    messageDetail.removeAttr('data-email');
+    messageDetail.find('.countdown').text('10');
+    currentView.remove();
+    clearInterval(countdownInterval);
+    clearInterval(countdownDisplay);
   };
 
   return Message;

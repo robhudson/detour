@@ -13,17 +13,13 @@ html
 
   body(data-csrf='#{session._csrf}')
     #wrapper
-      #header
-        block header
+      block header
 
-      if session.email
-        a(href='javascript:;', data-action='logout', id='logout') Sign out
-      else
+      if !session.email
         a(href='javascript:;', data-action='login', id='login') Sign in with Persona
 
       #messages
         block content
-    #footer
 
     script(src='https://login.persona.org/include.js', type='text/javascript')
     script(src='/javascripts/require.js', data-main='/javascripts/main')

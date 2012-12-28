@@ -79,6 +79,18 @@ a {
     text-decoration: none;
 }
 
+form {
+    background-color: rgba(1, 1, 1, 0.85);
+    display: none;
+    padding: 10px;
+    position: absolute;
+    width: 280px;
+}
+
+#contacts-form {
+    display: none;
+}
+
 #wrapper {
     background-color: rgba(2, 2, 2, 0.25);
     height: 100%;
@@ -146,32 +158,17 @@ ol.home li {
     text-shadow: #399cac -1px -1px 0;
 }
 
-#logout {
-    background-color: #111;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    color: #777;
-    font-size: 13px;
-    padding: 4px 8px 6px;
-    position: absolute;
-    right: 10px;
-    top: 0;
-}
-
-#logout:hover {
-    background-color: #59ccdf;
-    color: #333;
-}
-
 textarea, input[type="text"] {
     background-color: #59ccdf;
     border: 1px solid #73cbda;
     border-radius: 5px;
     box-shadow: inset #378896 1px 1px 2px;
     color: #24535b;
+    display: block;
     font-size: 15px;
+    margin: 10px auto;
     padding: 5px;
-    width: 290px;
+    width: 270px;
 }
 
 textarea:focus, input[type="text"]:focus {
@@ -181,23 +178,24 @@ textarea:focus, input[type="text"]:focus {
 }
 
 textarea {
-    height: 30px;
+    height: 100px;
     overflow: hidden;
     resize: none;
 }
 
 button {
-    background-color: rgba(1, 1, 1, 0.75);
+    background-color: #85b033;
     border: 0;
     border-radius: 5px;
-    color: #555;
+    color: #333;
     cursor: pointer;
     float: right;
-    font-size: 18px;
-    padding: 3px 7px;
+    font-size: 17px;
+    margin: 20px 0 0;
+    padding: 2px 7px;
 }
 
-button:hover {
+button:hover, #message-detail .actions:hover {
     background-color: #59ccdf;
     color: #333;
 }
@@ -205,7 +203,7 @@ button:hover {
 #message-view {
     clear: both;
     float: left;
-    height: 195px;
+    height: 100%;
     margin-bottom: 10px;
     width: 300px;
 }
@@ -217,8 +215,6 @@ button:hover {
     display: block;
     float: left;
     height: 100%;
-    overflow-y: scroll;
-    overflow-x: hidden;
     width: 100%;
 }
 
@@ -235,33 +231,74 @@ button:hover {
     border-top: 1px solid #191919;
     clear: both;
     float: left;
-    width: 290px;
+    width: 100%;
+}
+
+.messages li a span {
+    display: block;
+    float: left;
+    font-size: 15px;
+    line-height: 33px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 239px;
 }
 
 .messages li a {
     display: block;
+    float: left;
     padding: 10px 8px;
 }
 
 .messages li a:hover {
-    background-color: #191919;
+    background-color: #222;
     color: #eee;
 }
 
 #message-detail {
     background-color: rgba(1, 1, 1, 0.85);
     box-shadow: inset #000 0 0 3px;
-    bottom: 0;
     color: #eee;
     display: none;
     font-size: 16px;
+    height: 350px;
     left: 0;
     padding: 20px;
     position: absolute;
     right: 0;
     text-align: center;
-    top: -10px;
+    top: 0;
     z-index: 2;
+}
+
+#message-detail .actions {
+    background-color: #111;
+    border-radius: 5px;
+    color: #666;
+    display: inline-block;
+    font-family: 'Oswald';
+    padding: 4px 10px;
+    text-transform: uppercase;
+}
+
+#message-detail .reply, .cancel {
+    float: left;
+}
+
+.cancel {
+    bottom: 10px;
+    left: 10px;
+    position: absolute;
+}
+
+#message-detail .close {
+    float: right;
+}
+
+#message-detail p {
+    height: 300px;
+    margin-bottom: 20px;
 }
 
 #message-detail .countdown {
@@ -278,9 +315,85 @@ button:hover {
     width: 50px;
 }
 
-#message-status {
+#message-status, #contact-status {
     color: #f0ca19;
     display: inline-block;
     float: left;
     padding-top: 5px;
+}
+
+#footer {
+    background-color: rgba(1, 1, 1, 0.35);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    bottom: 0;
+    box-shadow: #111 0 0 8px;
+    height: 30px;
+    padding: 5px;
+    position: fixed;
+    width: 290px;
+    z-index: 3;
+}
+
+#footer a {
+    background-color: #111;
+    border-radius: 5px;
+    display: block;
+    float: left;
+    font-size: 14px;
+    margin: 2px 2px;
+    padding: 6px 5px;
+    text-align: center;
+    width: 82px;
+}
+
+#footer a:hover {
+    background-color: #59ccdf;
+    color: #333;
+}
+
+#contacts {
+    margin-top: 5px;
+}
+
+#current-contact {
+    color: #eee;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#contacts li {
+    margin-bottom: 2px;
+}
+
+#contacts li a {
+    border-radius: 5px;
+    display: block;
+    float: left;
+    padding: 3px;
+    width: 275px;
+}
+
+#contacts li a:hover {
+    background-color: #59ccdf;
+}
+
+#contacts li a:hover span {
+    color: #333;
+}
+
+#contacts li a span {
+    display: block;
+    float: left;
+    font-size: 16px;
+    line-height: 30px;
+    width: 200px;
+}
+
+.avatar {
+    border-radius: 5px;
+    display: block;
+    float: left;
+    margin-right: 10px;
+    width: 35px;
 }
