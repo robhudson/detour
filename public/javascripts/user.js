@@ -53,6 +53,7 @@ define(['jquery'],
         dataType: 'json'
       }).done(function(data) {
         form.find('#contact-status').text('Added!');
+        form.find('input[name="email"]').empty();
         setTimeout(function() {
           form.fadeOut();
         }, 1000);
