@@ -23,8 +23,8 @@ define(['jquery', 'user', 'message'],
   body.on('click', function(ev) {
     var self = $(ev.target);
 
-    var messageForm = body.find('#message-form');
-    var contactsForm = body.find('#contacts-form');
+    var messageForm = $('#message-form');
+    var contactsForm = $('#contacts-form');
     var messageDetail = $('#message-detail')
     var contacts = $('#contacts');
 
@@ -61,6 +61,7 @@ define(['jquery', 'user', 'message'],
         contactsForm.find('#contact-status').empty();
         messageForm.find('#message-status').empty();
         messageForm.find('#current-contact').empty();
+        messageForm.find('textarea').empty();
         break;
 
       case 'reply':
