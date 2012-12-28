@@ -74,11 +74,12 @@ define(['jquery'],
   };
 
   Message.prototype.clear = function() {
+    var self = this;
     this.currentContact = null;
     this.messageDetail.fadeOut(function() {
-      this.messageDetail.find('p').empty();
-      this.messageDetail.removeAttr('data-email');
-      this.messageDetail.find('.countdown').text('10');
+      self.messageDetail.find('p').empty();
+      self.messageDetail.removeAttr('data-email');
+      self.messageDetail.find('.countdown').text('10');
     });
     this.currentView.remove();
     clearInterval(countdownInterval);
