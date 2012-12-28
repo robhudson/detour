@@ -74,7 +74,7 @@ module.exports = function(app, client, isLoggedIn) {
 
         for (var i = 0; i < contacts.length; i ++) {
           contactsList.push({
-            avatar: gravatar.url(contacts[i]),
+            avatar: gravatar.url(contacts[i], {}, true),
             email: contacts[i]
           })
         }
