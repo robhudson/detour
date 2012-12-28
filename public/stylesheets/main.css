@@ -80,9 +80,12 @@ a {
 
 form {
     background-color: rgba(1, 1, 1, 0.85);
+    clear: both;
     display: none;
+    float: left;
+    margin-bottom: 10px;
     padding: 10px;
-    position: absolute;
+    position: fixed;
     width: 280px;
 }
 
@@ -184,7 +187,7 @@ textarea:focus, input[type="text"]:focus {
 }
 
 textarea {
-    height: 100px;
+    height: 80px;
     overflow: hidden;
     resize: none;
 }
@@ -198,7 +201,7 @@ button {
     float: right;
     font-family: 'Oswald';
     font-size: 17px;
-    margin: 20px 0 0;
+    margin: 10px 0 0;
     padding: 2px 7px;
 }
 
@@ -362,6 +365,9 @@ button:hover, #message-detail .actions:hover {
 
 #contacts {
     margin-top: 8px;
+    max-height: 150px;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 #current-contact {
@@ -372,6 +378,7 @@ button:hover, #message-detail .actions:hover {
 
 #contacts li {
     margin-bottom: 2px;
+    position: relative;
 }
 
 #contacts li a {
@@ -397,6 +404,8 @@ button:hover, #message-detail .actions:hover {
     float: left;
     font-size: 16px;
     line-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     width: 170px;
 }
 

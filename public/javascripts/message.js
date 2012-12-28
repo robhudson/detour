@@ -74,10 +74,11 @@ define(['jquery'],
 
   Message.prototype.clear = function() {
     this.currentContact = null;
-    this.messageDetail.fadeOut();
-    this.messageDetail.find('p').empty();
-    this.messageDetail.removeAttr('data-email');
-    this.messageDetail.find('.countdown').text('10');
+    this.messageDetail.fadeOut(function() {
+      this.messageDetail.find('p').empty();
+      this.messageDetail.removeAttr('data-email');
+      this.messageDetail.find('.countdown').text('10');
+    });
     this.currentView.remove();
     clearInterval(countdownInterval);
     clearInterval(countdownDisplay);
