@@ -9,10 +9,7 @@ images/logo-114.png
 images/logo-128.png
 images/logo-72.png
 javascripts/jquery.js
-javascripts/main.js
-javascripts/message.js
 javascripts/require.js
-javascripts/user.js
 stylesheets/main.css
 
 # catch-all for anything else
