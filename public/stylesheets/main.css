@@ -262,7 +262,7 @@ button:hover, #message-detail .actions:hover {
     color: #eee;
     display: none;
     font-size: 16px;
-    height: 250px;
+    height: 300px;
     left: 0;
     padding: 20px;
     position: absolute;
@@ -297,7 +297,7 @@ button:hover, #message-detail .actions:hover {
 }
 
 #message-detail p {
-    height: 200px;
+    height: 250px;
     margin-bottom: 20px;
 }
 
