@@ -7,36 +7,33 @@ var contact = require('../lib/contact');
 
 module.exports = function(app, client, isLoggedIn) {
   app.get('/', function (req, res) {
-    if (req.session.email) {
-      res.redirect('/dashboard');
-    } else {
-      res.render('index', {
-        pageType: 'home'
-      });
-    }
+    res.render('index', {
+      authenticated: !!req.session.email
+    });
   });
 
-  app.get('/dashboard', isLoggedIn, function (req, res) {
-    message.getRecent(req, client, function(err, messages) {
-      if (err) {
-        res.render('dashboard', {
-          pageType: 'dashboard',
-          messages: []
-        });
-      } else {
-        res.render('dashboard', {
-          pageType: 'dashboard',
+  app.get('/landing', function (req, res) {
+    if (req.session.email) {
+      message.getRecent(req, client, function(err, messages) {
+        res.render('_dashboard', {
+          layout: false,
+          authenticated: true,
           messages: messages
         });
-      }
-    });
+      });
+    } else {
+      res.render('_landing', {
+        layout: false,
+        authenticated: false
+      });
+    }
   });
 
   app.post('/message', isLoggedIn, function (req, res) {
     message.create(req, client, function (err, resp) {
       if (err) {
         res.status(500);
-        res.json({ message: 'something went wrong' });
+        res.json({ message: 'could not post message' });
       } else {
         res.json({ message: 'okay' });
       }
@@ -69,7 +66,7 @@ module.exports = function(app, client, isLoggedIn) {
     contact.delete(req, client, function (err, resp) {
       if (err) {
         res.status(500);
-        res.json({ message: 'something went wrong' });
+        res.json({ message: 'could not delete contact' });
       } else {
         res.json({ message: 'okay' });
       }
@@ -79,7 +76,10 @@ module.exports = function(app, client, isLoggedIn) {
   app.get('/contacts', isLoggedIn, function (req, res) {
     contact.getAll(req, client, function (err, contacts) {
       if (err) {
-        res.redirect('/500');
+        res.status(500);
+        res.render('_500', {
+          layout: false
+        });
       } else {
         var contactsList = [];
 

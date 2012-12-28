@@ -91,11 +91,17 @@ form {
 }
 
 #wrapper {
-    background-color: rgba(2, 2, 2, 0.25);
     height: 100%;
     margin: 0 auto;
     position: relative;
     width: 320px;
+}
+
+#inner-wrapper {
+    background-color: rgba(2, 2, 2, 0.25);
+    clear: both;
+    float: left;
+    width: 100%;
 }
 
 #header, #messages {
@@ -323,7 +329,7 @@ button:hover, #message-detail .actions:hover {
 }
 
 #footer {
-    background-color: rgba(1, 1, 1, 0.35);
+    background-color: rgba(1, 1, 1, 0.55);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     bottom: 0;

@@ -48,7 +48,7 @@ module.exports = function(app, configurations, express) {
     });
     app.use(function(err, req, res, next) {
       res.status(err.status || 500);
-      res.render('500', { error: err, layout: false });
+      res.render('_500', { error: err, layout: false });
     });
   });
 

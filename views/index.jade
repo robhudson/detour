@@ -1,12 +1,19 @@
-extend layout
+!!! 5
+html
+  head
+    title Detour
+    meta(content='width=device-width, height=device-height, user-scalable=no, initial-scale=0.96, maximum-scale=0.96, minimum-scale=0.96', name='viewport')
+    meta(content='yes', name='apple-mobile-web-app-capable')
+    meta(content='chrome=1', http-equiv='X-UA-Compatible')
+    link(rel='shortcut icon', href='/images/favicon.png')
+    link(rel='apple-touch-icon', sizes='72x72', href='/images/logo-72.png')
+    link(rel='apple-touch-icon', sizes='114x114', href='/images/logo-114.png')
+    link(rel='apple-touch-icon', sizes='128x128', href='/images/logo-128.png')
+    link(rel='stylesheet', href='/stylesheets/main.css')
 
-block header
-  #header
-    h1 Detour
+  body(data-csrf='#{session._csrf}', data-authenticated='#{authenticated}')
+    #wrapper
+      #inner-wrapper
 
-block content
-  ol.home
-    li Send a message to an email address
-    li Recipient views message
-    li Message is deleted after 10 seconds
-    li Rinse and repeat.
+    script(src='https://login.persona.org/include.js', type='text/javascript')
+    script(src='/javascripts/require.js', data-main='/javascripts/main')

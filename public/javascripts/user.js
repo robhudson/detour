@@ -21,7 +21,9 @@ define(['jquery'],
           cache: false
         }).done(function(data) {
           if (data.status === 'okay') {
-            document.location.href = '/';
+            $.get('/landing', function(data) {
+              body.find('#inner-wrapper').html(data);
+            });
           } else {
             console.log('Login failed because ' + data.reason);
           }

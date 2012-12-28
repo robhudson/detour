@@ -11,7 +11,6 @@ An experiment with ephemeral messaging using email addresses.
 
 ## Possible features
 
-* Automatic contact list creation from previously entered email addresses
 * Allow unread messages to die after a certain period of time
 * Encryption considerations (probably not necessary as someone who wants to encrypt can just paste the encrypted block into the message area. If they are that paranoid and want to still use the system. I mean, just use something else for now then, sheesh.)
 

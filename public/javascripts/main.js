@@ -14,19 +14,24 @@ define(['jquery', 'user', 'message'],
   var message = new Message();
 
   var body = $('body');
-  var messageForm = body.find('#message-form');
-  var contactsForm = body.find('#contacts-form');
-  var messageDetail = $('#message-detail')
-  var contacts = $('#contacts');
 
-  var insertContact = function(email) {
-    messageForm.find('input[name="email"]').val(email);
-    messageForm.find('#current-contact').text(email);
-    messageForm.find('textarea').focus();
-  };
+  $.get('/landing', function(data) {
+    body.find('#inner-wrapper').html(data);
+  });
 
   body.on('click', function(ev) {
     var self = $(ev.target);
+
+    var messageForm = body.find('#message-form');
+    var contactsForm = body.find('#contacts-form');
+    var messageDetail = $('#message-detail')
+    var contacts = $('#contacts');
+
+    var insertContact = function(email) {
+      messageForm.find('input[name="email"]').val(email);
+      messageForm.find('#current-contact').text(email);
+      messageForm.find('textarea').focus();
+    };
 
     switch (self.data('action')) {
       // persona login
@@ -58,7 +63,7 @@ define(['jquery', 'user', 'message'],
         break;
 
       case 'reply':
-        insertContact(self.parent().data('email'));
+        insertContact(message.currentContact);
         messageForm.fadeIn();
         message.clear();
         break;
@@ -92,15 +97,15 @@ define(['jquery', 'user', 'message'],
         messageForm.fadeIn();
         break;
     }
-  });
 
-  messageForm.submit(function(ev) {
-    ev.preventDefault();
-    message.send($(this).serialize());
-  });
+    messageForm.submit(function(ev) {
+      ev.preventDefault();
+      message.send($(this).serialize());
+    });
 
-  contactsForm.submit(function(ev) {
-    ev.preventDefault();
-    user.addContact($(this).serialize());
+    contactsForm.submit(function(ev) {
+      ev.preventDefault();
+      user.addContact($(this).serialize());
+    });
   });
 });
