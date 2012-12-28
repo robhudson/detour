@@ -58,7 +58,7 @@ module.exports = function(app, client, isLoggedIn) {
     contact.add(req, client, function (err, resp) {
       if (err) {
         res.status(500);
-        res.json({ message: 'something went wrong' });
+        res.json({ message: 'invalid email' });
       } else {
         res.json({ message: 'okay' });
       }

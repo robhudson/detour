@@ -58,10 +58,7 @@ define(['jquery'],
           form.fadeOut();
         }, 1000);
       }).error(function(data) {
-        form.find('#contact-status').text(data.responseText);
-        setTimeout(function() {
-          form.fadeOut();
-        }, 1000);
+        form.find('#contact-status').text(JSON.parse(data.responseText).message);
       });
     },
 

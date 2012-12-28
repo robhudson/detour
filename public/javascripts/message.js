@@ -30,7 +30,7 @@ define(['jquery'],
         form.fadeOut();
       }, 1000);
     }).error(function(data) {
-      form.find('#message-status').text(data.responseText);
+      form.find('#message-status').text(JSON.parse(data.responseText).message);
     });
   };
 
@@ -61,7 +61,7 @@ define(['jquery'],
         self.clear();
       }, MAX_TTL);
     }).error(function(data) {
-      form.find('#message-status').text(data.responseText);
+      form.find('#message-status').text(JSON.parse(data.responseText).message);
     });
   };
 

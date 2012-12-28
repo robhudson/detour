@@ -46,6 +46,7 @@ define(['jquery', 'user', 'message'],
       case 'cancel':
         self.parent().fadeOut();
         contacts.empty();
+        contactsForm.find('#contact-status').empty();
         break;
 
       case 'reply':
