@@ -262,7 +262,7 @@ button:hover, #message-detail .actions:hover {
     color: #eee;
     display: none;
     font-size: 16px;
-    height: 350px;
+    height: 250px;
     left: 0;
     padding: 20px;
     position: absolute;
@@ -297,7 +297,7 @@ button:hover, #message-detail .actions:hover {
 }
 
 #message-detail p {
-    height: 300px;
+    height: 200px;
     margin-bottom: 20px;
 }
 
@@ -354,13 +354,13 @@ button:hover, #message-detail .actions:hover {
 }
 
 #contacts {
-    margin-top: 5px;
+    margin-top: 8px;
 }
 
 #current-contact {
     color: #eee;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 #contacts li {

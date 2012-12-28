@@ -25,6 +25,7 @@ define(['jquery'],
       form.find('input[name="email"]').val('');
       form.find('#current-contact').empty();
       form.find('#message-status').text('Sent!');
+      form.find('#contacts').empty();
       setTimeout(function() {
         form.find('#message-status').empty();
         form.fadeOut();

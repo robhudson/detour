@@ -19,6 +19,12 @@ define(['jquery', 'user', 'message'],
   var messageDetail = $('#message-detail')
   var contacts = $('#contacts');
 
+  var insertContact = function(email) {
+    messageForm.find('input[name="email"]').val(email);
+    messageForm.find('#current-contact').text(email);
+    messageForm.find('textarea').focus();
+  };
+
   body.on('click', function(ev) {
     var self = $(ev.target);
 
@@ -47,12 +53,12 @@ define(['jquery', 'user', 'message'],
         self.parent().fadeOut();
         contacts.empty();
         contactsForm.find('#contact-status').empty();
+        messageForm.find('#message-status').empty();
+        messageForm.find('#current-contact').empty();
         break;
 
       case 'reply':
-        messageForm.find('input[name="email"]').val(self.parent().data('email'));
-        messageForm.find('textarea').focus();
-        messageForm.find('#current-contact').text(self.parent().data('email'));
+        insertContact(self.parent().data('email'));
         messageForm.fadeIn();
         message.clear();
         break;
@@ -63,9 +69,7 @@ define(['jquery', 'user', 'message'],
 
       case 'contact-add':
         var email = self.data('email') || self.parent().data('email');
-        messageForm.find('input[name="email"]').val(email);
-        messageForm.find('#current-contact').text(email);
-        messageForm.find('textarea').focus();
+        insertContact(email);
         contacts.empty();
         message.clear();
         break;
