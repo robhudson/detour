@@ -23,6 +23,7 @@ define(['jquery'],
     }).done(function(data) {
       form.find('textarea').val('');
       form.find('input[name="email"]').val('');
+      form.find('#current-contact').empty();
       form.find('#message-status').text('Sent!');
       setTimeout(function() {
         form.find('#message-status').empty();
