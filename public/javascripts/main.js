@@ -15,7 +15,7 @@ define(['jquery', 'user', 'message'],
 
   var body = $('body');
 
-  $.get('/landing', function(data) {
+  $.get('/landing', function (data) {
     body.find('#inner-wrapper').html(data);
   });
 
@@ -97,15 +97,20 @@ define(['jquery', 'user', 'message'],
         messageForm.fadeIn();
         break;
     }
+  });
 
-    messageForm.submit(function(ev) {
-      ev.preventDefault();
-      message.send($(this).serialize());
-    });
+  body.on('submit', 'form', function (ev) {
+    ev.preventDefault();
+    var self = $(ev.target);
 
-    contactsForm.submit(function(ev) {
-      ev.preventDefault();
-      user.addContact($(this).serialize());
-    });
+    switch (self[0].id) {
+      case 'message-form':
+        message.send(self.serialize());
+        break;
+
+      case 'contacts-form':
+        user.addContact(self.serialize());
+        break;
+    }
   });
 });

@@ -52,7 +52,8 @@ define(['jquery'],
         url: '/contact',
         data: data,
         type: 'POST',
-        dataType: 'json'
+        dataType: 'json',
+        cache : false
       }).done(function(data) {
         form.find('#contact-status').text('Added!');
         form.find('input[name="email"]').val('');
@@ -69,7 +70,8 @@ define(['jquery'],
         url: '/contact',
         data: data,
         type: 'DELETE',
-        dataType: 'json'
+        dataType: 'json',
+        cache : false
       });
     },
 
@@ -77,7 +79,8 @@ define(['jquery'],
       $.ajax({
         url: '/contacts',
         type: 'GET',
-        dataType: 'html'
+        dataType: 'html',
+        cache : false
       }).done(function(data) {
         body.find('#contacts').html(data);
       });
