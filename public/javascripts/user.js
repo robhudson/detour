@@ -61,7 +61,6 @@ define(['jquery'],
       dataType: 'json',
       cache : false
     }).done(function(data) {
-      alert('got here')
       self.form.find('#contact-status').text('Added!');
       self.form.find('input[name="email"]').val('');
       setTimeout(function() {
