@@ -9,9 +9,10 @@ requirejs.config({
 });
 
 define(['jquery', 'user', 'message'],
-  function($, user, Message) {
+  function($, User, Message) {
 
   var message = new Message();
+  var user = new User();
 
   var body = $('body');
 
