@@ -45,4 +45,53 @@ describe('message', function() {
       });
     });
   });
+
+  it('returns an existing user subscription', function (done) {
+    var req = {
+      body: {
+        name: 'Alice',
+        email: 'alice@test.org'
+      }
+    };
+
+    contact.subscribe(req, client, function (err, apiKey1) {
+      contact.subscribe(req, client, function (err, apiKey2) {
+        console.log('user key found: ', apiKey2);
+        apiKey2.should.equal(apiKey1);
+        done();
+      });
+    });
+  });
+
+  it('adds a new contact', function (done) {
+    var req = {
+      body: {
+        apiKey: '123abc',
+        email: 'alice@test.org'
+      }
+    };
+
+    contact.add(req, client, function (err, resp) {
+      should.not.exist(err);
+      should.exist(resp);
+      done();
+    });
+  });
+
+  it('deletes a contact', function (done) {
+    var req = {
+      body: {
+        apiKey: '123abc',
+        email: 'alice@test.org'
+      }
+    };
+
+    contact.add(req, client, function (err, resp) {
+      contact.delete(req, client, function (err, resp) {
+        should.not.exist(err);
+        should.exist(resp);
+        done();
+      });
+    });
+  });
 });

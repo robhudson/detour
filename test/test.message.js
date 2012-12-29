@@ -95,7 +95,6 @@ describe('message', function () {
 
     message.create(req, client, function (err, resp) {
       message.view(req, client, function (err, msg) {
-        console.log('** ')
         msg.should.equal(req.body.message);
         setTimeout(function() {
           client.get(req.params.key, function (err, msg) {
