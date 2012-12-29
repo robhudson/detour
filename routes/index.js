@@ -7,7 +7,7 @@ var contact = require('../lib/contact');
 
 module.exports = function(app, client, isLoggedIn) {
   app.get('/unread', isLoggedIn, function (req, res) {
-    message.getRecent(req, client, function(err, messages) {
+    message.getRecent(req, client, function (err, messages) {
       if (err) {
         res.status(500);
         res.json({ message: 'could not retreive unread' });
@@ -15,6 +15,17 @@ module.exports = function(app, client, isLoggedIn) {
         res.json({
           messages: messages
         });
+      }
+    });
+  });
+
+  app.post('/subscribe', function (req, res) {
+    contact.subscribe(req, client, function (err, apiKey) {
+      if (err) {
+        res.status(500);
+        res.json({ message: 'Could not subscribe' });
+      } else {
+        res.json({ key: apiKey });
       }
     });
   });
