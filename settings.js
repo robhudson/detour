@@ -12,7 +12,6 @@ module.exports = function(app, configurations, express) {
     if (!process.env.NODE_ENV) {
       app.use(express.logger('dev'));
     }
-    app.use(express.csrf());
     app.use(function(req, res, next) {
       res.locals.session = req.session;
       next();
