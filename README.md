@@ -17,7 +17,7 @@ An experiment with ephemeral messaging using email addresses.
 ## Server version
 
 * Relies on an apiKey to access authenticated requests
-* Format of messages are detour-message:<your API key>:<recipient email>:<id>
+* Format of messages are `detour-message:<your API key>:<recipient email>:<id>`
 * A user must sign in and have a matching email as the recipient in order to access the message
 
 ## Installing and running
