@@ -6,27 +6,17 @@ var message = require('../lib/message');
 var contact = require('../lib/contact');
 
 module.exports = function(app, client, isLoggedIn) {
-  app.get('/', function (req, res) {
-    res.render('index', {
-      authenticated: !!req.session.email
-    });
-  });
-
-  app.get('/landing', function (req, res) {
-    if (req.session.email) {
-      message.getRecent(req, client, function(err, messages) {
-        res.render('_dashboard', {
-          layout: false,
-          authenticated: true,
+  app.get('/unread', isLoggedIn, function (req, res) {
+    message.getRecent(req, client, function(err, messages) {
+      if (err) {
+        res.status(500);
+        res.json({ message: 'could not retreive unread' });
+      } else {
+        res.json({
           messages: messages
         });
-      });
-    } else {
-      res.render('_landing', {
-        layout: false,
-        authenticated: false
-      });
-    }
+      }
+    });
   });
 
   app.post('/message', isLoggedIn, function (req, res) {
@@ -89,10 +79,8 @@ module.exports = function(app, client, isLoggedIn) {
             email: contacts[i]
           })
         }
-        res.render('_contacts', {
-          layout: false,
-          contacts: contactsList
-        });
+
+        res.json({ contacts: contactsList });
       }
     });
   });

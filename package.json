@@ -7,16 +7,12 @@
     "npm": "1.1.x"
   },
   "dependencies": {
-    "client-sessions": ">= 0.0.9",
     "connect": ">= 2.4.5",
-    "express": ">= 3.0.0beta7",
-    "jade": ">= 0.27.2",
     "request": "2.9.153",
     "gravatar": "1.0.6",
     "nconf": "git://github.com/flatiron/nconf.git",
     "redis": "0.7.2",
-    "express-persona": "0.0.7",
-    "requirejs": ">= 2.1.0"
+    "node-uuid": "1.4.0"
   },
   "devDependencies": {
     "mocha": "1.4.2",

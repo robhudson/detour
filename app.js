@@ -14,16 +14,13 @@ client.select(app.set('redis-detour'), function(errDb, res) {
 });
 
 var isLoggedIn = function(req, res, next) {
-  if (req.session.email) {
+  if (req.query.apiKey || req.body.apiKey) {
     next();
   } else {
-    res.redirect('/');
+    res.status(500);
+    res.json({ message: 'you must be authenticated to access this call' });
   }
 };
-
-require('express-persona')(app, {
-  audience: nconf.get('domain') + ':' + nconf.get('authPort')
-});
 
 // routes
 require("./routes")(app, client, isLoggedIn);
