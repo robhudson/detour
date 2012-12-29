@@ -38,7 +38,7 @@ describe('message', function() {
     });
   });
 
-  it('creates a message that defaults to the sender', function(done) {
+  it('creates a message that does not validate', function(done) {
     var req = {
       body: {
         message: 'some message',
@@ -53,10 +53,9 @@ describe('message', function() {
     };
 
     message.create(req, client, function(err, resp) {
-      message.view(req, client, function(err, message) {
-        message.should.equal(req.body.message);
-        done();
-      });
+      console.log(err)
+      should.exist(err);
+      done();
     });
   });
 
