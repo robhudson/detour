@@ -79,7 +79,7 @@ a {
 }
 
 form {
-    background-color: rgba(1, 1, 1, 0.45);
+    background-color: rgba(3, 3, 3, 0.85);
     border-radius: 5px;
     clear: both;
     display: none;
@@ -90,8 +90,24 @@ form {
     width: 280px;
 }
 
-#contacts-form {
-    display: none;
+form.on {
+    display: block;
+}
+
+form h2 {
+    color: #bbb;
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+#api-form {
+    padding-top: 10px;
+    top: 155px;
+}
+
+#api-form p {
+    color: #ccc;
+    line-height: 20px;
 }
 
 #wrapper {
@@ -326,7 +342,7 @@ button:hover, #message-detail .actions:hover {
     width: 50px;
 }
 
-#message-status, #contact-status {
+#message-status, #contact-status, #api-status {
     background-color: #c92020;
     border-radius: 3px;
     color: #ffcece;
@@ -343,10 +359,15 @@ button:hover, #message-detail .actions:hover {
 
 #contact-status {
     left: 10px;
-    top: 58px;
+    top: 112px;
 }
 
-#message-status.on, #contact-status.on {
+#api-status {
+    left: 10px;
+    top: 140px;
+}
+
+#message-status.on, #contact-status.on, #api-status.on {
     display: inline-block;
 }
 

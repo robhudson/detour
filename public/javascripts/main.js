@@ -25,7 +25,8 @@ define(['jquery', 'user', 'message'],
 
     var messageForm = $('#message-form');
     var contactsForm = $('#contacts-form');
-    var messageDetail = $('#message-detail')
+    var messageDetail = $('#message-detail');
+    var apiForm = $('#api-form');
     var contacts = $('#contacts');
 
     var insertContact = function(email) {
@@ -56,7 +57,6 @@ define(['jquery', 'user', 'message'],
         break;
 
       case 'cancel':
-        self.parent().fadeOut();
         contacts.empty();
         contactsForm.find('#contact-status')
           .empty()
@@ -66,6 +66,9 @@ define(['jquery', 'user', 'message'],
           .empty()
           .removeClass('on');
         messageForm.find('textarea, input[name="email"]').val('');
+        apiForm.fadeOut();
+        contactsForm.fadeOut();
+        messageForm.fadeOut();
         break;
 
       case 'reply':
@@ -98,10 +101,12 @@ define(['jquery', 'user', 'message'],
         messageDetail.hide();
         messageForm.find('input[name="email"], textarea, #current-contact').empty();
         contactsForm.fadeIn();
+        apiForm.fadeIn();
         break;
 
       case 'new-message':
-        contactsForm.hide();
+        apiForm.fadeOut();
+        contactsForm.fadeOut();
         messageDetail.hide();
         messageForm.fadeIn();
         break;
@@ -119,6 +124,10 @@ define(['jquery', 'user', 'message'],
 
       case 'contacts-form':
         user.addContact(self.serialize());
+        break;
+
+      case 'api-form':
+        user.addApiKey(self.serialize());
         break;
     }
   });

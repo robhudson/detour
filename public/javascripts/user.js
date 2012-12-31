@@ -65,12 +65,6 @@ define(['jquery'],
         .text('Added!')
         .addClass('on');
       self.form.find('input[name="email"]').val('');
-      setTimeout(function() {
-        self.form.fadeOut();
-        self.form.find('#contact-status')
-          .empty()
-          .removeClass('on');
-      }, 1000);
     }).error(function(data) {
       self.form.find('#contact-status')
         .text(JSON.parse(data.responseText).message)
@@ -103,6 +97,28 @@ define(['jquery'],
         .empty()
         .removeClass('on');
       self.form.find('#contacts').html(data);
+    });
+  };
+
+  User.prototype.addApiKey = function (data) {
+    var self = this;
+
+    this.form = $('#api-form');
+
+    $.ajax({
+      url: '/pushKey',
+      data: data,
+      type: 'POST',
+      dataType: 'json',
+      cache : false
+    }).done(function(data) {
+      self.form.find('#api-status')
+        .text('Added!')
+        .addClass('on');
+    }).error(function(data) {
+      self.form.find('#api-status')
+        .text(JSON.parse(data.responseText).message)
+        .addClass('on');
     });
   };
 

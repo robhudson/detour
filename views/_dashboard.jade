@@ -26,13 +26,23 @@
     a(href='javascript:;', data-action='cancel', class='cancel') Cancel
 
   form(method='post', id='contacts-form')
-    input(type='text', name='email', placeholder='add a new email address')
+    h2 Add a new contact
+    input(type='text', name='email', placeholder='add contact email')
     input(type='hidden', value='#{session._csrf}', name='_csrf')
     #contact-status
     button(type='submit') Add
-    a(href='javascript:;', data-action='cancel', class='cancel') Cancel
+
+  form(method='post', id='api-form')
+    h2 Add or reset your Pushover API Key
+    p.tip You can register for push notifications at
+      a(href='https://pushover.net', target='_blank')  pushover.net
+    input(type='text', name='apiKey', placeholder='add a notfication api key', value='#{session.apiKey || ""}')
+    input(type='hidden', value='#{session._csrf}', name='_csrf')
+    #api-status
+    button(type='submit') Add
+    a(href='javascript:;', data-action='cancel', class='cancel') Close
 
   #footer
     a(href='javascript:;', data-action='new-message') Message
-    a(href='javascript:;', data-action='add-contact-form') Contacts
+    a(href='javascript:;', data-action='add-contact-form') Settings
     a(href='javascript:;', data-action='logout', id='logout') Sign out

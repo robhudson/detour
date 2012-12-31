@@ -4,8 +4,9 @@ var gravatar = require('gravatar');
 
 var message = require('../lib/message');
 var contact = require('../lib/contact');
+var setting = require('../lib/setting');
 
-module.exports = function(app, client, isLoggedIn) {
+module.exports = function(app, client, nconf, isLoggedIn) {
   app.get('/', function (req, res) {
     res.render('index', {
       authenticated: !!req.session.email
@@ -14,11 +15,18 @@ module.exports = function(app, client, isLoggedIn) {
 
   app.get('/landing', function (req, res) {
     if (req.session.email) {
-      message.getRecent(req, client, function(err, messages) {
-        res.render('_dashboard', {
-          layout: false,
-          authenticated: true,
-          messages: messages
+      setting.getPushKey(req, client, function (key) {
+        console.log(key)
+        if (key) {
+          req.session.apiKey = key;
+        }
+
+        message.getRecent(req, client, function(err, messages) {
+          res.render('_dashboard', {
+            layout: false,
+            authenticated: true,
+            messages: messages
+          });
         });
       });
     } else {
@@ -30,7 +38,7 @@ module.exports = function(app, client, isLoggedIn) {
   });
 
   app.post('/message', isLoggedIn, function (req, res) {
-    message.create(req, client, function (err, resp) {
+    message.create(req, client, nconf, function (err, resp) {
       if (err) {
         res.status(500);
         res.json({ message: 'please choose a contact' });
@@ -69,6 +77,17 @@ module.exports = function(app, client, isLoggedIn) {
         res.json({ message: 'could not delete contact' });
       } else {
         res.json({ message: 'okay' });
+      }
+    });
+  });
+
+  app.post('/pushKey', isLoggedIn, function (req, res) {
+    setting.add(req, client, function (err, resp) {
+      if (err) {
+        res.status(500);
+        res.json({ message: 'could not add key' });
+      } else {
+        res.json({ message: req.body.apiKey });
       }
     });
   });

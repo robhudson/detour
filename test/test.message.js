@@ -31,7 +31,7 @@ describe('message', function() {
         email: 'alice@test.org'
       }
     };
-    message.create(req, client, function(err, resp) {
+    message.create(req, client, nconf, function(err, resp) {
       should.not.exist(err);
       resp.should.equal('OK');
       done();
@@ -52,7 +52,7 @@ describe('message', function() {
       }
     };
 
-    message.create(req, client, function(err, resp) {
+    message.create(req, client, nconf, function(err, resp) {
       console.log(err)
       should.exist(err);
       done();
@@ -70,7 +70,7 @@ describe('message', function() {
       }
     };
 
-    message.create(req, client, function(err, resp) {
+    message.create(req, client, nconf, function(err, resp) {
       message.getRecent(req, client, function(err, messages) {
         messages.length.should.equal(1);
         done();
@@ -94,7 +94,7 @@ describe('message', function() {
       }
     };
 
-    message.create(req, client, function(err, resp) {
+    message.create(req, client, nconf, function(err, resp) {
       message.view(req, client, function(err, message) {
         message.should.equal(req.body.message);
         setTimeout(function() {

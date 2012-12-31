@@ -16,7 +16,8 @@
     "nconf": "git://github.com/flatiron/nconf.git",
     "redis": "0.7.2",
     "express-persona": "0.0.7",
-    "requirejs": ">= 2.1.0"
+    "requirejs": ">= 2.1.0",
+    "request": "git://github.com/mikeal/request.git"
   },
   "devDependencies": {
     "mocha": "1.4.2",
