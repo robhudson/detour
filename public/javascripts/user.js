@@ -24,7 +24,7 @@ define(['jquery'],
       }).done(function(data) {
         if (data.status === 'okay') {
           $.get('/landing', function(data) {
-            body.find('#inner-wrapper').html(data);
+            $('#inner-wrapper').html(data);
           });
         } else {
           console.log('Login failed because ' + data.reason);
