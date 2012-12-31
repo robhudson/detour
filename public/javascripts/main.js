@@ -61,6 +61,9 @@ define(['jquery', 'user', 'message'],
         contactsForm.find('#contact-status')
           .empty()
           .removeClass('on');
+        apiForm.find('#api-status')
+          .empty()
+          .removeClass('on');
         messageForm
           .find('#message-status, #current-contact')
           .empty()

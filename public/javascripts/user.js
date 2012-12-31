@@ -104,6 +104,7 @@ define(['jquery'],
     var self = this;
 
     this.form = $('#api-form');
+    var apiKey = this.form.find('input[name="apiKey"]').val();
 
     $.ajax({
       url: '/pushKey',
@@ -112,8 +113,13 @@ define(['jquery'],
       dataType: 'json',
       cache : false
     }).done(function(data) {
+      var message = 'Added!';
+
+      if (apiKey.length < 1) {
+        message = 'Removed!';
+      }
       self.form.find('#api-status')
-        .text('Added!')
+        .text(message)
         .addClass('on');
     }).error(function(data) {
       self.form.find('#api-status')

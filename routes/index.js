@@ -16,9 +16,10 @@ module.exports = function(app, client, nconf, isLoggedIn) {
   app.get('/landing', function (req, res) {
     if (req.session.email) {
       setting.getPushKey(req, client, function (key) {
-        console.log(key)
         if (key) {
           req.session.apiKey = key;
+        } else {
+          req.session.apiKey = null;
         }
 
         message.getRecent(req, client, function(err, messages) {
@@ -87,6 +88,7 @@ module.exports = function(app, client, nconf, isLoggedIn) {
         res.status(500);
         res.json({ message: 'could not add key' });
       } else {
+        req.session.apiKey = req.body.apiKey.trim();
         res.json({ message: req.body.apiKey });
       }
     });
