@@ -4,8 +4,9 @@ var gravatar = require('gravatar');
 
 var message = require('../lib/message');
 var contact = require('../lib/contact');
+var request = require('request');
 
-module.exports = function(app, client, isLoggedIn) {
+module.exports = function(app, client, nconf, isLoggedIn) {
   app.get('/unread', isLoggedIn, function (req, res) {
     message.getRecent(req, client, function (err, messages) {
       if (err) {
@@ -15,17 +16,6 @@ module.exports = function(app, client, isLoggedIn) {
         res.json({
           messages: messages
         });
-      }
-    });
-  });
-
-  app.post('/subscribe', function (req, res) {
-    contact.subscribe(req, client, function (err, apiKey) {
-      if (err) {
-        res.status(500);
-        res.json({ message: 'Could not subscribe' });
-      } else {
-        res.json({ key: apiKey });
       }
     });
   });
@@ -92,6 +82,47 @@ module.exports = function(app, client, isLoggedIn) {
         }
 
         res.json({ contacts: contactsList });
+      }
+    });
+  });
+
+  app.post('/verify', function (req, res) {
+    var authUrl = nconf.get('authUrl') + '/verify';
+    var siteUrl = nconf.get('domain') + ':' + nconf.get('authPort');
+
+    if (!req.body.assertion) {
+      req.status(500);
+      res.json({ message: 'Invalid assertion' });
+    }
+
+    var qs = {
+      assertion: req.body.assertion,
+      audience: siteUrl
+    };
+
+    var params = {
+      url: authUrl,
+      form: qs
+    };
+
+    request.post(params, function(err, resp, body) {
+      if (err) {
+        req.status(500);
+        res.json({ message: 'Could not get email' });
+      }
+
+      var jsonResp = JSON.parse(body);
+
+      if (jsonResp.status === 'okay') {
+        req.body.email = jsonResp.email;
+        contact.subscribe(req, client, function (err, apiKey) {
+          if (err) {
+            res.status(500);
+            res.json({ message: 'Could not subscribe' });
+          } else {
+            res.json({ key: apiKey });
+          }
+        });
       }
     });
   });
