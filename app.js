@@ -14,10 +14,11 @@ client.select(app.set('redis-detour'), function(errDb, res) {
 });
 
 var isLoggedIn = function(req, res, next) {
-  if (req.session.email) {
+  if (req.query.apiKey || req.body.apiKey || req.session.apiKey) {
     next();
   } else {
-    res.redirect('/');
+    res.status(500);
+    res.json({ message: 'you must be authenticated to access this call' });
   }
 };
 

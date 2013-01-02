@@ -21,12 +21,49 @@ describe('message', function() {
     console.log('cleared test database');
   });
 
+  it('creates a new user subscription', function (done) {
+    var req = {
+      session: {
+        email: 'alice@test.org'
+      },
+      query: { }
+    };
+
+    contact.subscribe(req, client, function (err, apiKey) {
+      should.not.exist(err);
+      should.exist(apiKey);
+
+      req.query.apiKey = apiKey;
+
+      contact.me(req, client, function (err, user) {
+        console.log('user created: ', user);
+        should.exist(user.apiKey);
+        user.email.should.equal(req.session.email);
+        done();
+      });
+    });
+  });
+
+  it('returns an existing user subscription', function (done) {
+    var req = {
+      session: {
+        email: 'alice@test.org'
+      }
+    };
+
+    contact.subscribe(req, client, function (err, apiKey1) {
+      contact.subscribe(req, client, function (err, apiKey2) {
+        console.log('user key found: ', apiKey2);
+        apiKey2.should.equal(apiKey1);
+        done();
+      });
+    });
+  });
+
   it('adds a new contact', function (done) {
     var req = {
       body: {
-        email: 'alice@test.org'
-      },
-      session: {
+        apiKey: '123abc',
         email: 'alice@test.org'
       }
     };
@@ -44,6 +81,7 @@ describe('message', function() {
         email: 'alice@test.org'
       },
       session: {
+        apiKey: '123abc',
         email: 'alice@test.org'
       }
     };

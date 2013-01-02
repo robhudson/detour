@@ -15,10 +15,15 @@ define(['jquery', 'user', 'message'],
   var user = new User();
 
   var body = $('body');
+  var apiKey = window.localStorage.getItem('detour-apiKey');
 
-  $.get('/landing', function (data) {
-    body.find('#inner-wrapper').html(data);
-  });
+  if (apiKey) {
+    $.post('/initApiKey', { apiKey: apiKey, _csrf: body.data('csrf') }, function () {
+      $.get('/landing', function(data) {
+        body.find('#inner-wrapper').html(data);
+      });
+    });
+  }
 
   body.on('click', function(ev) {
     var self = $(ev.target);

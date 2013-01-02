@@ -13,6 +13,22 @@ module.exports = function(app, client, nconf, isLoggedIn) {
     });
   });
 
+  app.get('/subscribe', function (req, res) {
+    contact.subscribe(req, client, function (err, apiKey) {
+      if (err) {
+        res.status(500);
+        res.json({ message: 'could not subscribe' });
+      } else {
+        res.json({ apiKey: apiKey });
+      }
+    });
+  });
+
+  app.post('/initApiKey', function (req, res) {
+    req.session.apiKey = req.body.apiKey;
+    res.json({ message: 'added' });
+  });
+
   app.get('/landing', function (req, res) {
     if (req.session.email) {
       setting.getPushKey(req, client, function (key) {
