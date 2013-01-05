@@ -15,7 +15,7 @@
     .countdown 10
 
   form(method='post', id='message-form')
-    textarea(name='message', placeholder='write your message')
+    textarea(name='message', placeholder='write your message (maximum 300 characters)')
     input(type='hidden', name='email')
     input(type='hidden', value='#{session._csrf}', name='_csrf')
     span(id='current-contact')
@@ -33,8 +33,8 @@
     button(type='submit') Add
 
   form(method='post', id='api-form')
-    h2 Add or reset your Pushover API Key
-    p.tip You can register for push notifications at
+    h2 Add/reset your Pushover API Key
+    p.tip Register for push notifications at
       a(href='https://pushover.net', target='_blank')  pushover.net
     input(type='text', name='apiKey', placeholder='add a notfication api key', value='#{session.apiKey || ""}')
     input(type='hidden', value='#{session._csrf}', name='_csrf')
