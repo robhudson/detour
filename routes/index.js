@@ -13,6 +13,11 @@ module.exports = function(app, client, nconf, isLoggedIn) {
     });
   });
 
+  app.post('/facebook/login', function(req, res) {
+    req.session.email = req.body.email;
+    res.json({ message: 'okay' });
+  });
+
   app.get('/landing', function (req, res) {
     if (req.session.email) {
       setting.getPushKey(req, client, function (key) {
@@ -116,5 +121,13 @@ module.exports = function(app, client, nconf, isLoggedIn) {
         });
       }
     });
+  });
+
+  app.post('/logout', isLoggedIn, function (req, res) {
+    req.session.email = null;
+    req.session.apiKey = null;
+    res.json({
+      message: 'logged out'
+    })
   });
 };

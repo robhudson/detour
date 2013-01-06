@@ -9,7 +9,7 @@ define(['jquery'],
     this.form = null;
   };
 
-  User.prototype.login = function () {
+  User.prototype.loginPersona = function () {
     navigator.id.get(function(assertion) {
       if (!assertion) {
         return;
@@ -33,19 +33,35 @@ define(['jquery'],
     });
   };
 
+  User.prototype.loginFacebook = function () {
+    FB.login(function(resp) {
+      if (resp.authResponse) {
+        FB.api('/me', function(response) {
+          $.ajax({
+            url: '/facebook/login',
+            type: 'POST',
+            data: { email: response.email },
+            dataType: 'json',
+            cache: false
+          }).done(function(data) {
+            $.get('/landing', function(data) {
+              body.find('#inner-wrapper').html(data);
+            });
+          });
+        });
+      }
+    }, { scope: 'email' });
+  };
+
   User.prototype.logout = function () {
     $.ajax({
-      url: '/persona/logout',
+      url: '/logout',
       type: 'POST',
       data: { _csrf: body.data('csrf') },
       dataType: 'json',
       cache: false
     }).done(function(data) {
-      if (data.status === 'okay') {
-        document.location.href = '/';
-      } else {
-        console.log('Logout failed because ' + data.reason);
-      }
+      document.location.href = '/';
     });
   };
 

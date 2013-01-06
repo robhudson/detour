@@ -151,7 +151,7 @@ h1, h2 {
 ol.home {
     clear: both;
     display: block;
-    margin: 20px auto;
+    margin: 10px auto;
     padding: 0;
     text-align: center;
     width: 270px;
@@ -166,7 +166,7 @@ ol.home li {
     text-shadow: #111 1px 1px 2px;
 }
 
-#login {
+.login {
     background-color: #121212;
     border: 1px solid #668790;
     border-radius: 35px;
@@ -174,15 +174,15 @@ ol.home li {
     color: #3fa6c4;
     display: block;
     font-family: 'Oswald';
-    font-size: 22px;
-    margin: 0 auto;
-    padding: 25px 10px;
+    font-size: 18px;
+    margin: 10px auto;
+    padding: 15px 5px;
     text-align: center;
     text-transform: uppercase;
     width: 245px;
 }
 
-#login, #login:hover {
+.login, .login:hover {
     -webkit-transition-property: background color;
     -webkit-transition-duration: 2.3s;
     -webkit-transition-timing-function: ease;
@@ -200,7 +200,7 @@ ol.home li {
     transition-timing-function: ease;
 }
 
-#login:hover {
+.login:hover {
     background-color: #24a8cd;
     color: #cbf4ff;
     text-shadow: #399cac -1px -1px 0;

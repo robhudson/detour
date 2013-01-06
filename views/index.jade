@@ -1,5 +1,5 @@
 !!! 5
-html
+html(xmlns:fb='http://ogp.me/ns/fb')
   head
     title Detour
     meta(content='width=device-width, height=device-height, user-scalable=no, initial-scale=0.96, maximum-scale=0.96, minimum-scale=0.96', name='viewport')
@@ -13,6 +13,26 @@ html
     link(rel='stylesheet', href='/stylesheets/main.css')
 
   body(data-csrf='#{session._csrf}', data-authenticated='#{authenticated}')
+    #fb-root
+    script
+      window.fbAsyncInit = function() {
+        // init the FB JS SDK
+        FB.init({
+          appId: '310957979021296',
+          channelUrl: '//detourapp.com/channel', // Channel File for x-domain communication
+          status: true,
+          cookie: true,
+          xfbml: true
+        });
+      };
+
+      (function(d, debug){
+         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement('script'); js.id = id; js.async = true;
+         js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+         ref.parentNode.insertBefore(js, ref);
+       }(document, /*debug*/ false));
     #wrapper
       #inner-wrapper
 

@@ -37,12 +37,18 @@ define(['jquery', 'user', 'message'],
 
     switch (self.data('action')) {
       // persona login
-      case 'login':
+      case 'login-persona':
         ev.preventDefault();
-        user.login();
+        user.loginPersona();
         break;
 
-      // persona logout
+      // facebook login
+      case 'login-facebook':
+        ev.preventDefault();
+        user.loginFacebook();
+        break;
+
+      // logout
       case 'logout':
         ev.preventDefault();
         user.logout();
