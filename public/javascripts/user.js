@@ -40,7 +40,7 @@ define(['jquery'],
           $.ajax({
             url: '/facebook/login',
             type: 'POST',
-            data: { email: response.email },
+            data: { email: response.email, _csrf: body.data('csrf') },
             dataType: 'json',
             cache: false
           }).done(function(data) {
