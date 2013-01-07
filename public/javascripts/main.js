@@ -62,6 +62,10 @@ define(['jquery', 'user', 'message'],
         message.clear();
         break;
 
+      case 'upload-photo':
+        messageForm.find('input[type="file"]').click();
+        break;
+
       case 'cancel':
         contacts.empty();
         contactsForm.find('#contact-status')
@@ -75,13 +79,16 @@ define(['jquery', 'user', 'message'],
           .empty()
           .removeClass('on');
         messageForm.find('textarea, input[name="email"]').val('');
+        messageForm.find('img').attr('src', '');
         apiForm.fadeOut();
         contactsForm.fadeOut();
         messageForm.fadeOut();
+        body.removeClass('fixed');
         break;
 
       case 'reply':
         insertContact(message.currentContact);
+        messageForm.find('img').attr('src', '');
         messageForm.fadeIn();
         message.clear();
         break;
@@ -106,6 +113,7 @@ define(['jquery', 'user', 'message'],
         break;
 
       case 'add-contact-form':
+        body.addClass('fixed');
         messageForm.hide();
         messageDetail.hide();
         messageForm.find('input[name="email"], textarea, #current-contact').empty();
@@ -114,11 +122,32 @@ define(['jquery', 'user', 'message'],
         break;
 
       case 'new-message':
+        body.addClass('fixed');
         apiForm.fadeOut();
         contactsForm.fadeOut();
         messageDetail.hide();
         messageForm.fadeIn();
         break;
+    }
+  });
+
+  body.on('change', 'input[type="file"]', function (ev) {
+    var files = ev.target.files;
+    var file;
+
+    if (files && files.length > 0) {
+      file = files[0];
+
+      var fileReader = new FileReader();
+      var preview = $('#photo-preview');
+      var photoMessage = $('textarea[name="photo_message"]');
+
+      fileReader.onload = function (evt) {
+        preview.attr('src', evt.target.result);
+        photoMessage.val(evt.target.result);
+      };
+
+      fileReader.readAsDataURL(file);
     }
   });
 
@@ -129,14 +158,17 @@ define(['jquery', 'user', 'message'],
     switch (self[0].id) {
       case 'message-form':
         message.send(self.serialize());
+        body.removeClass('fixed');
         break;
 
       case 'contacts-form':
         user.addContact(self.serialize());
+        body.removeClass('fixed');
         break;
 
       case 'api-form':
         user.addApiKey(self.serialize());
+        body.removeClass('fixed');
         break;
     }
   });

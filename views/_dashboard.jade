@@ -10,16 +10,23 @@
 
   #message-detail
     p
+      span
+    img(src='')
     a(href='javascript:;', data-action='reply', class='actions reply') Reply
     a(href='javascript:;', data-action='close', class='actions close') Close
     .countdown 10
 
   form(method='post', id='message-form')
-    textarea(name='message', placeholder='write your message (maximum 300 characters)')
+    textarea(name='message', placeholder='write your message (maximum 200 characters)')
+    textarea(name='photo_message')
+    img(src='', id='photo-preview')
+    input(type='file', name='photo', accept='image/*')
     input(type='hidden', name='email')
     input(type='hidden', value='#{session._csrf}', name='_csrf')
     span(id='current-contact')
-    a(href='javascript:;', data-action='contacts') choose a contact
+    .button-wrapper
+      button(data-action='upload-photo', class='selectors', type='button') upload a photo
+      button(data-action='contacts', class='selectors', type='button') choose a contact
     ol#contacts
     #message-status
     button(type='submit') Send

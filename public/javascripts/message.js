@@ -64,7 +64,11 @@ define(['jquery'],
     }).done(function(data) {
       var seconds = (MAX_TTL / 1000) - 1;
       self.currentContact = self.currentView[0].id.split(':')[1];
-      self.messageDetail.find('p').text(data.message);
+      if (data.message.photo) {
+        self.messageDetail.find('p')
+          .css({ backgroundImage: 'url("' + data.message.photo + '")' });
+      }
+      self.messageDetail.find('p span').text(data.message.text);
       self.messageDetail.fadeIn();
 
       countdownInterval = setInterval(function() {
@@ -84,6 +88,8 @@ define(['jquery'],
   Message.prototype.clear = function() {
     var self = this;
     this.currentContact = null;
+    this.messageDetail = $('#message-detail');
+
     this.messageDetail.fadeOut(function() {
       self.messageDetail.find('p').empty();
       self.messageDetail.removeAttr('data-email');
