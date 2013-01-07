@@ -25,6 +25,7 @@ describe('message', function() {
     var req = {
       body: {
         message: 'some message',
+        photo_message: '',
         email: 'bob@test.com'
       },
       session: {
@@ -53,7 +54,6 @@ describe('message', function() {
     };
 
     message.create(req, client, nconf, function(err, resp) {
-      console.log(err)
       should.exist(err);
       done();
     });
@@ -63,6 +63,7 @@ describe('message', function() {
     var req = {
       body: {
         message: 'some message',
+        photo_message: '',
         email: 'alice@test.org'
       },
       session: {
@@ -84,6 +85,7 @@ describe('message', function() {
     var req = {
       body: {
         message: 'some message',
+        photo_message: '',
         email: 'alice@test.org'
       },
       session: {
@@ -96,7 +98,7 @@ describe('message', function() {
 
     message.create(req, client, nconf, function(err, resp) {
       message.view(req, client, function(err, message) {
-        message.should.equal(req.body.message);
+        message.text.should.equal(req.body.message);
         setTimeout(function() {
           client.get(req.params.key, function(err, msg) {
             should.not.exist(msg);
