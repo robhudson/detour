@@ -4,6 +4,7 @@ define(['jquery'],
   function($) {
 
   var Message = function() {};
+  var body = $('body');
 
   var MAX_TTL = 10000;
 
@@ -25,10 +26,13 @@ define(['jquery'],
       type: 'POST',
       dataType: 'json',
       cache: false
-    }).done(function(data) {
+    }).done(function (data) {
       self.form
         .find('#current-contact, #contacts').empty();
       self.form.find('textarea, input[name="email"]').val('');
+      self.form.find('img')
+        .attr('src', '')
+        .hide();
       self.form.find('#message-status')
         .text('Sent!')
         .addClass('on');
@@ -37,8 +41,9 @@ define(['jquery'],
           .empty()
           .removeClass('on');
         self.form.fadeOut();
+        body.removeClass('fixed');
       }, 1000);
-    }).error(function(data) {
+    }).error(function (data) {
       self.form.find('#message-status')
         .text(JSON.parse(data.responseText).message)
         .addClass('on');

@@ -20,7 +20,7 @@ define(['jquery', 'user', 'message'],
     body.find('#inner-wrapper').html(data);
   });
 
-  body.on('click', function(ev) {
+  body.on('click', function (ev) {
     var self = $(ev.target);
 
     var messageForm = $('#message-form');
@@ -29,7 +29,7 @@ define(['jquery', 'user', 'message'],
     var apiForm = $('#api-form');
     var contacts = $('#contacts');
 
-    var insertContact = function(email) {
+    var insertContact = function (email) {
       messageForm.find('input[name="email"]').val(email);
       messageForm.find('#current-contact').text(email);
       messageForm.find('textarea').focus();
@@ -89,8 +89,10 @@ define(['jquery', 'user', 'message'],
       case 'reply':
         insertContact(message.currentContact);
         messageForm.find('img').attr('src', '');
+        messageForm.find('textarea').empty();
         messageForm.fadeIn();
         message.clear();
+        body.addClass('fixed');
         break;
 
       case 'contacts':
@@ -145,10 +147,15 @@ define(['jquery', 'user', 'message'],
       fileReader.onload = function (evt) {
         preview.attr('src', evt.target.result);
         photoMessage.val(evt.target.result);
+        preview.show();
       };
 
       fileReader.readAsDataURL(file);
     }
+  });
+
+  body.on('focus', 'textarea, input[type="text"]', function () {
+    body.find('#message-status, #api-status, #contact-status').removeClass('on');
   });
 
   body.on('submit', 'form', function (ev) {
@@ -158,17 +165,14 @@ define(['jquery', 'user', 'message'],
     switch (self[0].id) {
       case 'message-form':
         message.send(self.serialize());
-        body.removeClass('fixed');
         break;
 
       case 'contacts-form':
         user.addContact(self.serialize());
-        body.removeClass('fixed');
         break;
 
       case 'api-form':
         user.addApiKey(self.serialize());
-        body.removeClass('fixed');
         break;
     }
   });
