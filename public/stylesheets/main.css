@@ -67,8 +67,8 @@ body {
 }
 
 body.fixed ol.messages {
+    display: none;
     position: fixed;
-    width: 300px;
     z-index: 0;
 }
 
@@ -86,8 +86,6 @@ a {
 }
 
 form {
-    background-color: rgba(3, 3, 3, 0.85);
-    border-radius: 5px;
     clear: both;
     display: none;
     float: left;
@@ -95,7 +93,7 @@ form {
     margin-top: -10px;
     padding: 10px;
     position: relative;
-    width: 280px;
+    width: 300px;
     z-index: 2;
 }
 
@@ -160,9 +158,8 @@ input[type="file"], textarea[name="photo_message"] {
 #header, #messages {
     clear: both;
     float: left;
-    padding: 10px;
     position: relative;
-    width: 300px;
+    width: 320px;
 }
 
 h1, h2 {
@@ -280,6 +277,7 @@ button:hover, #message-detail .actions:hover {
     background-color: #222;
     color: #777;
     font-size: 14px;
+    padding: 2px 20px;
 }
 
 #message-view {
@@ -287,13 +285,12 @@ button:hover, #message-detail .actions:hover {
     float: left;
     height: 100%;
     margin-bottom: 10px;
-    width: 300px;
+    width: 318px;
 }
 
 .messages {
     background-color: rgba(2, 2, 2, 0.25);
     border: 1px solid #191919;
-    border-radius: 5px;
     display: block;
     float: left;
     height: 100%;
@@ -328,30 +325,17 @@ button:hover, #message-detail .actions:hover {
 }
 
 .messages li a {
+    color: #555;
     display: block;
     float: left;
-    padding: 10px 8px;
-}
-
-.messages li a, .messages li a:hover {
-    -webkit-transition-property: background color;
-    -webkit-transition-duration: 1.4s;
-    -webkit-transition-timing-function: ease;
-    -moz-transition-property: background color;
-    -moz-transition-duration: 1.4s;
-    -moz-transition-timing-function: ease;
-    -o-transition-property: background color;
-    -o-transition-duration: 1.4s;
-    -o-transition-timing-function: ease;
-    -ms-transition-property: background color;
-    -ms-transition-duration: 1.4s;
-    -ms-transition-timing-function: ease;
-    transition-property: background color;
-    transition-duration: 1.4s;
-    transition-timing-function: ease;
+    padding: 6px 8px;
 }
 
 .messages li a:hover {
+    color: #aaa;
+}
+
+.messages li:hover {
     background-color: #171717;
     color: #eee;
 }
@@ -478,7 +462,7 @@ button:hover, #message-detail .actions:hover {
     float: left;
     margin-bottom: 2px;
     padding: 3px;
-    width: 275px;
+    width: 294px;
 }
 
 #contacts li a:hover {
@@ -493,18 +477,18 @@ button:hover, #message-detail .actions:hover {
     display: block;
     float: left;
     font-size: 16px;
-    line-height: 30px;
+    line-height: 32px;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 170px;
+    width: 210px;
 }
 
 .avatar {
-    border-radius: 5px;
+    border-radius: 3px;
     display: block;
     float: left;
     margin-right: 10px;
-    width: 30px;
+    width: 35px;
 }
 
 #contacts li span.delete {
@@ -530,14 +514,11 @@ button:hover, #message-detail .actions:hover {
 
 #footer {
     background-color: rgba(1, 1, 1, 0.45);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
     bottom: 0;
-    box-shadow: #111 0 0 8px;
     height: 30px;
     padding: 2px;
     position: fixed;
-    width: 296px;
+    width: 316px;
     z-index: 3;
 }
 
@@ -553,7 +534,7 @@ button:hover, #message-detail .actions:hover {
     margin: 2px 1px;
     padding: 6px 3px;
     text-align: center;
-    width: 90px;
+    width: 97px;
 }
 
 #footer a:hover {

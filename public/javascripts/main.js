@@ -80,9 +80,9 @@ define(['jquery', 'user', 'message'],
           .removeClass('on');
         messageForm.find('textarea, input[name="email"]').val('');
         messageForm.find('img').attr('src', '');
-        apiForm.fadeOut();
-        contactsForm.fadeOut();
-        messageForm.fadeOut();
+        apiForm.hide();
+        contactsForm.hide();
+        messageForm.hide();
         body.removeClass('fixed');
         break;
 
