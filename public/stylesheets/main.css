@@ -284,8 +284,8 @@ button:hover, #message-detail .actions:hover {
 }
 
 .selectors {
-    background-color: #222;
-    color: #777;
+    background-color: #ccc;
+    color: #111;
     font-size: 14px;
     padding: 2px 20px;
 }
