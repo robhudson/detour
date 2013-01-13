@@ -366,12 +366,14 @@ button:hover, #message-detail .actions:hover {
 #message-detail {
     background-color: rgba(1, 1, 1, 0.95);
     box-shadow: inset #000 0 0 3px;
+    clear: both;
     color: #aaa;
     display: none;
     float: left;
     font-size: 18px;
     font-weight: 100;
     line-height: 25px;
+    margin-bottom: 30px;
     padding: 10px;
     text-align: center;
     z-index: 2;
@@ -400,8 +402,8 @@ button:hover, #message-detail .actions:hover {
 }
 
 #message-detail p {
-    background-size: 100%;
-    margin-bottom: 10px;
+    clear: both;
+    float: left;
 }
 
 #dither-view {
@@ -425,7 +427,7 @@ button:hover, #message-detail .actions:hover {
 }
 
 #message-detail .countdown {
-    bottom: 15px;
+    bottom: 45px;
     color: #eee;
     font-size: 45px;
     font-weight: 400;

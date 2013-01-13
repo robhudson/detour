@@ -33,7 +33,6 @@ define(['jquery', 'user', 'message', 'dither'],
     var insertContact = function (email) {
       messageForm.find('input[name="email"]').val(email);
       messageForm.find('#current-contact').text(email);
-      messageForm.find('textarea').focus();
     };
 
     var clearFields = function () {
@@ -99,8 +98,15 @@ define(['jquery', 'user', 'message', 'dither'],
         break;
 
       case 'reply':
+        messageForm.find('img').attr('src', '');
+        messageForm.find('textarea, input[name="email"]').val('');
+        messageForm.find('input[name="dither"]')
+          .attr('checked', false)
+          .removeClass('on');
         insertContact(message.currentContact);
-        clearFields();
+        messageForm.show();
+        message.clear();
+        body.addClass('fixed');
         break;
 
       case 'contacts':
