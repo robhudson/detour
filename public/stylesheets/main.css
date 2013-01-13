@@ -112,6 +112,16 @@ input[type="file"], textarea[name="photo_message"] {
     display: none;
 }
 
+label.checkbox {
+    color: #eee;
+    display: block;
+    float: right;
+    font-size: 11px;
+    line-height: 12px;
+    text-transform: uppercase;
+    width: 110px;
+}
+
 .button-wrapper {
     float: left;
     display: block;
@@ -122,16 +132,20 @@ input[type="file"], textarea[name="photo_message"] {
     float: left;
 }
 
-#photo-preview {
+canvas {
     display: none;
-    margin: 10px 0;
-    max-height: 100px;
-    max-width: 300px;
 }
 
 #contacts-form {
-    margin-bottom: 0;
+    border-bottom: 1px solid #222;
+    margin: 0;
     padding-bottom: 20px;
+}
+
+#api-form {
+    border-top: 1px solid #181818;
+    margin-top: 0;
+    padding-top: 20px;
 }
 
 #api-form p {
@@ -237,8 +251,7 @@ ol.home li {
 
 textarea, input[type="text"] {
     background-color: #59ccdf;
-    border: 0;
-    border-radius: 3px;
+    border: 1px solid #111;
     color: #24535b;
     display: block;
     font-size: 15px;
@@ -264,7 +277,7 @@ textarea {
     resize: none;
 }
 
-button {
+button, #message-detail .actions {
     background-color: #85b033;
     border: 0;
     border-radius: 15px;
@@ -283,7 +296,7 @@ button:hover, #message-detail .actions:hover {
     color: #333;
 }
 
-.selectors {
+.selectors, #message-detail .actions {
     background-color: #ccc;
     color: #111;
     font-size: 14px;
@@ -355,27 +368,21 @@ button:hover, #message-detail .actions:hover {
     box-shadow: inset #000 0 0 3px;
     color: #aaa;
     display: none;
+    float: left;
     font-size: 18px;
     font-weight: 100;
-    height: 290px;
     line-height: 25px;
-    left: 0;
-    padding: 20px;
-    position: absolute;
-    right: 0;
+    padding: 10px;
     text-align: center;
-    top: 0;
     z-index: 2;
 }
 
 #message-detail .actions {
-    background-color: #111;
-    border-radius: 5px;
-    color: #666;
     display: inline-block;
-    font-family: 'Oswald';
-    padding: 4px 10px;
-    text-transform: uppercase;
+    margin-top: 20px;
+    padding: 2px 5px;
+    min-width: 70px;
+    width: 70px;
 }
 
 #message-detail .reply, .cancel {
@@ -394,8 +401,13 @@ button:hover, #message-detail .actions:hover {
 
 #message-detail p {
     background-size: 100%;
-    height: 240px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+}
+
+#dither-view {
+    clear: both;
+    display: block;
+    float: left;
 }
 
 #message-detail p span {
@@ -406,16 +418,13 @@ button:hover, #message-detail .actions:hover {
 
 #message-detail .countdown {
     bottom: 15px;
-    border: 4px solid #bbb;
-    border-radius: 100px;
-    color: #bbb;
-    font-size: 22px;
-    height: 40px;
-    line-height: 42px;
+    color: #eee;
+    font-size: 45px;
+    font-weight: 400;
     left: -25px;
     margin-left: 50%;
     position: absolute;
-    width: 40px;
+    width: 50px;
 }
 
 #message-status, #contact-status, #api-status {

@@ -8,11 +8,12 @@ requirejs.config({
   }
 });
 
-define(['jquery', 'user', 'message'],
-  function($, User, Message) {
+define(['jquery', 'user', 'message', 'dither'],
+  function($, User, Message, Dither) {
 
   var message = new Message();
   var user = new User();
+  var dither = new Dither();
 
   var body = $('body');
 
@@ -130,10 +131,31 @@ define(['jquery', 'user', 'message'],
         messageDetail.hide();
         messageForm.fadeIn();
         break;
+
+      case 'dither':
+        var canvas = $('#dither-preview');
+        dither.ctx = canvas[0].getContext('2d');
+
+        if (self.hasClass('on')) {
+          self.removeClass('on');
+          dither.start = null;
+          clearTimeout(dither.animation);
+          dither.preview();
+        } else {
+          self.addClass('on');
+          dither.start = window.mozAnimationStartTime || new Date().getTime()
+          dither.run();
+        }
+        break;
     }
   });
 
   body.on('change', 'input[type="file"]', function (ev) {
+    var photoMessage = $('textarea[name="photo_message"]');
+    var canvas = $('#dither-preview');
+
+    dither.ctx = canvas[0].getContext('2d');
+
     var files = ev.target.files;
     var file;
 
@@ -141,13 +163,13 @@ define(['jquery', 'user', 'message'],
       file = files[0];
 
       var fileReader = new FileReader();
-      var preview = $('#photo-preview');
-      var photoMessage = $('textarea[name="photo_message"]');
 
       fileReader.onload = function (evt) {
-        preview.attr('src', evt.target.result);
+        dither.currentSource = evt.target.result;
+        dither.preview();
+        canvas.show();
+
         photoMessage.val(evt.target.result);
-        preview.show();
       };
 
       fileReader.readAsDataURL(file);

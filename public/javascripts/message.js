@@ -1,7 +1,9 @@
 'use strict';
 
-define(['jquery'],
-  function($) {
+define(['jquery', 'dither'],
+  function($, Dither) {
+
+  var dither = new Dither();
 
   var Message = function() {};
   var body = $('body');
@@ -53,6 +55,9 @@ define(['jquery'],
   Message.prototype.view = function(preview) {
     var self = this;
 
+    var canvas = $('#dither-view');
+    dither.ctx = canvas[0].getContext('2d');
+
     if (preview.parent().hasClass('message-root')) {
       this.currentView = preview.parent();
     } else {
@@ -70,9 +75,18 @@ define(['jquery'],
       var seconds = (MAX_TTL / 1000) - 1;
       self.currentContact = self.currentView[0].id.split(':')[1];
       if (data.message.photo) {
-        self.messageDetail.find('p')
-          .css({ backgroundImage: 'url("' + data.message.photo + '")' });
+        dither.currentSource = data.message.photo;
+
+        if (data.message.dither !== 'false') {
+          dither.start = window.mozAnimationStartTime || new Date().getTime();
+          dither.run();
+        } else {
+          dither.preview();
+        }
+        canvas.show();
       }
+
+      body.addClass('fixed');
       self.messageDetail.find('p span').text(data.message.text);
       self.messageDetail.fadeIn();
 
@@ -95,12 +109,12 @@ define(['jquery'],
     this.currentContact = null;
     this.messageDetail = $('#message-detail');
 
-    this.messageDetail.fadeOut(function() {
-      self.messageDetail.find('p').empty();
-      self.messageDetail.removeAttr('data-email');
-      self.messageDetail.find('.countdown').text('10');
-    });
+    this.messageDetail.find('p').empty();
+    this.messageDetail.removeAttr('data-email');
+    this.messageDetail.find('.countdown').text('10');
+    this.messageDetail.hide();
     this.currentView.remove();
+    body.removeClass('fixed');
     clearInterval(countdownInterval);
     clearInterval(countdownDisplay);
   };
