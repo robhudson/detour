@@ -74,7 +74,7 @@ define(['jquery', 'dither'],
     }).done(function(data) {
       var seconds = (MAX_TTL / 1000) - 1;
       self.currentContact = self.currentView[0].id.split(':')[1];
-      if (data.message.photo) {
+      if (data.message.photo.length > 0) {
         dither.currentSource = data.message.photo;
 
         if (data.message.dither !== 'false') {

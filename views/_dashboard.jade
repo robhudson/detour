@@ -21,10 +21,10 @@
     textarea(name='photo_message')
     canvas(id='dither-preview', width='300', height='400')
     input(type='file', name='photo', accept='image/*')
-    label(for='dither', class='checkbox')
-      = 'Dither photo'
-      input(type='checkbox', name='dither', data-action='dither')
-      span
+    .dither-toggle
+      label(for='dither', class='checkbox')
+        = 'Dither photo'
+        input(type='checkbox', name='dither', data-action='dither')å
     input(type='hidden', name='email')
     input(type='hidden', value='#{session._csrf}', name='_csrf')
     span(id='current-contact')

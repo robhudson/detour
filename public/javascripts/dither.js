@@ -25,9 +25,7 @@ define(['jquery'],
   Dither.prototype.preview = function () {
     var self = this;
 
-    // clear old image
-    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    this.ctx.clearRect(0, 0, this.width, this.height);
+    this.clear();
 
     this.image.onload = function () {
       self.ctx.drawImage(self.image, 0, 0, self.width, self.height);
@@ -36,12 +34,16 @@ define(['jquery'],
     this.image.src = this.currentSource;
   };
 
+  Dither.prototype.clear = function () {
+    clearTimeout(this.animation);
+    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+    this.ctx.clearRect(0, 0, this.width, this.height);
+  };
+
   Dither.prototype.run = function (runForever) {
     var self = this;
 
-    // clear old image
-    this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-    this.ctx.clearRect(0, 0, this.width, this.imageSize);
+    this.clear();
 
     this.image.onload = function () {
       self.ctx.drawImage(self.image, 0, 0, self.width, self.height);

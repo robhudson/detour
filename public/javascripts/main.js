@@ -36,6 +36,33 @@ define(['jquery', 'user', 'message', 'dither'],
       messageForm.find('textarea').focus();
     };
 
+    var clearFields = function () {
+      contacts.empty();
+      contactsForm.find('#contact-status')
+        .empty()
+        .removeClass('on');
+      apiForm.find('#api-status')
+        .empty()
+        .removeClass('on');
+      messageForm
+        .find('#message-status, #current-contact')
+        .empty()
+        .removeClass('on');
+      messageForm.find('textarea, input[name="email"]').val('');
+      messageForm.find('input[name="dither"]')
+        .attr('checked', false)
+        .removeClass('on');
+      messageForm.find('img').attr('src', '');
+      apiForm.hide();
+      contactsForm.hide();
+      messageForm.hide();
+      body.removeClass('fixed');
+      dither.start = null;
+      dither.clear();
+      messageForm.find('.dither-toggle').removeClass('on');
+      body.find('canvas').hide();
+    };
+
     switch (self.data('action')) {
       // persona login
       case 'login-persona':
@@ -68,32 +95,12 @@ define(['jquery', 'user', 'message', 'dither'],
         break;
 
       case 'cancel':
-        contacts.empty();
-        contactsForm.find('#contact-status')
-          .empty()
-          .removeClass('on');
-        apiForm.find('#api-status')
-          .empty()
-          .removeClass('on');
-        messageForm
-          .find('#message-status, #current-contact')
-          .empty()
-          .removeClass('on');
-        messageForm.find('textarea, input[name="email"]').val('');
-        messageForm.find('img').attr('src', '');
-        apiForm.hide();
-        contactsForm.hide();
-        messageForm.hide();
-        body.removeClass('fixed');
+        clearFields();
         break;
 
       case 'reply':
         insertContact(message.currentContact);
-        messageForm.find('img').attr('src', '');
-        messageForm.find('textarea').empty();
-        messageForm.fadeIn();
-        message.clear();
-        body.addClass('fixed');
+        clearFields();
         break;
 
       case 'contacts':
@@ -139,7 +146,7 @@ define(['jquery', 'user', 'message', 'dither'],
         if (self.hasClass('on')) {
           self.removeClass('on');
           dither.start = null;
-          clearTimeout(dither.animation);
+          dither.clear();
           dither.preview();
         } else {
           self.addClass('on');
@@ -165,6 +172,7 @@ define(['jquery', 'user', 'message', 'dither'],
       var fileReader = new FileReader();
 
       fileReader.onload = function (evt) {
+        body.find('.dither-toggle').addClass('on');
         dither.currentSource = evt.target.result;
         dither.preview();
         canvas.show();
@@ -187,6 +195,7 @@ define(['jquery', 'user', 'message', 'dither'],
     switch (self[0].id) {
       case 'message-form':
         message.send(self.serialize());
+        dither.clear();
         break;
 
       case 'contacts-form':

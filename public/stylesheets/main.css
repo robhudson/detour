@@ -410,6 +410,14 @@ button:hover, #message-detail .actions:hover {
     float: left;
 }
 
+.dither-toggle {
+    display: none;
+}
+
+.dither-toggle.on {
+    display: block;
+}
+
 #message-detail p span {
     background-color: rgba(1, 1, 1, 0.75);
     display: block;
