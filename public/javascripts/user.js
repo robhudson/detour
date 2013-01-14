@@ -103,8 +103,7 @@ define(['jquery'],
 
     $.ajax({
       url: '/contacts',
-      data: { _csrf: body.data('csrf') },
-      type: 'POST',
+      type: 'GET',
       dataType: 'html',
       cache : false
     }).done(function (data) {

@@ -99,7 +99,7 @@ module.exports = function(app, client, nconf, isLoggedIn) {
     });
   });
 
-  app.post('/contacts', isLoggedIn, function (req, res) {
+  app.get('/contacts', isLoggedIn, function (req, res) {
     contact.getAll(req, client, function (err, contacts) {
       if (err) {
         res.status(500);
