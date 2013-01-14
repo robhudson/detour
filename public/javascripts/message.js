@@ -31,7 +31,7 @@ define(['jquery', 'dither'],
     }).done(function (data) {
       self.form
         .find('#current-contact, #contacts').empty();
-      self.form.find('textarea, input[name="email"]').val('');
+      self.form.find('textarea, input[type="text"], input[type="hidden"]').val('');
       self.form.find('img')
         .attr('src', '')
         .hide();
@@ -55,9 +55,6 @@ define(['jquery', 'dither'],
   Message.prototype.view = function(preview) {
     var self = this;
 
-    var canvas = $('#dither-view');
-    dither.ctx = canvas[0].getContext('2d');
-
     if (preview.parent().hasClass('message-root')) {
       this.currentView = preview.parent();
     } else {
@@ -72,9 +69,19 @@ define(['jquery', 'dither'],
       dataType: 'json',
       cache: false
     }).done(function(data) {
+      var canvas = $('#dither-view');
       var seconds = (MAX_TTL / 1000) - 1;
+
       self.currentContact = self.currentView[0].id.split(':')[1];
+
       if (data.message.photo.length > 0) {
+        canvas
+          .attr('width', data.message.width)
+          .attr('height', data.message.height);
+
+        dither.ctx = canvas[0].getContext('2d');
+        dither.width = data.message.width;
+        dither.height = data.message.height;
         dither.currentSource = data.message.photo;
 
         if (data.message.dither !== 'false') {
@@ -84,6 +91,10 @@ define(['jquery', 'dither'],
           dither.preview();
         }
         canvas.show();
+      } else {
+        canvas
+          .attr('width', 300)
+          .attr('height', 1);
       }
 
       body.addClass('fixed');
@@ -113,7 +124,9 @@ define(['jquery', 'dither'],
     this.messageDetail.removeAttr('data-email');
     this.messageDetail.find('.countdown').text('10');
     this.messageDetail.hide();
-    this.currentView.remove();
+    if (this.currentView) {
+      this.currentView.remove();
+    }
     body.removeClass('fixed');
     clearInterval(countdownInterval);
     clearInterval(countdownDisplay);

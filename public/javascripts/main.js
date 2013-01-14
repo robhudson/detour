@@ -166,8 +166,7 @@ define(['jquery', 'user', 'message', 'dither'],
   body.on('change', 'input[type="file"]', function (ev) {
     var photoMessage = $('textarea[name="photo_message"]');
     var canvas = $('#dither-preview');
-
-    dither.ctx = canvas[0].getContext('2d');
+    var messageForm = $('#message-form');
 
     var files = ev.target.files;
     var file;
@@ -179,6 +178,7 @@ define(['jquery', 'user', 'message', 'dither'],
 
       fileReader.onload = function (evt) {
         body.find('.dither-toggle').addClass('on');
+        dither.form = messageForm;
         dither.currentSource = evt.target.result;
         dither.preview();
         canvas.show();
