@@ -540,6 +540,27 @@ button:hover, #message-detail .actions:hover {
     color: #ffb7b7;
 }
 
+#uploading-overlay, #viewing-overlay {
+    background-color: rgba(1, 1, 1, 0.65);
+    bottom: 0;
+    color: #eee;
+    display: none;
+    font-family: 'Oswald';
+    font-size: 25px;
+    left: 0;
+    padding-top: 150px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    text-shadow: #067093 -2px -1px 0;
+    top: 0;
+    z-index: 4;
+}
+
+#uploading-overlay p, #viewing-overlay p {
+    margin-bottom: 20px;
+}
+
 #footer {
     background-color: rgba(1, 1, 1, 0.45);
     bottom: 0;

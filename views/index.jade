@@ -35,6 +35,13 @@ html(xmlns:fb='http://ogp.me/ns/fb')
        }(document, /*debug*/ false));
     #wrapper
       #inner-wrapper
+    #uploading-overlay
+      p Sending, please wait!
+      img(src='/images/loading.gif')
+
+    #viewing-overlay
+      p Downloading, please wait!
+      img(src='/images/loading.gif')
 
     script(src='https://login.persona.org/include.js', type='text/javascript')
     script(src='/javascripts/require.js', data-main='/javascripts/main')

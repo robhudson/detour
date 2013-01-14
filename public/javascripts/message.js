@@ -3,9 +3,6 @@
 define(['jquery', 'dither'],
   function($, Dither) {
 
-  var dither = new Dither();
-
-  var Message = function() {};
   var body = $('body');
 
   var MAX_TTL = 10000;
@@ -13,6 +10,7 @@ define(['jquery', 'dither'],
   var countdownInterval;
   var countdownDisplay;
 
+  var dither = new Dither();
   var Message = function() {
     this.currentContact = null;
     this.currentView = null;
@@ -21,6 +19,8 @@ define(['jquery', 'dither'],
   Message.prototype.send = function(data) {
     var self = this;
     this.form = $('#message-form');
+
+    body.find('#uploading-overlay').fadeIn();
 
     $.ajax({
       url: '/message',
@@ -49,11 +49,15 @@ define(['jquery', 'dither'],
       self.form.find('#message-status')
         .text(JSON.parse(data.responseText).message)
         .addClass('on');
+    }).always(function () {
+      body.find('#uploading-overlay').fadeOut();
     });
   };
 
   Message.prototype.view = function(preview) {
     var self = this;
+
+    body.find('#viewing-overlay').fadeIn();
 
     if (preview.parent().hasClass('message-root')) {
       this.currentView = preview.parent();
@@ -68,7 +72,7 @@ define(['jquery', 'dither'],
       type: 'GET',
       dataType: 'json',
       cache: false
-    }).done(function(data) {
+    }).done(function (data) {
       var canvas = $('#dither-view');
       var seconds = (MAX_TTL / 1000) - 1;
 
@@ -108,10 +112,12 @@ define(['jquery', 'dither'],
       countdownDisplay = setTimeout(function() {
         self.clear();
       }, MAX_TTL);
-    }).error(function(data) {
+    }).error(function (data) {
       form.find('#message-status')
         .text(JSON.parse(data.responseText).message)
         .addClass('on');
+    }).always(function () {
+      body.find('#viewing-overlay').fadeOut();
     });
   };
 
