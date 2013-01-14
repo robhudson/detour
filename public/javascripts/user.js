@@ -21,7 +21,7 @@ define(['jquery'],
         data: { assertion: assertion, _csrf: body.data('csrf') },
         dataType: 'json',
         cache: false
-      }).done(function(data) {
+      }).done(function (data) {
         if (data.status === 'okay') {
           document.location.href = '/';
         } else {
@@ -41,7 +41,7 @@ define(['jquery'],
             data: { email: response.email, _csrf: body.data('csrf') },
             dataType: 'json',
             cache: false
-          }).done(function(data) {
+          }).done(function (data) {
             $.get('/landing', function(data) {
               body.find('#inner-wrapper').html(data);
             });
@@ -58,7 +58,7 @@ define(['jquery'],
       data: { _csrf: body.data('csrf') },
       dataType: 'json',
       cache: false
-    }).done(function(data) {
+    }).done(function (data) {
       document.location.href = '/';
     });
   };
@@ -74,12 +74,12 @@ define(['jquery'],
       type: 'POST',
       dataType: 'json',
       cache : false
-    }).done(function(data) {
+    }).done(function (data) {
       self.form.find('#contact-status')
         .text('Added!')
         .addClass('on');
       self.form.find('input[name="email"]').val('');
-    }).error(function(data) {
+    }).error(function (data) {
       self.form.find('#contact-status')
         .text(JSON.parse(data.responseText).message)
         .addClass('on');
@@ -103,10 +103,11 @@ define(['jquery'],
 
     $.ajax({
       url: '/contacts',
-      type: 'GET',
-      async: false,
+      data: { _csrf: body.data('csrf') },
+      type: 'POST',
+      dataType: 'html',
       cache : false
-    }).done(function(data) {
+    }).done(function (data) {
       self.form.find('#contact-status')
         .empty()
         .removeClass('on');
@@ -126,7 +127,7 @@ define(['jquery'],
       type: 'POST',
       dataType: 'json',
       cache : false
-    }).done(function(data) {
+    }).done(function (data) {
       var message = 'Added!';
 
       if (apiKey.length < 1) {
@@ -135,7 +136,7 @@ define(['jquery'],
       self.form.find('#api-status')
         .text(message)
         .addClass('on');
-    }).error(function(data) {
+    }).error(function (data) {
       self.form.find('#api-status')
         .text(JSON.parse(data.responseText).message)
         .addClass('on');
