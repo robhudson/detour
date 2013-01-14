@@ -27,10 +27,15 @@ define(['jquery'],
 
   Dither.prototype.preview = function () {
     var self = this;
-    var canvas = $('#dither-preview');
-    this.ctx = canvas[0].getContext('2d');
+    var canvas;
 
-    this.clear();
+    if (self.form) {
+      canvas = $('#dither-preview');
+    } else {
+      canvas = $('#dither-view');
+    }
+
+    this.ctx = canvas[0].getContext('2d');
 
     this.image.onload = function (evt) {
       self.width = this.width;
@@ -62,8 +67,10 @@ define(['jquery'],
         .attr('width', self.width)
         .attr('height', self.height);
 
-      self.form.find('#image-width').val(self.width);
-      self.form.find('#image-height').val(self.height);
+      if (self.form) {
+        self.form.find('#image-width').val(self.width);
+        self.form.find('#image-height').val(self.height);
+      }
 
       self.ctx.drawImage(self.image, 0, 0, self.width, self.height);
     };

@@ -44,13 +44,13 @@ define(['jquery', 'dither'],
           .removeClass('on');
         self.form.fadeOut();
         body.removeClass('fixed');
+        body.find('#uploading-overlay').fadeOut();
       }, 1000);
     }).error(function (data) {
+      body.find('#uploading-overlay').fadeOut();
       self.form.find('#message-status')
         .text(JSON.parse(data.responseText).message)
         .addClass('on');
-    }).always(function () {
-      body.find('#uploading-overlay').fadeOut();
     });
   };
 
@@ -101,6 +101,7 @@ define(['jquery', 'dither'],
           .attr('height', 1);
       }
 
+      body.find('#viewing-overlay').fadeOut();
       body.addClass('fixed');
       self.messageDetail.find('p span').text(data.message.text);
       self.messageDetail.fadeIn();
@@ -113,11 +114,10 @@ define(['jquery', 'dither'],
         self.clear();
       }, MAX_TTL);
     }).error(function (data) {
+      body.find('#viewing-overlay').fadeOut();
       form.find('#message-status')
         .text(JSON.parse(data.responseText).message)
         .addClass('on');
-    }).always(function () {
-      body.find('#viewing-overlay').fadeOut();
     });
   };
 
