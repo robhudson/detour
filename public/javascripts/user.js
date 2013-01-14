@@ -104,7 +104,7 @@ define(['jquery'],
     $.ajax({
       url: '/contacts',
       type: 'GET',
-      dataType: 'html',
+      async: false,
       cache : false
     }).done(function(data) {
       self.form.find('#contact-status')
