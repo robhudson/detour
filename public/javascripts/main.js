@@ -21,6 +21,36 @@ define(['jquery', 'user', 'message', 'dither'],
     body.find('#inner-wrapper').html(data);
   });
 
+  navigator.id.watch({
+    onlogin: function(assertion) {
+      $.ajax({
+        url: '/persona/verify',
+        type: 'POST',
+        data: { assertion: assertion, _csrf: body.data('csrf') },
+        dataType: 'json',
+        cache: false
+      }).done(function (data) {
+        if (data.status === 'okay') {
+
+          $.get('/landing', function (data) {
+            body.find('#inner-wrapper').html(data);
+          });
+        }
+      });
+    },
+    onlogout: function() {
+      $.ajax({
+        url: '/logout',
+        type: 'POST',
+        data: { _csrf: body.data('csrf') },
+        dataType: 'json',
+        cache: false
+      }).done(function (data) {
+        document.location.href = '/';
+      });
+    }
+  });
+
   body.on('click', function (ev) {
     var self = $(ev.target);
 
@@ -66,7 +96,7 @@ define(['jquery', 'user', 'message', 'dither'],
       // persona login
       case 'login-persona':
         ev.preventDefault();
-        user.loginPersona();
+        navigator.id.request();
         break;
 
       // facebook login
@@ -78,6 +108,7 @@ define(['jquery', 'user', 'message', 'dither'],
       // logout
       case 'logout':
         ev.preventDefault();
+        navigator.id.logout();
         user.logout();
         break;
 

@@ -458,7 +458,7 @@ button:hover, #message-detail .actions:hover {
 
 #api-status {
     right: 10px;
-    top: 90px;
+    top: 100px;
 }
 
 #message-status.on, #contact-status.on, #api-status.on {
@@ -475,7 +475,7 @@ button:hover, #message-detail .actions:hover {
 #current-contact {
     color: #eee;
     display: block;
-    margin-bottom: 8px;
+    margin: 5px 0;
 }
 
 #contacts li {
@@ -564,7 +564,6 @@ button:hover, #message-detail .actions:hover {
 #footer {
     background-color: rgba(1, 1, 1, 0.45);
     bottom: 0;
-    height: 30px;
     padding: 2px;
     position: fixed;
     width: 316px;
@@ -579,14 +578,16 @@ button:hover, #message-detail .actions:hover {
     display: block;
     float: left;
     font-family: 'Oswald';
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 100;
     margin: 2px 1px;
-    padding: 6px 3px;
+    padding: 10px 3px;
     text-align: center;
+    text-transform: uppercase;
     width: 97px;
 }
 
 #footer a:hover {
-    background-color: #1a1a1a;
+    background-color: #222;
     color: #1a85b6;
 }

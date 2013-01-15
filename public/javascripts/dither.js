@@ -15,7 +15,6 @@ define(['jquery'],
   var Dither = function () {
     this.image = new Image();
     this.start = window.mozAnimationStartTime || new Date().getTime();
-    this.fps = 35;
     this.height = 0;
     this.width = 0;
   };
@@ -80,7 +79,6 @@ define(['jquery'],
 
   Dither.prototype.clear = function () {
     if (this.ctx) {
-      clearTimeout(this.animation);
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.ctx.clearRect(0, 0, this.width, this.height);
     }
@@ -119,11 +117,11 @@ define(['jquery'],
           this.pixelsNew[i ++] = Math.floor(Math.random() * 185);
         }
       } else if (this.imageData.data[i] < 170) {
-        for (p = 0; p < 3; p ++) {
+        for (p = 1; p < 3; p ++) {
           this.pixelsNew[i ++] = Math.floor(Math.random() * 195) + 10;
         }
       } else {
-        for (p = 1; p < 4; p ++) {
+        for (p = 1; p < 3; p ++) {
           this.pixelsNew[i ++] = Math.floor(Math.random() * 255) + 10;
         }
       }
@@ -132,9 +130,7 @@ define(['jquery'],
     this.ctx.putImageData(this.imageDataNew, 0, 0);
 
     if (progress < 10000) {
-      this.animation = setTimeout(function() {
-        requestAnimationFrame(self.generate.bind(self));
-      }, 1000 / self.fps);
+      requestAnimationFrame(self.generate.bind(self));
     }
   };
 
