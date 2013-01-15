@@ -17,8 +17,13 @@ define(['jquery', 'user', 'message', 'dither'],
 
   var body = $('body');
 
+  body.find('#loading-overlay').fadeIn();
+
   $.get('/landing', function (data) {
     body.find('#inner-wrapper').html(data);
+    setTimeout(function () {
+      body.find('#loading-overlay').fadeOut();
+    }, 800);
   });
 
   navigator.id.watch({
@@ -34,6 +39,7 @@ define(['jquery', 'user', 'message', 'dither'],
 
           $.get('/landing', function (data) {
             body.find('#inner-wrapper').html(data);
+            body.find('#loading-overlay').fadeOut();
           });
         }
       });
@@ -81,7 +87,7 @@ define(['jquery', 'user', 'message', 'dither'],
       messageForm.find('input[name="dither"]')
         .attr('checked', false)
         .removeClass('on');
-      messageForm.find('img').attr('src', '');
+      messageForm.find('.dither-toggle').removeClass('on');
       apiForm.hide();
       contactsForm.hide();
       messageForm.hide();
@@ -89,7 +95,7 @@ define(['jquery', 'user', 'message', 'dither'],
       dither.start = null;
       dither.clear();
       messageForm.find('.dither-toggle').removeClass('on');
-      body.find('canvas').hide();
+      body.find('canvas').addClass('hidden');
     };
 
     switch (self.data('action')) {
@@ -113,7 +119,6 @@ define(['jquery', 'user', 'message', 'dither'],
         break;
 
       case 'view':
-        console.log('got here')
         message.view(self);
         break;
 
@@ -130,7 +135,6 @@ define(['jquery', 'user', 'message', 'dither'],
         break;
 
       case 'reply':
-        messageForm.find('img').attr('src', '');
         messageForm.find('textarea, input[name="email"]').val('');
         messageForm.find('input[name="dither"]')
           .attr('checked', false)
@@ -161,10 +165,8 @@ define(['jquery', 'user', 'message', 'dither'],
         break;
 
       case 'add-contact-form':
+        clearFields();
         body.addClass('fixed');
-        messageForm.hide();
-        messageDetail.hide();
-        messageForm.find('input[name="email"], textarea, #current-contact').empty();
         contactsForm.fadeIn();
         apiForm.fadeIn();
         break;
@@ -213,7 +215,7 @@ define(['jquery', 'user', 'message', 'dither'],
         dither.form = messageForm;
         dither.currentSource = evt.target.result;
         dither.preview();
-        canvas.show();
+        canvas.removeClass('hidden');
 
         photoMessage.val(evt.target.result);
       };
@@ -233,7 +235,6 @@ define(['jquery', 'user', 'message', 'dither'],
     switch (self[0].id) {
       case 'message-form':
         message.send(self.serialize());
-        dither.clear();
         break;
 
       case 'contacts-form':

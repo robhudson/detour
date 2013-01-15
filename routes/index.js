@@ -135,10 +135,17 @@ module.exports = function(app, client, nconf, isLoggedIn) {
             email: contacts[i]
           })
         }
-        res.render('_contacts', {
-          layout: false,
-          contacts: contactsList
-        });
+
+        if (contactsList.length > 0) {
+          res.render('_contacts', {
+            layout: false,
+            contacts: contactsList
+          });
+        } else {
+          res.render('_add_contact', {
+            layout: false
+          });
+        }
       }
     });
   });

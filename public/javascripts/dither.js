@@ -17,6 +17,7 @@ define(['jquery'],
     this.start = window.mozAnimationStartTime || new Date().getTime();
     this.height = 0;
     this.width = 0;
+    this.canvas = null;
   };
 
   Dither.prototype.constrainImage = function (imageRatioHeight) {
@@ -26,15 +27,14 @@ define(['jquery'],
 
   Dither.prototype.preview = function () {
     var self = this;
-    var canvas;
 
-    if (self.form) {
-      canvas = $('#dither-preview');
+    if (this.form) {
+      this.canvas = $('#dither-preview');
     } else {
-      canvas = $('#dither-view');
+      this.canvas = $('#dither-view');
     }
 
-    this.ctx = canvas[0].getContext('2d');
+    this.ctx = this.canvas[0].getContext('2d');
 
     this.image.onload = function (evt) {
       self.width = this.width;
@@ -62,7 +62,7 @@ define(['jquery'],
         self.height = IMAGE_SIZE;
       }
 
-      canvas
+      self.canvas
         .attr('width', self.width)
         .attr('height', self.height);
 
@@ -81,6 +81,7 @@ define(['jquery'],
     if (this.ctx) {
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.ctx.clearRect(0, 0, this.width, this.height);
+      this.ctx.save();
     }
   };
 
