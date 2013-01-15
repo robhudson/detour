@@ -609,3 +609,10 @@ button:hover, #message-detail .actions:hover {
     background-color: #222;
     color: #1a85b6;
 }
+
+@media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    body {
+        background-image: url('/images/background@2x.jpg');
+        background-size: auto 256px;
+    }
+}
