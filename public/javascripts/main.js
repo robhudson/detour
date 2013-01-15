@@ -82,6 +82,7 @@ define(['jquery', 'user', 'message', 'dither'],
         break;
 
       case 'view':
+        console.log('got here')
         message.view(self);
         break;
 

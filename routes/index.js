@@ -18,6 +18,16 @@ module.exports = function(app, client, nconf, isLoggedIn) {
     res.json({ message: 'okay' });
   });
 
+  app.get('/message/list/:id', isLoggedIn, function (req, res) {
+    message.getMessage(req, client, function(err, msg) {
+      res.render('_message', {
+        layout: false,
+        authenticated: true,
+        message: msg[0]
+      });
+    });
+  });
+
   app.get('/landing', function (req, res) {
     if (req.session.email) {
       setting.getPushKey(req, client, function (key) {
@@ -44,12 +54,22 @@ module.exports = function(app, client, nconf, isLoggedIn) {
   });
 
   app.post('/message', isLoggedIn, function (req, res) {
-    message.create(req, client, nconf, function (err, resp) {
+    message.create(req, client, nconf, function (err, id) {
       if (err) {
         res.status(500);
         res.json({ message: 'please choose a contact' });
       } else {
-        res.json({ message: 'okay' });
+        var isSelf = false;
+
+        if (req.session.email.toLowerCase() === req.body.email.trim().toLowerCase()) {
+          isSelf = true;
+        }
+
+        res.json({
+          message: 'okay',
+          isSelf: isSelf,
+          id: id
+        });
       }
     });
   });

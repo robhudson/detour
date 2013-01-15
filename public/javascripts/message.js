@@ -31,13 +31,20 @@ define(['jquery', 'dither'],
     }).done(function (data) {
       self.form
         .find('#current-contact, #contacts').empty();
-      self.form.find('textarea, input[type="text"], input[type="hidden"]').val('');
+      self.form.find('textarea, input[type="text"], #image-width, #image-height').val('');
       self.form.find('img')
         .attr('src', '')
         .hide();
       self.form.find('#message-status')
         .text('Sent!')
         .addClass('on');
+
+      if (data.isSelf) {
+        $.get('/message/list/' + data.id, function (data) {
+          body.find('ol.messages').prepend(data);
+        });
+      }
+
       setTimeout(function() {
         self.form.find('#message-status')
           .empty()
@@ -125,8 +132,7 @@ define(['jquery', 'dither'],
     var self = this;
     this.currentContact = null;
     this.messageDetail = $('#message-detail');
-
-    this.messageDetail.find('p').empty();
+    this.messageDetail.find('p span').empty();
     this.messageDetail.removeAttr('data-email');
     this.messageDetail.find('.countdown').text('10');
     this.messageDetail.hide();
