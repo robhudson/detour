@@ -115,16 +115,16 @@ define(['jquery'],
 
     for (var i = 0; i < imageArea; i += 2) {
       if (this.imageData.data[i] < 90) {
-        for (p = 0; p < 3; p ++) {
-          this.pixelsNew[i ++] = Math.floor(Math.random() * 175);
+        for (p = 0; p < 4; p ++) {
+          this.pixelsNew[i ++] = Math.floor(Math.random() * 185);
         }
       } else if (this.imageData.data[i] < 170) {
         for (p = 0; p < 3; p ++) {
-          this.pixelsNew[i ++] = Math.floor(Math.random() * 245) + 20;
+          this.pixelsNew[i ++] = Math.floor(Math.random() * 195) + 10;
         }
       } else {
-        for (p = 0; p < 4; p ++) {
-          this.pixelsNew[i ++] = Math.floor(Math.random() * 255) + 50;
+        for (p = 1; p < 4; p ++) {
+          this.pixelsNew[i ++] = Math.floor(Math.random() * 255) + 10;
         }
       }
     }
