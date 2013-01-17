@@ -40,6 +40,7 @@
 
   form(method='post', id='contacts-form')
     h2 Add a new contact
+    p.tip Contacts will receive notifications only if they sign in and set it. So let them know the first time!
     input(type='text', name='email', placeholder='add contact email')
     input(type='hidden', value='#{session._csrf}', name='_csrf')
     #contact-status
