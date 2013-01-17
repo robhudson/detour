@@ -95,6 +95,7 @@ define(['jquery', 'user', 'message', 'dither'],
       apiForm.hide();
       contactsForm.hide();
       messageForm.hide();
+      notificationForm.hide();
       body.removeClass('fixed');
       dither.start = null;
       dither.clear();
