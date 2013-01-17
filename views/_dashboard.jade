@@ -45,6 +45,16 @@
     #contact-status
     button(type='submit') Add
 
+  form(method='post', id='email-notification-form')
+    if session.emailNotification
+      input(type='checkbox', name='emailNotification', checked='checked')
+    else
+      input(type='checkbox', name='emailNotification')
+    h2 Email notifications?
+    input(type='hidden', value='#{session._csrf}', name='_csrf')
+    #email-notification-status
+    button(type='submit') Update
+
   form(method='post', id='api-form')
     h2 Add/reset your Pushover API Key
     p.tip Register for push notifications at

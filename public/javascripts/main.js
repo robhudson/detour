@@ -62,6 +62,7 @@ define(['jquery', 'user', 'message', 'dither'],
 
     var messageForm = $('#message-form');
     var contactsForm = $('#contacts-form');
+    var notificationForm = $('#email-notification-form');
     var messageDetail = $('#message-detail');
     var apiForm = $('#api-form');
     var contacts = $('#contacts');
@@ -77,6 +78,9 @@ define(['jquery', 'user', 'message', 'dither'],
         .empty()
         .removeClass('on');
       apiForm.find('#api-status')
+        .empty()
+        .removeClass('on');
+      notificationForm.find('#email-notification-status')
         .empty()
         .removeClass('on');
       messageForm
@@ -168,6 +172,7 @@ define(['jquery', 'user', 'message', 'dither'],
         clearFields();
         body.addClass('fixed');
         contactsForm.fadeIn();
+        notificationForm.fadeIn();
         apiForm.fadeIn();
         break;
 
@@ -175,6 +180,7 @@ define(['jquery', 'user', 'message', 'dither'],
         body.addClass('fixed');
         apiForm.fadeOut();
         contactsForm.fadeOut();
+        notificationForm.fadeOut();
         messageDetail.hide();
         messageForm.fadeIn();
         break;
@@ -226,7 +232,7 @@ define(['jquery', 'user', 'message', 'dither'],
   });
 
   body.on('focus', 'textarea, input[type="text"]', function () {
-    body.find('#message-status, #api-status, #contact-status').removeClass('on');
+    body.find('#message-status, #api-status, #contact-status, #email-notification-status').removeClass('on');
   });
 
   body.on('submit', 'form', function (ev) {
@@ -244,6 +250,10 @@ define(['jquery', 'user', 'message', 'dither'],
 
       case 'api-form':
         user.addApiKey(self.serialize());
+        break;
+
+      case 'email-notification-form':
+        user.addEmailNotification(self.serialize());
         break;
     }
   });

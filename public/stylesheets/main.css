@@ -141,13 +141,13 @@ canvas.hidden {
     display: none;
 }
 
-#contacts-form {
+#contacts-form, #email-notification-form {
     border-bottom: 1px solid #222;
     margin: 0;
     padding-bottom: 20px;
 }
 
-#api-form {
+#api-form, #email-notification-form {
     border-top: 1px solid #181818;
     margin-top: 0;
     padding-top: 20px;
@@ -442,13 +442,18 @@ button:hover, #message-detail .actions:hover {
     width: 50px;
 }
 
-#message-status, #contact-status, #api-status {
+#message-status, #contact-status, #api-status, #email-notification-status {
     background-color: #c92020;
     color: #ffcece;
     display: none;
     font-size: 12px;
     padding: 5px;
     position: absolute;
+}
+
+#email-notification-form h2 {
+    display: inline;
+    margin-bottom: 20px;
 }
 
 #message-status {
@@ -466,7 +471,12 @@ button:hover, #message-detail .actions:hover {
     top: 100px;
 }
 
-#message-status.on, #contact-status.on, #api-status.on {
+#email-notification-status {
+    right: 10px;
+    top: 5px;
+}
+
+#message-status.on, #contact-status.on, #api-status.on, #email-notification-status.on {
     display: inline-block;
 }
 

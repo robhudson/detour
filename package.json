@@ -17,7 +17,8 @@
     "redis": "0.7.2",
     "express-persona": "git://github.com/jbuck/express-persona.git",
     "requirejs": ">= 2.1.0",
-    "request": "git://github.com/mikeal/request.git"
+    "request": "git://github.com/mikeal/request.git",
+    "postmark": "0.1.8"
   },
   "devDependencies": {
     "mocha": "1.4.2",

@@ -8,5 +8,6 @@
     "redis_dev": 1,
     "redis_test": 2,
     "redis_prod": 0,
-    "pushover_key": "pushover_key"
+    "pushover_key": "pushover_key",
+    "postmark_api_key": "postmark_api_key"
 }

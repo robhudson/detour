@@ -120,5 +120,29 @@ define(['jquery'],
     });
   };
 
+  User.prototype.addEmailNotification = function (data) {
+    var self = this;
+
+    this.form = $('#email-notification-form');
+
+    $.ajax({
+      url: '/emailNotification',
+      data: data,
+      type: 'POST',
+      dataType: 'json',
+      cache : false
+    }).done(function (data) {
+      var message = 'Updated!';
+
+      self.form.find('#email-notification-status')
+        .text(message)
+        .addClass('on');
+    }).error(function (data) {
+      self.form.find('#email-notification-status')
+        .text(JSON.parse(data.responseText).message)
+        .addClass('on');
+    });
+  };
+
   return User;
 });
