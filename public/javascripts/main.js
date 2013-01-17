@@ -187,7 +187,7 @@ define(['jquery', 'user', 'message', 'dither'],
           self.removeClass('on');
           dither.start = null;
           dither.clear();
-          dither.preview();
+          dither.preview(true);
         } else {
           self.addClass('on');
           dither.start = window.mozAnimationStartTime || new Date().getTime()
@@ -198,7 +198,6 @@ define(['jquery', 'user', 'message', 'dither'],
   });
 
   body.on('change', 'input[type="file"]', function (ev) {
-    var photoMessage = $('textarea[name="photo_message"]');
     var canvas = $('#dither-preview');
     var messageForm = $('#message-form');
 
@@ -212,12 +211,14 @@ define(['jquery', 'user', 'message', 'dither'],
 
       fileReader.onload = function (evt) {
         body.find('.dither-toggle').addClass('on');
-        dither.form = messageForm;
         dither.currentSource = evt.target.result;
-        dither.preview();
-        canvas.removeClass('hidden');
+        dither.preview(true, function (data) {
+          messageForm.find('#image-width').val(data.width);
+          messageForm.find('#image-height').val(data.height);
+        });
+        messageForm.find('textarea[name="photo_message"]').val(evt.target.result);
 
-        photoMessage.val(evt.target.result);
+        canvas.removeClass('hidden');
       };
 
       fileReader.readAsDataURL(file);

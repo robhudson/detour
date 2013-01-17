@@ -54,6 +54,7 @@ module.exports = function(app, client, nconf, isLoggedIn) {
   });
 
   app.post('/message', isLoggedIn, function (req, res) {
+    console.log(req.body)
     message.create(req, client, nconf, function (err, id) {
       if (err) {
         res.status(500);

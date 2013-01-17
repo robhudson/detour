@@ -110,6 +110,7 @@ define(['jquery', 'dither'],
         } else {
           dither.preview();
         }
+
         dither.canvas.removeClass('hidden');
       } else {
         dither.canvas

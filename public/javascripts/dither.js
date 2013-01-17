@@ -1,37 +1,46 @@
 'use strict';
 
 define(['jquery'],
-  function($) {
+  function ($) {
 
-  var IMAGE_SIZE = 300;
+  var Dither = function (options) {
+    if (options) {
+      this.imageSize = parseInt(options.imageSize, 10) || 300;
+      this.ditherPreviewId = options.ditherPreviewId || 'dither-preview';
+      this.ditherViewId = options.ditherViewId || 'dither-view';
+      this.ttl = parseInt(options.ttl, 10) || 10000;
 
-  var requestAnimationFrame = window.requestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.msRequestAnimationFrame;
+    } else {
+      this.imageSize = 300;
+      this.ditherPreviewId = 'dither-preview';
+      this.ditherViewId = 'dither-view';
+      this.ttl = 10000;
+    }
 
-  window.requestAnimationFrame = requestAnimationFrame;
+    window.requestAnimationFrame = window.requestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.msRequestAnimationFrame;
 
-  var Dither = function () {
     this.image = new Image();
     this.start = window.mozAnimationStartTime || new Date().getTime();
     this.height = 0;
     this.width = 0;
-    this.canvas = null;
+
   };
 
   Dither.prototype.constrainImage = function (imageRatioHeight) {
-    this.width = IMAGE_SIZE;
-    this.height = Math.round(IMAGE_SIZE * imageRatioHeight);
+    this.width = this.imageSize;
+    this.height = Math.round(this.imageSize * imageRatioHeight);
   };
 
-  Dither.prototype.preview = function () {
+  Dither.prototype.preview = function (ditherToggle, callback) {
     var self = this;
 
-    if (this.form) {
-      this.canvas = $('#dither-preview');
+    if (ditherToggle) {
+      this.canvas = $('#' + this.ditherPreviewId);
     } else {
-      this.canvas = $('#dither-view');
+      this.canvas = $('#' + this.ditherViewId);
     }
 
     this.ctx = this.canvas[0].getContext('2d');
@@ -49,26 +58,24 @@ define(['jquery'],
 
       } else if (imageRatioWidth > imageRatioHeight) {
         //landscape
-        self.width = Math.round(IMAGE_SIZE * imageRatioWidth);
-        self.height = IMAGE_SIZE;
+        self.width = Math.round(self.imageSize * imageRatioWidth);
+        self.height = self.imageSize;
 
-        if (self.width > IMAGE_SIZE) {
+        if (self.width > self.imageSize) {
           self.constrainImage(imageRatioHeight);
         }
 
       } else {
         // square
-        self.width = IMAGE_SIZE;
-        self.height = IMAGE_SIZE;
+        self.width = self.imageSize;
+        self.height = self.imageSize;
       }
 
-      self.canvas
-        .attr('width', self.width)
-        .attr('height', self.height);
+      self.canvas[0].setAttribute('width', self.width + 'px');
+      self.canvas[0].setAttribute('height', self.height + 'px');
 
-      if (self.form) {
-        self.form.find('#image-width').val(self.width);
-        self.form.find('#image-height').val(self.height);
+      if (callback) {
+        callback(self);
       }
 
       self.ctx.drawImage(self.image, 0, 0, self.width, self.height);
@@ -130,8 +137,8 @@ define(['jquery'],
 
     this.ctx.putImageData(this.imageDataNew, 0, 0);
 
-    if (progress < 10000) {
-      requestAnimationFrame(self.generate.bind(self));
+    if (progress < this.ttl) {
+      window.requestAnimationFrame(self.generate.bind(self));
     }
   };
 

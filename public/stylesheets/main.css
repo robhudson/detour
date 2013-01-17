@@ -110,15 +110,11 @@ form h2 {
 
 /* Hack to ensure it works in Chrome b/c of a security
 restriction with display: none; */
-input[type="file"] {
+input[type="file"], textarea[name="photo_message"] {
     height: 1px;
     left: -9999px;
     position: absolute;
     width: 1px;
-}
-
-textarea[name="photo_message"] {
-    display: none;
 }
 
 label.checkbox {
