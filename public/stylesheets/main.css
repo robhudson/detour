@@ -72,6 +72,10 @@ body.fixed ol.messages {
     z-index: 0;
 }
 
+body.file-disabled button[data-action="upload-photo"] {
+    display: none;
+}
+
 textarea {
     font-family: Helvetica, Arial, sans-serif;
 }
@@ -99,6 +103,10 @@ form {
     position: relative;
     width: 300px;
     z-index: 2;
+}
+
+#dither-preview-img.hidden {
+    display: none;
 }
 
 form.on {

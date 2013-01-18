@@ -15,6 +15,8 @@ define(['jquery', 'user', 'message', 'dither'],
   var user = new User();
   var dither = new Dither();
 
+  var nav = navigator.userAgent;
+
   var body = $('body');
 
   body.find('#loading-overlay').fadeIn();
@@ -194,7 +196,7 @@ define(['jquery', 'user', 'message', 'dither'],
           self.removeClass('on');
           dither.start = null;
           dither.clear();
-          dither.preview();
+          dither.preview(true);
         } else {
           self.addClass('on');
           dither.start = window.mozAnimationStartTime || new Date().getTime()
@@ -204,11 +206,23 @@ define(['jquery', 'user', 'message', 'dither'],
     }
   });
 
-  body.on('change', 'input[type="file"]', function (ev) {
-    var photoMessage = $('textarea[name="photo_message"]');
-    var canvas = $('#dither-preview');
-    var messageForm = $('#message-form');
+  var isValidCanvasBrowser = function () {
+    return (nav.match(/Firefox/i) && nav.match(/Android/i) && window.ontouchstart) || !window.ontouchstart;
+  };
 
+  // for now ... O_O
+  var isInvalidFileInput = function () {
+    return nav.match(/Firefox/i) && nav.match(/Mobile/i);
+  }
+
+  if (isInvalidFileInput()) {
+    body.addClass('file-disabled');
+  }
+
+  body.on('change', 'input[type="file"]', function (ev) {
+    var canvas = $('#dither-preview');
+    var img = $('#dither-preview-img');
+    var messageForm = $('#message-form');
     var files = ev.target.files;
     var file;
 
@@ -219,12 +233,24 @@ define(['jquery', 'user', 'message', 'dither'],
 
       fileReader.onload = function (evt) {
         body.find('.dither-toggle').addClass('on');
-        dither.form = messageForm;
-        dither.currentSource = evt.target.result;
-        dither.preview();
-        canvas.removeClass('hidden');
 
-        photoMessage.val(evt.target.result);
+        if (!isValidCanvasBrowser()) {
+          dither.currentSource = evt.target.result;
+          dither.preview(true, function (data) {
+            messageForm.find('#image-width').val(data.width);
+            messageForm.find('#image-height').val(data.height);
+          });
+
+          canvas.removeClass('hidden');
+
+        } else {
+          img.attr('src', evt.target.result);
+          img.removeClass('hidden');
+          messageForm.find('#image-width').val(img.width());
+          messageForm.find('#image-height').val(img.height());
+        }
+
+        messageForm.find('textarea[name="photo_message"]').val(evt.target.result);
       };
 
       fileReader.readAsDataURL(file);

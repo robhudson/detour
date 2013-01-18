@@ -72,6 +72,8 @@ define(['jquery', 'dither'],
 
   Message.prototype.view = function (preview) {
     var self = this;
+    var img = $('#dither-preview-img');
+    img.src = '';
 
     body.find('#viewing-overlay').fadeIn();
 
