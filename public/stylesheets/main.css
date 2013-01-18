@@ -499,11 +499,11 @@ button:hover, #message-detail .actions:hover {
 }
 
 #contacts li a {
-    background-color: #111;
-    border-radius: 5px;
+    background-color: #1a1a1a;
+    color: #666;
     display: block;
     float: left;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
     padding: 3px;
     width: 294px;
 }
@@ -559,7 +559,7 @@ button:hover, #message-detail .actions:hover {
     width: 21px;
 }
 
-#contacts li span.delete:hover {
+#contacts li span.delete:hover, #contacts li:hover span.delete {
     background-color: #e51616;
     color: #ffb7b7;
 }
@@ -586,7 +586,6 @@ button:hover, #message-detail .actions:hover {
 }
 
 #footer {
-    background-color: rgba(1, 1, 1, 0.45);
     bottom: 0;
     padding: 2px;
     position: fixed;
@@ -596,16 +595,14 @@ button:hover, #message-detail .actions:hover {
 
 #footer a {
     background-color: #171717;
-    border-radius: 3px;
-    box-shadow: inset #000 1px 1px 2px;
-    color: #555;
+    color: #666;
     display: block;
     float: left;
     font-family: 'Oswald';
     font-size: 16px;
     font-weight: 100;
-    margin: 2px 1px;
-    padding: 10px 3px;
+    margin: 2px;
+    padding: 10px 2px;
     text-align: center;
     text-transform: uppercase;
     width: 97px;
