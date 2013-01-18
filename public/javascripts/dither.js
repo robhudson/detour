@@ -1,46 +1,37 @@
 'use strict';
 
 define(['jquery'],
-  function ($) {
+  function($) {
 
-  var Dither = function (options) {
-    if (options) {
-      this.imageSize = parseInt(options.imageSize, 10) || 300;
-      this.ditherPreviewId = options.ditherPreviewId || 'dither-preview';
-      this.ditherViewId = options.ditherViewId || 'dither-view';
-      this.ttl = parseInt(options.ttl, 10) || 10000;
+  var IMAGE_SIZE = 300;
 
-    } else {
-      this.imageSize = 300;
-      this.ditherPreviewId = 'dither-preview';
-      this.ditherViewId = 'dither-view';
-      this.ttl = 10000;
-    }
+  var requestAnimationFrame = window.requestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.msRequestAnimationFrame;
 
-    window.requestAnimationFrame = window.requestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.msRequestAnimationFrame;
+  window.requestAnimationFrame = requestAnimationFrame;
 
+  var Dither = function () {
     this.image = new Image();
     this.start = window.mozAnimationStartTime || new Date().getTime();
     this.height = 0;
     this.width = 0;
-
+    this.canvas = null;
   };
 
   Dither.prototype.constrainImage = function (imageRatioHeight) {
-    this.width = this.imageSize;
-    this.height = Math.round(this.imageSize * imageRatioHeight);
+    this.width = IMAGE_SIZE;
+    this.height = Math.round(IMAGE_SIZE * imageRatioHeight);
   };
 
-  Dither.prototype.preview = function (ditherToggle, callback) {
+  Dither.prototype.preview = function () {
     var self = this;
 
-    if (ditherToggle) {
-      this.canvas = $('#' + this.ditherPreviewId);
+    if (this.form) {
+      this.canvas = $('#dither-preview');
     } else {
-      this.canvas = $('#' + this.ditherViewId);
+      this.canvas = $('#dither-view');
     }
 
     this.ctx = this.canvas[0].getContext('2d');
@@ -52,30 +43,42 @@ define(['jquery'],
       var imageRatioWidth = self.width / self.height;
       var imageRatioHeight = self.height / self.width;
 
+      // subsampling check
+      if (self.width * self.height > 1024 * 1024) {
+
+      }
+
       if (imageRatioHeight > imageRatioWidth) {
         // portrait
         self.constrainImage(imageRatioHeight);
 
       } else if (imageRatioWidth > imageRatioHeight) {
         //landscape
-        self.width = Math.round(self.imageSize * imageRatioWidth);
-        self.height = self.imageSize;
+        self.width = Math.round(IMAGE_SIZE * imageRatioWidth);
+        self.height = IMAGE_SIZE;
 
-        if (self.width > self.imageSize) {
+        if (self.width > IMAGE_SIZE) {
           self.constrainImage(imageRatioHeight);
         }
 
       } else {
         // square
-        self.width = self.imageSize;
-        self.height = self.imageSize;
+        self.width = IMAGE_SIZE;
+        self.height = IMAGE_SIZE;
       }
 
-      self.canvas[0].setAttribute('width', self.width + 'px');
-      self.canvas[0].setAttribute('height', self.height + 'px');
+      // subsampling check
+      if (self.width * self.height > 1024 * 1024) {
+        self.height = self.height * 500;
+      }
 
-      if (callback) {
-        callback(self);
+      self.canvas
+        .attr('width', self.width)
+        .attr('height', self.height);
+
+      if (self.form) {
+        self.form.find('#image-width').val(self.width);
+        self.form.find('#image-height').val(self.height);
       }
 
       self.ctx.drawImage(self.image, 0, 0, self.width, self.height);
@@ -86,9 +89,10 @@ define(['jquery'],
 
   Dither.prototype.clear = function () {
     if (this.ctx) {
+      this.ctx.save();
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.ctx.clearRect(0, 0, this.width, this.height);
-      this.ctx.save();
+      this.ctx.restore();
     }
   };
 
@@ -137,8 +141,8 @@ define(['jquery'],
 
     this.ctx.putImageData(this.imageDataNew, 0, 0);
 
-    if (progress < this.ttl) {
-      window.requestAnimationFrame(self.generate.bind(self));
+    if (progress < 10000) {
+      requestAnimationFrame(self.generate.bind(self));
     }
   };
 
