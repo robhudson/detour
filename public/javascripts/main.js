@@ -59,6 +59,16 @@ define(['jquery', 'user', 'message', 'dither'],
     }
   });
 
+  var isValidCanvasBrowser = function () {
+    return !window.ontouchstart;
+  };
+
+  // for now ... O_O
+  var isInvalidFileInput = function () {
+    return nav.match(/Mobile/i) && ((nav.match(/Firefox/i) && nav.match(/Mobile/i) && !nav.match(/Android/i)) ||
+      nav.match(/Safari/i));
+  }
+
   body.on('click', function (ev) {
     var self = $(ev.target);
 
@@ -189,32 +199,24 @@ define(['jquery', 'user', 'message', 'dither'],
         break;
 
       case 'dither':
-        var canvas = $('#dither-preview');
-        dither.ctx = canvas[0].getContext('2d');
+        if (!isInvalidFileInput()) {
+          var canvas = $('#dither-preview');
+          dither.ctx = canvas[0].getContext('2d');
 
-        if (self.hasClass('on')) {
-          self.removeClass('on');
-          dither.start = null;
-          dither.clear();
-          dither.preview(true);
-        } else {
-          self.addClass('on');
-          dither.start = window.mozAnimationStartTime || new Date().getTime()
-          dither.run();
+          if (self.hasClass('on')) {
+            self.removeClass('on');
+            dither.start = null;
+            dither.clear();
+            dither.preview(true);
+          } else {
+            self.addClass('on');
+            dither.start = window.mozAnimationStartTime || new Date().getTime()
+            dither.run();
+          }
         }
         break;
     }
   });
-
-  var isValidCanvasBrowser = function () {
-    return !window.ontouchstart;
-  };
-
-  // for now ... O_O
-  var isInvalidFileInput = function () {
-    return nav.match(/Mobile/i) && ((nav.match(/Firefox/i) && nav.match(/Mobile/i) && !nav.match(/Android/i)) ||
-      nav.match(/Safari/i));
-  }
 
   if (isInvalidFileInput()) {
     body.addClass('file-disabled');
@@ -229,8 +231,6 @@ define(['jquery', 'user', 'message', 'dither'],
 
     if (files && files.length > 0) {
       file = files[0];
-
-      body.find('#loading-overlay').fadeIn();
 
       var fileReader = new FileReader();
 
@@ -252,12 +252,9 @@ define(['jquery', 'user', 'message', 'dither'],
           messageForm.find('#image-width').val(img.width());
           messageForm.find('#image-height').val(img.height());
         }
-
-        messageForm.find('textarea[name="photo_message"]').val(evt.target.result);
       };
 
       fileReader.readAsDataURL(file);
-      body.find('#loading-overlay').fadeOut();
     }
   });
 
@@ -271,7 +268,11 @@ define(['jquery', 'user', 'message', 'dither'],
 
     switch (self[0].id) {
       case 'message-form':
-        message.send(self.serialize());
+        body.find('#uploading-overlay').fadeIn(function () {
+          var photoMessage = $('textarea[name="photo_message"]');
+          photoMessage.val(dither.currentSource);
+          message.send(self.serialize());
+        });
         break;
 
       case 'contacts-form':

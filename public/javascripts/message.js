@@ -17,7 +17,6 @@ define(['jquery', 'dither'],
     var self = this;
     this.form = $('#message-form');
 
-    body.find('#uploading-overlay').fadeIn();
     dither.canvas = $('#dither-preview');
 
     $.ajax({
