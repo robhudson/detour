@@ -207,12 +207,13 @@ define(['jquery', 'user', 'message', 'dither'],
   });
 
   var isValidCanvasBrowser = function () {
-    return (nav.match(/Firefox/i) && nav.match(/Android/i) && window.ontouchstart) || !window.ontouchstart;
+    return !window.ontouchstart;
   };
 
   // for now ... O_O
   var isInvalidFileInput = function () {
-    return nav.match(/Firefox/i) && nav.match(/Mobile/i) && !nav.match(/Android/i);
+    return nav.match(/Mobile/i) && ((nav.match(/Firefox/i) && nav.match(/Mobile/i) && !nav.match(/Android/i)) ||
+      nav.match(/Safari/i));
   }
 
   if (isInvalidFileInput()) {
@@ -229,11 +230,13 @@ define(['jquery', 'user', 'message', 'dither'],
     if (files && files.length > 0) {
       file = files[0];
 
+      body.find('#loading-overlay').fadeIn();
+
       var fileReader = new FileReader();
 
       fileReader.onload = function (evt) {
         body.find('.dither-toggle').addClass('on');
-        /*
+
         if (isValidCanvasBrowser()) {
           dither.currentSource = evt.target.result;
           dither.preview(true, function (data) {
@@ -244,17 +247,17 @@ define(['jquery', 'user', 'message', 'dither'],
           canvas.removeClass('hidden');
 
         } else {
-          */
           img.attr('src', evt.target.result);
           img.removeClass('hidden');
           messageForm.find('#image-width').val(img.width());
           messageForm.find('#image-height').val(img.height());
-        //}
+        }
 
         messageForm.find('textarea[name="photo_message"]').val(evt.target.result);
       };
 
       fileReader.readAsDataURL(file);
+      body.find('#loading-overlay').fadeOut();
     }
   });
 
