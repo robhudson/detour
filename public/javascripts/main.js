@@ -233,7 +233,7 @@ define(['jquery', 'user', 'message', 'dither'],
 
       fileReader.onload = function (evt) {
         body.find('.dither-toggle').addClass('on');
-
+        /*
         if (isValidCanvasBrowser()) {
           dither.currentSource = evt.target.result;
           dither.preview(true, function (data) {
@@ -244,11 +244,12 @@ define(['jquery', 'user', 'message', 'dither'],
           canvas.removeClass('hidden');
 
         } else {
+          */
           img.attr('src', evt.target.result);
           img.removeClass('hidden');
           messageForm.find('#image-width').val(img.width());
           messageForm.find('#image-height').val(img.height());
-        }
+        //}
 
         messageForm.find('textarea[name="photo_message"]').val(evt.target.result);
       };
