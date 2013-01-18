@@ -212,7 +212,7 @@ define(['jquery', 'user', 'message', 'dither'],
 
   // for now ... O_O
   var isInvalidFileInput = function () {
-    return nav.match(/Firefox/i) && nav.match(/Mobile/i);
+    return nav.match(/Firefox/i) && nav.match(/Mobile/i) && !nav.match(/Android/i);
   }
 
   if (isInvalidFileInput()) {
