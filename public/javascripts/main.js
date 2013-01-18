@@ -234,7 +234,7 @@ define(['jquery', 'user', 'message', 'dither'],
       fileReader.onload = function (evt) {
         body.find('.dither-toggle').addClass('on');
 
-        if (!isValidCanvasBrowser()) {
+        if (isValidCanvasBrowser()) {
           dither.currentSource = evt.target.result;
           dither.preview(true, function (data) {
             messageForm.find('#image-width').val(data.width);
