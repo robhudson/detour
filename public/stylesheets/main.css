@@ -76,8 +76,12 @@ textarea {
     font-family: Helvetica, Arial, sans-serif;
 }
 
-textarea, input, button {
+textarea, input[type="text"], button {
     margin-bottom: 10px;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
 }
 
 a {
@@ -451,11 +455,6 @@ button:hover, #message-detail .actions:hover {
     position: absolute;
 }
 
-#email-notification-form h2 {
-    display: inline;
-    margin-bottom: 20px;
-}
-
 #message-status {
     right: 10px;
     top: 58px;
@@ -463,12 +462,12 @@ button:hover, #message-detail .actions:hover {
 
 #contact-status {
     right: 10px;
-    top: 60px;
+    top: 104px;
 }
 
 #api-status {
     right: 10px;
-    top: 100px;
+    top: 97px;
 }
 
 #email-notification-status {

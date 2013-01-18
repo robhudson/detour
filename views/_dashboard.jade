@@ -47,11 +47,13 @@
     button(type='submit') Add
 
   form(method='post', id='email-notification-form')
-    if session.emailNotification
-      input(type='checkbox', name='emailNotification', checked='checked')
-    else
-      input(type='checkbox', name='emailNotification')
-    h2 Email notifications?
+    h2 Email notifications
+    p.tip
+      if session.emailNotification
+        input(type='checkbox', name='emailNotification', checked='checked')
+      else
+        input(type='checkbox', name='emailNotification')
+      = 'when someone sends you a message'
     input(type='hidden', value='#{session._csrf}', name='_csrf')
     #email-notification-status
     button(type='submit') Update
