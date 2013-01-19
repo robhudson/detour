@@ -16,7 +16,7 @@ An experiment with ephemeral messaging using email addresses.
 
 ## Installing and running
 
-> git clone git://github.com/ednapiranha/detour.git
+> git clone git://github.com/noodle/detour.git
 
 > npm install
 
