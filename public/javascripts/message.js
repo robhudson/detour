@@ -13,24 +13,26 @@ define(['jquery', 'dither'],
   var dither = new Dither();
   var Message = function() { };
 
-  Message.prototype.send = function (data) {
+  Message.prototype.create = function () {
     var self = this;
     this.form = $('#message-form');
 
     dither.canvas = $('#dither-preview');
 
     var fd = new FormData(this.form[0]);
-    fd.append('file[]', this.form.find('input[type="file"]')[0]);
+    var ts = Math.round((new Date()).getTime() / 1000);
+
+    fd.append('photo' + ts, this.form.find('#photo-file')[0].files);
 
     $.ajax({
-      url: '/message?ts=' + Math.round((new Date()).getTime() / 1000),
+      url: '/message?ts=' + ts,
       data: fd,
       type: 'POST',
-      dataType: 'json',
       processData: false,
       contentType: false,
       cache: false
     }).done(function (data) {
+
       self.form
         .find('#current-contact, #contacts').empty();
       self.form.find('input[type="file"], input[name="email"], textarea, input[type="text"], #image-width, #image-height').val('');

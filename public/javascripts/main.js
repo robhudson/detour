@@ -243,7 +243,7 @@ define(['jquery', 'user', 'message', 'dither'],
     switch (self[0].id) {
       case 'message-form':
         body.find('#uploading-overlay').fadeIn();
-        message.send(self.serialize());
+        message.create();
         break;
 
       case 'contacts-form':
