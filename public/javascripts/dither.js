@@ -6,21 +6,14 @@ define(['jquery'],
   var Dither = function (options) {
     if (options) {
       this.imageSize = parseInt(options.imageSize, 10) || 300;
-      this.ditherPreviewId = options.ditherPreviewId || 'dither-preview';
       this.ditherViewId = options.ditherViewId || 'dither-view';
       this.ttl = parseInt(options.ttl, 10) || 10000;
 
     } else {
       this.imageSize = 300;
-      this.ditherPreviewId = 'dither-preview';
       this.ditherViewId = 'dither-view';
       this.ttl = 10000;
     }
-
-    window.requestAnimationFrame = window.requestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.msRequestAnimationFrame;
 
     this.image = new Image();
     this.start = window.mozAnimationStartTime || new Date().getTime();
@@ -29,54 +22,18 @@ define(['jquery'],
 
   };
 
-  Dither.prototype.constrainImage = function (imageRatioHeight) {
-    this.width = this.imageSize;
-    this.height = Math.round(this.imageSize * imageRatioHeight);
-  };
-
   Dither.prototype.preview = function (ditherToggle, callback) {
     var self = this;
 
-    if (ditherToggle) {
-      this.canvas = $('#' + this.ditherPreviewId);
-    } else {
-      this.canvas = $('#' + this.ditherViewId);
-    }
-
+    this.canvas = $('#' + this.ditherViewId);
     this.ctx = this.canvas[0].getContext('2d');
 
     this.image.onload = function (evt) {
       self.width = this.width;
       self.height = this.height;
 
-      var imageRatioWidth = self.width / self.height;
-      var imageRatioHeight = self.height / self.width;
-
-      if (imageRatioHeight > imageRatioWidth) {
-        // portrait
-        self.constrainImage(imageRatioHeight);
-
-      } else if (imageRatioWidth > imageRatioHeight) {
-        //landscape
-        self.width = Math.round(self.imageSize * imageRatioWidth);
-        self.height = self.imageSize;
-
-        if (self.width > self.imageSize) {
-          self.constrainImage(imageRatioHeight);
-        }
-
-      } else {
-        // square
-        self.width = self.imageSize;
-        self.height = self.imageSize;
-      }
-
       self.canvas[0].setAttribute('width', self.width + 'px');
       self.canvas[0].setAttribute('height', self.height + 'px');
-
-      if (callback) {
-        callback(self);
-      }
 
       self.ctx.drawImage(self.image, 0, 0, self.width, self.height);
     };
@@ -88,7 +45,6 @@ define(['jquery'],
     if (this.ctx) {
       this.ctx.setTransform(1, 0, 0, 1, 0, 0);
       this.ctx.clearRect(0, 0, this.width, this.height);
-      this.ctx.save();
     }
   };
 
