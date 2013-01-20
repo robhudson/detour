@@ -22,8 +22,11 @@ define(['jquery', 'dither'],
     var fd = new FormData(this.form[0]);
     var ts = Math.round((new Date()).getTime() / 1000);
 
-    fd.append('photo' + ts, document.getElementById('photo-file').files);
-
+    try {
+      fd.append('photo' + ts, this.form.find('#photo-file')[0].files);
+    } catch (e) {
+      console.log('error ', e);
+    }
     $.ajax({
       url: '/message?ts=' + ts,
       data: fd,
