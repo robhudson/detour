@@ -26,6 +26,7 @@ define(['jquery', 'dither'],
       url: '/message?ts=' + Math.round((new Date()).getTime() / 1000),
       data: fd,
       type: 'POST',
+      dataType: 'json',
       processData: false,
       contentType: false,
       cache: false
