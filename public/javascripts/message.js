@@ -20,7 +20,7 @@ define(['jquery', 'dither'],
     dither.canvas = $('#dither-preview');
 
     var fd = new FormData(this.form[0]);
-    fd.append('file', this.form.find('input[type="file"]')[0]);
+    fd.append('file[]', this.form.find('input[type="file"]')[0]);
 
     $.ajax({
       url: '/message?ts=' + Math.round((new Date()).getTime() / 1000),
