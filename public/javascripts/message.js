@@ -22,10 +22,8 @@ define(['jquery', 'dither'],
     var fd = new FormData(this.form[0]);
     fd.append('file', this.form.find('input[type="file"]')[0]);
 
-    $.ajaxSetup({ cache: false });
-
     $.ajax({
-      url: '/message',
+      url: '/message?ts=' + Math.round((new Date()).getTime() / 1000),
       data: fd,
       type: 'POST',
       processData: false,
