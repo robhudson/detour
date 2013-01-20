@@ -16,10 +16,9 @@
     a(href='javascript:;', data-action='close', class='actions close') Close
     .countdown 10
 
-  form(method='post', id='message-form')
+  form(method='post', id='message-form', enctype='multipart/form-data')
     textarea(name='message', placeholder='write your message (maximum 200 characters)')
     textarea(name='photo_message')
-    canvas(id='dither-preview', class='hidden')
     img(id='dither-preview-img', class='hidden', width='300')
     input(type='file', name='photo', accept='image/*')
     input(type='hidden', name='width', id='image-width')
@@ -27,7 +26,7 @@
     .dither-toggle
       label(for='dither', class='checkbox')
         = 'Dither photo'
-        input(type='checkbox', name='dither', data-action='dither')å
+        input(type='checkbox', name='dither', data-action='dither')
     input(type='hidden', name='email')
     input(type='hidden', value='#{session._csrf}', name='_csrf')
     span(id='current-contact')

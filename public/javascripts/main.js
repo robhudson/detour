@@ -11,6 +11,11 @@ requirejs.config({
 define(['jquery', 'user', 'message', 'dither'],
   function($, User, Message, Dither) {
 
+  window.requestAnimationFrame = window.requestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.msRequestAnimationFrame;
+
   var message = new Message();
   var user = new User();
   var dither = new Dither();
@@ -58,10 +63,6 @@ define(['jquery', 'user', 'message', 'dither'],
       });
     }
   });
-
-  var isValidCanvasBrowser = function () {
-    return !window.ontouchstart;
-  };
 
   // for now ... O_O
   var isInvalidFileInput = function () {
@@ -197,24 +198,6 @@ define(['jquery', 'user', 'message', 'dither'],
         messageDetail.hide();
         messageForm.fadeIn();
         break;
-
-      case 'dither':
-        if (!isInvalidFileInput()) {
-          var canvas = $('#dither-preview');
-          dither.ctx = canvas[0].getContext('2d');
-
-          if (self.hasClass('on')) {
-            self.removeClass('on');
-            dither.start = null;
-            dither.clear();
-            dither.preview(true);
-          } else {
-            self.addClass('on');
-            dither.start = window.mozAnimationStartTime || new Date().getTime()
-            dither.run();
-          }
-        }
-        break;
     }
   });
 
@@ -237,21 +220,13 @@ define(['jquery', 'user', 'message', 'dither'],
       fileReader.onload = function (evt) {
         body.find('.dither-toggle').addClass('on');
 
-        if (isValidCanvasBrowser()) {
-          dither.currentSource = evt.target.result;
-          dither.preview(true, function (data) {
-            messageForm.find('#image-width').val(data.width);
-            messageForm.find('#image-height').val(data.height);
-          });
-
-          canvas.removeClass('hidden');
-
-        } else {
-          img.attr('src', evt.target.result);
-          img.removeClass('hidden');
+        img[0].onload = function () {
           messageForm.find('#image-width').val(img.width());
           messageForm.find('#image-height').val(img.height());
+          img.removeClass('hidden');
         }
+
+        img[0].src = evt.target.result;
       };
 
       fileReader.readAsDataURL(file);
@@ -269,8 +244,6 @@ define(['jquery', 'user', 'message', 'dither'],
     switch (self[0].id) {
       case 'message-form':
         body.find('#uploading-overlay').fadeIn(function () {
-          var photoMessage = $('textarea[name="photo_message"]');
-          photoMessage.val(dither.currentSource);
           message.send(self.serialize());
         });
         break;

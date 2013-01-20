@@ -19,19 +19,23 @@ define(['jquery', 'dither'],
 
     dither.canvas = $('#dither-preview');
 
+    var fd = new FormData(this.form[0]);
+    fd.append('file', this.form.find('input[type="file"]')[0]);
+
     $.ajax({
       url: '/message',
-      data: data,
+      data: fd,
       type: 'POST',
-      dataType: 'json',
+      processData: false,
+      contentType: false,
       cache: false
     }).done(function (data) {
       self.form
         .find('#current-contact, #contacts').empty();
-      self.form.find('textarea, input[type="text"], #image-width, #image-height').val('');
+      self.form.find('input[type="file"], input[name="email"], textarea, input[type="text"], #image-width, #image-height').val('');
       self.form.find('img')
         .attr('src', '')
-        .hide();
+        .addClass('hidden');
       self.form.find('#message-status')
         .text('Sent!')
         .addClass('on');
@@ -49,17 +53,10 @@ define(['jquery', 'dither'],
       body.removeClass('fixed');
       body.find('#uploading-overlay').fadeOut();
       self.clear();
-      dither.start = null;
-      dither.clear();
-      dither.canvas
-        .attr('width', 300)
-        .attr('height', 1)
-        .addClass('hidden');
       body.find('input[name="dither"]')
         .attr('checked', false)
         .removeClass('on');
       body.find('.dither-toggle').removeClass('on');
-      body.find('textarea, input[name="email"]').val('');
 
     }).error(function (data) {
       body.find('#uploading-overlay').fadeOut();
@@ -150,6 +147,7 @@ define(['jquery', 'dither'],
     if (this.currentView) {
       this.currentView.remove();
     }
+    body.find('canvas').addClass('hidden');
     body.removeClass('fixed');
     clearInterval(countdownInterval);
     clearInterval(countdownDisplay);
