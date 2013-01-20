@@ -18,9 +18,8 @@
 
   form(method='post', id='message-form', enctype='multipart/form-data')
     textarea(name='message', placeholder='write your message (maximum 200 characters)')
-    textarea(name='photo_message')
     img(id='dither-preview-img', class='hidden', width='300')
-    input(type='file', name='photo', accept='image/*')
+    input(type='file', name='photo', id='photo-file', accept='image/*')
     input(type='hidden', name='width', id='image-width')
     input(type='hidden', name='height', id='image-height')
     .dither-toggle
