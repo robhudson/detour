@@ -157,7 +157,8 @@ module.exports = function(app, client, nconf, isLoggedIn) {
         }
 
         if (contactsList.length > 0) {
-          res.json({
+          res.render('_contacts', {
+            layout: false,
             contacts: contactsList
           });
         } else {
