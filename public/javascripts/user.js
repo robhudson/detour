@@ -84,20 +84,7 @@ define(['jquery'],
       type: 'GET',
       async: false
     }).done(function (data) {
-      self.form.find('#contacts').empty();
-      for (var i = 0; i < data.contacts.length; i ++) {
-        var contact = $('<li><a href="javascript:;" data-action="contact-add">' +
-          '<img class="avatar" src="' + data.contacts[i].avatar +
-          '" data-action="contact-add"><span data-action="contact-add">' +
-          data.contacts[i].email + '</span>' +
-          '<span data-action="contact-delete" class="delete" title="delete">X</span></a></li>');
-
-        contact.find('a').attr('data-email', data.contacts[i].email);
-
-        contact.find('.delete').attr('data-email', data.contacts[i].email);
-        self.form.find('#contacts').prepend(contact);
-      }
-
+      self.form.find('#contacts').html(data);
       self.form.find('#contact-status')
         .empty()
         .removeClass('on');
