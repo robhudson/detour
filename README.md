@@ -5,9 +5,9 @@ An experiment with ephemeral messaging using email addresses.
 ## How it works
 
 * Sender creates a message and provides the receiver email address
-* Message sits in Redis waiting to be read
+* Message sits in the server waiting to be read
 * When the receiver signs in using Persona and their email matches the receiver address they get a list of unread messages
-* Once the receiver views the message, it is deleted from Redis in 10 seconds
+* Once the receiver views the message, it is deleted from the server
 
 ## Possible features
 
@@ -16,11 +16,15 @@ An experiment with ephemeral messaging using email addresses.
 
 ## Installing and running
 
+> brew install imagemagick
+
 > git clone git://github.com/noodle/detour.git
 
 > npm install
 
 > cp local.json-dist local.json
+
+> mkdir tmp
 
 > node app.js
 
