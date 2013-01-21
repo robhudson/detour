@@ -82,7 +82,8 @@ define(['jquery'],
     $.ajax({
       url: '/contacts',
       type: 'GET',
-      dataType: 'json'
+      dataType: 'json',
+      async: false
     }).done(function (data) {
       self.form.find('#contacts').empty();
       for (var i = 0; i < data.contacts.length; i ++) {
