@@ -82,7 +82,6 @@ define(['jquery'],
     $.ajax({
       url: '/contacts',
       type: 'GET',
-      dataType: 'json',
       async: false
     }).done(function (data) {
       self.form.find('#contacts').empty();
@@ -101,6 +100,10 @@ define(['jquery'],
       self.form.find('#contact-status')
         .empty()
         .removeClass('on');
+    }).error(function (data) {
+      self.form.find('#contact-status')
+        .text(JSON.parse(data.responseText).message)
+        .addClass('on');
     });
   };
 
