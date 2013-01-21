@@ -82,13 +82,24 @@ define(['jquery'],
     $.ajax({
       url: '/contacts',
       type: 'GET',
-      dataType: 'html',
-      cache : false
+      dataType: 'json'
     }).done(function (data) {
+      self.form.find('#contacts').empty();
+      for (var i = 0; i < data.contacts.length; i ++) {
+        var contact = $('<li><a href="javascript:;" data-action="contact-add">' +
+          '<img class="avatar" data-action="contact-add"><span data-action="contact-add"></span>' +
+          '<span data-action="contact-delete" class="delete" title="delete">X</span></a></li>');
+
+        contact.find('a').attr('data-email', data.contacts[i].email);
+        contact.find('img').attr('src', data.contacts[i].avatar);
+        contact.find('span[data-action="contact-add"]').text(data.contacts[i].email);
+        contact.find('.delete').attr('data-email', data.contacts[i].email);
+        self.form.find('#contacts').prepend(contact);
+      }
+
       self.form.find('#contact-status')
         .empty()
         .removeClass('on');
-      self.form.find('#contacts').html(data);
     });
   };
 
