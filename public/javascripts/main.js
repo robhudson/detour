@@ -122,12 +122,6 @@ define(['jquery', 'user', 'message', 'dither'],
         navigator.id.request();
         break;
 
-      // facebook login
-      case 'login-facebook':
-        ev.preventDefault();
-        user.loginFacebook();
-        break;
-
       // logout
       case 'logout':
         ev.preventDefault();

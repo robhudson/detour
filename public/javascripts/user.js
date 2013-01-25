@@ -9,26 +9,6 @@ define(['jquery'],
     this.form = null;
   };
 
-  User.prototype.loginFacebook = function () {
-    FB.login(function(resp) {
-      if (resp.authResponse) {
-        FB.api('/me', function(response) {
-          $.ajax({
-            url: '/facebook/login',
-            type: 'POST',
-            data: { email: response.email, _csrf: body.data('csrf') },
-            dataType: 'json',
-            cache: false
-          }).done(function (data) {
-            $.get('/landing', function(data) {
-              body.find('#inner-wrapper').html(data);
-            });
-          });
-        });
-      }
-    }, { scope: 'email' });
-  };
-
   User.prototype.logout = function () {
     $.ajax({
       url: '/logout',
