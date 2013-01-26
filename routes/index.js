@@ -13,11 +13,6 @@ module.exports = function(app, client, nconf, isLoggedIn) {
     });
   });
 
-  app.post('/facebook/login', function(req, res) {
-    req.session.email = req.body.email;
-    res.json({ message: 'okay' });
-  });
-
   app.get('/message/list/:id', isLoggedIn, function (req, res) {
     message.getMessage(req, client, function(err, msg) {
       res.render('_message', {

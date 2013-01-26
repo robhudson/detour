@@ -28,13 +28,18 @@ describe('message', function() {
         photo_message: '',
         email: 'bob@test.com'
       },
+      files: {
+        photo: {
+          path: ''
+        }
+      },
       session: {
         email: 'alice@test.org'
       }
     };
     message.create(req, client, nconf, function(err, resp) {
       should.not.exist(err);
-      resp.should.equal('OK');
+      resp.should.equal(1);
       done();
     });
   });
@@ -44,6 +49,11 @@ describe('message', function() {
       body: {
         message: 'some message',
         email: ''
+      },
+      files: {
+        photo: {
+          path: ''
+        }
       },
       session: {
         email: 'alice@test.org'
@@ -66,6 +76,11 @@ describe('message', function() {
         photo_message: '',
         email: 'alice@test.org'
       },
+      files: {
+        photo: {
+          path: ''
+        }
+      },
       session: {
         email: 'alice@test.org'
       }
@@ -87,6 +102,11 @@ describe('message', function() {
         message: 'some message',
         photo_message: '',
         email: 'alice@test.org'
+      },
+      files: {
+        photo: {
+          path: ''
+        }
       },
       session: {
         email: 'alice@test.org'
