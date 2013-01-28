@@ -501,6 +501,8 @@ button:hover, #message-detail .actions:hover {
 }
 
 #contacts li {
+    clear: both;
+    float: left;
     margin-bottom: 2px;
     position: relative;
 }
@@ -510,7 +512,7 @@ button:hover, #message-detail .actions:hover {
     color: #666;
     display: block;
     float: left;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
     padding: 3px;
     width: 294px;
 }
@@ -552,18 +554,17 @@ button:hover, #message-detail .actions:hover {
 
 #contacts li span.delete {
     background-color: #222;
-    border-radius: 100px;
     color: #555;
     display: block;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: bold;
-    height: 21px;
-    line-height: 22px;
-    margin-top: 5px;
+    height: 30px;
+    line-height: 32px;
     position: absolute;
-    right: 8px;
+    right: 0;
     text-align: center;
-    width: 21px;
+    top: 0;
+    width: 30px;
 }
 
 #contacts li span.delete:hover, #contacts li:hover span.delete {
