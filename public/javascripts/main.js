@@ -65,9 +65,11 @@ define(['jquery', 'user', 'message', 'dither'],
   });
 
   // for now ... O_O
+  /*
   var isInvalidFileInput = function () {
     return nav.match(/Mobile/i) && ((nav.match(/Firefox/i) && nav.match(/Mobile/i) && !nav.match(/Android/i)));
   }
+  */
 
   body.on('click', function (ev) {
     var self = $(ev.target);
