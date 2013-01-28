@@ -501,6 +501,8 @@ button:hover, #message-detail .actions:hover {
 }
 
 #contacts li {
+    clear: both;
+    float: left;
     margin-bottom: 2px;
     position: relative;
 }
@@ -510,7 +512,7 @@ button:hover, #message-detail .actions:hover {
     color: #666;
     display: block;
     float: left;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
     padding: 3px;
     width: 294px;
 }
