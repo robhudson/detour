@@ -196,9 +196,11 @@ define(['jquery', 'user', 'message', 'dither'],
     }
   });
 
+  /*
   if (isInvalidFileInput()) {
     body.addClass('file-disabled');
   }
+  */
 
   body.on('change', 'input[type="file"]', function (ev) {
     var canvas = $('#dither-preview');
