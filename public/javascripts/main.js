@@ -248,10 +248,6 @@ define(['jquery', 'user', 'message', 'dither'],
         user.addContact(self.serialize());
         break;
 
-      case 'api-form':
-        user.addApiKey(self.serialize());
-        break;
-
       case 'email-notification-form':
         user.addEmailNotification(self.serialize());
         break;

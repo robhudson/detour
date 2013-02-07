@@ -75,34 +75,6 @@ define(['jquery'],
     });
   };
 
-  User.prototype.addApiKey = function (data) {
-    var self = this;
-
-    this.form = $('#api-form');
-    var apiKey = this.form.find('input[name="apiKey"]').val();
-
-    $.ajax({
-      url: '/pushKey',
-      data: data,
-      type: 'POST',
-      dataType: 'json',
-      cache : false
-    }).done(function (data) {
-      var message = 'Added!';
-
-      if (apiKey.length < 1) {
-        message = 'Removed!';
-      }
-      self.form.find('#api-status')
-        .text(message)
-        .addClass('on');
-    }).error(function (data) {
-      self.form.find('#api-status')
-        .text(JSON.parse(data.responseText).message)
-        .addClass('on');
-    });
-  };
-
   User.prototype.addEmailNotification = function (data) {
     var self = this;
 

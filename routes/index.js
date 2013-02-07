@@ -25,26 +25,19 @@ module.exports = function(app, client, nconf, isLoggedIn) {
 
   app.get('/landing', function (req, res) {
     if (req.session.email) {
-      setting.getPushoverKey(req, client, function (key) {
-        if (key) {
-          req.session.apiKey = key;
+
+      setting.getEmailNotification(req, client, function (email) {
+        if (email) {
+          req.session.emailNotification = true;
         } else {
-          req.session.apiKey = null;
+          req.session.emailNotification = false;
         }
 
-        setting.getEmailNotification(req, client, function (email) {
-          if (email) {
-            req.session.emailNotification = true;
-          } else {
-            req.session.emailNotification = false;
-          }
-
-          message.getRecent(req, client, function(err, messages) {
-            res.render('_dashboard', {
-              layout: false,
-              authenticated: true,
-              messages: messages
-            });
+        message.getRecent(req, client, function(err, messages) {
+          res.render('_dashboard', {
+            layout: false,
+            authenticated: true,
+            messages: messages
           });
         });
       });
@@ -106,18 +99,6 @@ module.exports = function(app, client, nconf, isLoggedIn) {
         res.json({ message: 'could not delete contact' });
       } else {
         res.json({ message: 'okay' });
-      }
-    });
-  });
-
-  app.post('/pushKey', isLoggedIn, function (req, res) {
-    setting.addPushoverKey(req, client, function (err, resp) {
-      if (err) {
-        res.status(500);
-        res.json({ message: 'could not add key' });
-      } else {
-        req.session.apiKey = req.body.apiKey.trim();
-        res.json({ message: req.body.apiKey });
       }
     });
   });

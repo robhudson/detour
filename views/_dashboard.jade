@@ -57,16 +57,6 @@
     #email-notification-status
     button(type='submit') Update
 
-  form(method='post', id='api-form')
-    h2 Add/reset your Pushover API Key
-    p.tip Register for push notifications at
-      a(href='https://pushover.net', target='_blank')  pushover.net
-    input(type='text', name='apiKey', placeholder='add a notfication api key', value='#{session.apiKey || ""}')
-    input(type='hidden', value='#{session._csrf}', name='_csrf')
-    #api-status
-    button(type='submit') Update
-    a(href='javascript:;', data-action='cancel', class='cancel') Close
-
   #footer
     a(href='javascript:;', data-action='new-message') Message
     a(href='javascript:;', data-action='add-contact-form') Settings
