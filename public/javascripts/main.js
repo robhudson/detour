@@ -124,7 +124,6 @@ define(['jquery', 'user', 'message', 'dither'],
         navigator.id.request();
         break;
 
-      // logout
       case 'logout':
         ev.preventDefault();
         navigator.id.logout();

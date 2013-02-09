@@ -19,7 +19,6 @@ define(['jquery'],
     this.start = window.mozAnimationStartTime || new Date().getTime();
     this.height = 0;
     this.width = 0;
-
   };
 
   Dither.prototype.preview = function (ditherToggle, callback) {
@@ -57,7 +56,6 @@ define(['jquery'],
       this.image.onload = function () {
         self.ctx.drawImage(self.image, 0, 0, self.width, self.height);
         self.imageData = self.ctx.getImageData(0, 0, self.width, self.height);
-
         self.imageDataNew = self.ctx.getImageData(0, 0, self.width, self.height);
         self.pixels = self.imageData.data;
         self.pixelsNew = self.imageDataNew.data;

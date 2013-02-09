@@ -13,6 +13,28 @@ define(['jquery', 'dither'],
   var dither = new Dither();
   var Message = function() { };
 
+  var dateDisplay = function(time) {
+    var date = new Date(parseInt(time, 10));
+    var diff = (Date.now() - date) / 1000;
+    var dayDiff = Math.floor(diff / 86400);
+
+    if (isNaN(dayDiff)) {
+      return '?';
+    }
+
+    if (dayDiff <= 0) {
+      if (diff < 60) {
+        return ' less than 1 minute ago';
+      } else if (diff < 3600) {
+        return Math.floor(diff / 60) + ' minutes ago';
+      } else {
+        return Math.floor(diff / 3600) + ' hours ago';
+      }
+    } else {
+      return dayDiff + ' days ago';
+    }
+  };
+
   Message.prototype.create = function () {
     var self = this;
     this.form = $('#message-form');
@@ -27,6 +49,7 @@ define(['jquery', 'dither'],
     } catch (e) {
       console.log('error ', e);
     }
+
     $.ajax({
       url: '/message?ts=' + ts,
       data: fd,
@@ -34,6 +57,7 @@ define(['jquery', 'dither'],
       processData: false,
       contentType: false,
       cache: false
+
     }).done(function (data) {
 
       self.form
@@ -92,6 +116,7 @@ define(['jquery', 'dither'],
       type: 'GET',
       dataType: 'json',
       cache: false
+
     }).done(function (data) {
       dither.canvas = $('#dither-view');
       var seconds = (MAX_TTL / 1000) - 1;
@@ -116,6 +141,7 @@ define(['jquery', 'dither'],
         }
 
         dither.canvas.removeClass('hidden');
+
       } else {
         dither.canvas
           .attr('width', 300)
@@ -125,6 +151,8 @@ define(['jquery', 'dither'],
       body.find('#viewing-overlay').fadeOut();
       body.addClass('fixed');
       self.messageDetail.find('p span').text(data.message.text);
+      self.messageDetail.find('p').append('<time>Sent' +
+        dateDisplay(data.message.created) + '</time>');
       self.messageDetail.fadeIn();
 
       countdownInterval = setInterval(function () {
@@ -134,6 +162,7 @@ define(['jquery', 'dither'],
       countdownDisplay = setTimeout(function () {
         self.clear();
       }, MAX_TTL);
+
     }).error(function (data) {
       body.find('#viewing-overlay').fadeOut();
       form.find('#message-status')
@@ -150,9 +179,11 @@ define(['jquery', 'dither'],
     this.messageDetail.removeAttr('data-email');
     this.messageDetail.find('.countdown').text('10');
     this.messageDetail.hide();
+
     if (this.currentView) {
       this.currentView.remove();
     }
+
     body.find('canvas').addClass('hidden');
     body.removeClass('fixed');
     clearInterval(countdownInterval);

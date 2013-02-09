@@ -468,6 +468,11 @@ button:hover, #message-detail .actions:hover {
     top: 58px;
 }
 
+time {
+    font-size: 12px;
+    font-style: italic;
+}
+
 #contact-status {
     right: 10px;
     top: 104px;
