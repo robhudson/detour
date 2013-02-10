@@ -396,6 +396,10 @@ button:hover, #message-detail .actions:hover {
     z-index: 2;
 }
 
+#message-detail span {
+    text-align: left;
+}
+
 #message-detail .actions {
     display: inline-block;
     margin-top: 20px;

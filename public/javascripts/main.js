@@ -24,9 +24,15 @@ define(['jquery', 'user', 'message', 'dither'],
 
   var body = $('body');
 
-  $.get('/landing', function (data) {
+  if (!body.data('authenticated')) {
+    $.get('/landing', function (data) {
+      body.find('#inner-wrapper').html(data);
+    });
+  }
+
+  var loadMessages = function (data) {
     body.find('#inner-wrapper').html(data);
-  });
+  }
 
   navigator.id.watch({
     onlogin: function(assertion) {
@@ -37,17 +43,19 @@ define(['jquery', 'user', 'message', 'dither'],
         data: { assertion: assertion, _csrf: body.data('csrf') },
         dataType: 'json',
         cache: false
+
       }).done(function (data) {
         if (data.status === 'okay') {
 
           $.get('/landing', function (data) {
-            body.find('#inner-wrapper').html(data);
+            loadMessages(data);
+          }).done(function () {
             body.find('#loading-overlay').fadeOut();
           });
         }
       });
     },
-    onlogout: function() {
+    onlogout: function () {
       $.ajax({
         url: '/logout',
         type: 'POST',
