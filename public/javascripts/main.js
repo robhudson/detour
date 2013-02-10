@@ -24,17 +24,13 @@ define(['jquery', 'user', 'message', 'dither'],
 
   var body = $('body');
 
-  body.find('#loading-overlay').fadeIn();
-
   $.get('/landing', function (data) {
     body.find('#inner-wrapper').html(data);
-    setTimeout(function () {
-      body.find('#loading-overlay').fadeOut();
-    }, 800);
   });
 
   navigator.id.watch({
     onlogin: function(assertion) {
+      body.find('#loading-overlay').fadeIn();
       $.ajax({
         url: '/persona/verify',
         type: 'POST',
