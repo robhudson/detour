@@ -31,8 +31,8 @@
     input(type='hidden', value='#{session._csrf}', name='_csrf')
     span(id='current-contact')
     .button-wrapper
-      button(data-action='upload-photo', class='selectors', type='button') upload a photo
       button(data-action='contacts', class='selectors', type='button') choose a contact
+      button(data-action='upload-photo', class='selectors', type='button') upload a photo
     ol#contacts
     #message-status
     button(type='submit') Send
