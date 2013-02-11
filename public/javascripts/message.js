@@ -5,8 +5,6 @@ define(['jquery', 'dither'],
 
   var body = $('body');
 
-  var MAX_TTL = 10000;
-
   var countdownInterval;
   var countdownDisplay;
 
@@ -119,7 +117,7 @@ define(['jquery', 'dither'],
 
     }).done(function (data) {
       dither.canvas = $('#dither-view');
-      var seconds = (MAX_TTL / 1000) - 1;
+      var seconds = data.message.ttl;
 
       self.currentContact = self.currentView[0].id.split(':')[1];
 
@@ -153,15 +151,16 @@ define(['jquery', 'dither'],
       self.messageDetail.find('p span').text(data.message.text);
       self.messageDetail.find('p time').append('Sent ' +
           dateDisplay(data.message.created));
+      self.messageDetail.find('.countdown').text(seconds);
       self.messageDetail.fadeIn();
 
       countdownInterval = setInterval(function () {
-        self.messageDetail.find('.countdown').text(seconds--);
+        self.messageDetail.find('.countdown').text(--seconds);
       }, 1000);
 
       countdownDisplay = setTimeout(function () {
         self.clear();
-      }, MAX_TTL);
+      }, seconds * 1000);
 
     }).error(function (data) {
       body.find('#viewing-overlay').fadeOut();
@@ -178,7 +177,7 @@ define(['jquery', 'dither'],
     this.messageDetail.find('p span').empty();
     this.messageDetail.find('p time').empty();
     this.messageDetail.removeAttr('data-email');
-    this.messageDetail.find('.countdown').text('10');
+    this.messageDetail.find('.countdown').text('');
     this.messageDetail.hide();
 
     if (this.currentView) {

@@ -221,7 +221,7 @@ define(['jquery', 'user', 'message', 'dither'],
           messageForm.find('#image-width').val(img.width());
           messageForm.find('#image-height').val(img.height());
           img.removeClass('hidden');
-        }
+        };
 
         img[0].src = evt.target.result;
       };
