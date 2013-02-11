@@ -109,16 +109,13 @@ define(['jquery', 'user', 'message', 'dither'],
       messageForm.find('input[name="dither"]')
         .attr('checked', false)
         .removeClass('on');
-      messageForm.find('.dither-toggle').removeClass('on');
+      messageForm.find('img').attr('src', '');
       apiForm.hide();
       contactsForm.hide();
       messageForm.hide();
       notificationForm.hide();
       body.removeClass('fixed');
-      dither.start = null;
-      dither.clear();
       messageForm.find('.dither-toggle').removeClass('on');
-      body.find('canvas').addClass('hidden');
     };
 
     switch (self.data('action')) {
