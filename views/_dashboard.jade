@@ -15,7 +15,7 @@
     canvas(id='dither-view', class='hidden')
     a(href='javascript:;', data-action='reply', class='actions reply') Reply
     a(href='javascript:;', data-action='close', class='actions close') Close
-    .countdown 10
+    .countdown
 
   form(method='post', id='message-form', enctype='multipart/form-data')
     textarea(name='message', placeholder='write your message (maximum 200 characters)')
@@ -28,6 +28,7 @@
         = 'Dither photo'
         input(type='checkbox', name='dither', data-action='dither')
     input(type='hidden', name='email')
+    input(type='hidden', name='ttl')
     input(type='hidden', value='#{session._csrf}', name='_csrf')
     span(id='current-contact')
     .button-wrapper
