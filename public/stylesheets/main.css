@@ -425,6 +425,9 @@ button:hover, #message-detail .actions:hover {
 #message-detail p {
     clear: both;
     float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 300px;
 }
 
 #dither-view {
