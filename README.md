@@ -16,18 +16,16 @@ An experiment with ephemeral messaging using email addresses.
 
 ## Installing and running
 
-> brew install imagemagick
+> install Redis
 
-> git clone git://github.com/noodle/detour.git
+> mkvirtualenv detour
 
-> npm install
+> pip install -r requirements.txt
 
-> cp local.json-dist local.json
-
-> mkdir tmp
-
-> node app.js
+> cp detour/settings.py-local detour/settings.py
 
 ## Running Tests
 
-> NODE_ENV=test make test
+In the top level of the project, run the following
+
+> python -m detour.tests.test

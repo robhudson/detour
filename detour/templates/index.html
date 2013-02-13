@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DetourApp</title>
+    <meta content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="on" http-equiv="cleartype">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename='images/logo-72.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ url_for('static', filename='images/logo-114.png') }}">
+    <link rel="apple-touch-icon" sizes="128x128" href="{{ url_for('static', filename='images/logo-128.png') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body data-csrf="" data-authenticated="{{ authenticated }}">
+    <div id="wrapper">
+      <div id="inner-wrapper">
+
+      </div>
+    </div>
+    <div id="uploading-overlay">
+      <p>Sending, please wait!</p>
+      <img src="{{ url_for('static', filename='images/loading.gif') }}">
+    </div>
+    <div id="viewing-overlay">
+      <p>Downloading, please wait!</p>
+      <img src="{{ url_for('static', filename='images/loading.gif') }}">
+    </div>
+    <div id="loading-overlay">
+      <p>Loading, please wait!</p>
+      <img src="{{ url_for('static', filename='images/loading.gif') }}">
+    </div>
+    <script type="text/javascript" src="https://login.persona.org/include.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/require.js') }}"
+            data-main="{{ url_for('static', filename='js/main') }}"></script>
+  </body>
+</html>

@@ -1,6 +1,0 @@
-for contact in contacts
-  li
-    a(href='javascript:;', data-action='contact-add', data-email='#{contact.email}')
-      img(src='#{contact.avatar}', class='avatar', data-action='contact-add')
-      span(data-action='contact-add')= contact.email
-      span(data-action='contact-delete', class='delete', data-email='#{contact.email}', title='delete') X

@@ -1,5 +1,4 @@
-.DS_Store
-node_modules
-local.json
-public_build
+*.py[co]
+settings.py
 tmp
+.DS_Store
