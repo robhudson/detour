@@ -24,16 +24,23 @@ message = Message()
 @app.route('/', methods=['GET'])
 def main():
     """Default landing page."""
-
     authenticated = False
-    if session:
+    if session and session['email']:
         authenticated = True
 
     return render_template('index.html',
                            authenticated=authenticated)
 
 
-@app.route('/set_email', methods=['POST'])
+@app.route('/landing', methods=['GET'])
+def landing():
+    if session and session['email']:
+        return render_template('_dashboard.html')
+    else:
+        return render_template('_landing.html')
+
+
+@app.route('/authenticate', methods=['POST'])
 def set_email():
     """Verify via Persona and upon success, set
     the email for the user's session.
@@ -42,14 +49,14 @@ def set_email():
                             settings.SITE_URL)
 
     session['email'] = data['email']
-    return redirect(url_for('main'))
+    return jsonify({'message':'okay'})
 
 
-@app.route('/logout', methods=['POST'])
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
     """Log the user out."""
     session.pop('email', None)
-    return redirect(url_for('main'))
+    return jsonify({'message':'okay'})
 
 
 @app.errorhandler(404)

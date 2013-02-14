@@ -1,24 +1,12 @@
-'use strict';
-
 define(['jquery'],
   function($) {
+
+  'use strict';
 
   var body = $('body');
 
   var User = function() {
     this.form = null;
-  };
-
-  User.prototype.logout = function () {
-    $.ajax({
-      url: '/logout',
-      type: 'POST',
-      data: { _csrf: body.data('csrf') },
-      dataType: 'json',
-      cache: false
-    }).done(function (data) {
-      document.location.href = '/';
-    });
   };
 
   User.prototype.addContact = function (data) {

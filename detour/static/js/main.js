@@ -1,15 +1,15 @@
-'use strict';
-
 requirejs.config({
-  baseUrl: '/javascripts',
+  baseUrl: '/static/js',
   enforceDefine: true,
   paths: {
-    jquery: '/javascripts/jquery'
+    jquery: '/static/js/jquery'
   }
 });
 
 define(['jquery', 'user', 'message', 'dither'],
   function($, User, Message, Dither) {
+
+  'use strict';
 
   window.requestAnimationFrame = window.requestAnimationFrame ||
     window.mozRequestAnimationFrame ||
@@ -24,46 +24,51 @@ define(['jquery', 'user', 'message', 'dither'],
 
   var body = $('body');
 
-  if (!body.data('authenticated')) {
-    $.get('/landing', function (data) {
-      body.find('#inner-wrapper').html(data);
-    });
-  }
-
   var loadMessages = function (data) {
     body.find('#inner-wrapper').html(data);
   }
 
+  if (body.data('authenticated') === 'False') {
+    $.get('/landing', function (data) {
+      loadMessages(data);
+    });
+  }
+
+  var currentUser = localStorage.getItem('personaEmail');
+
   navigator.id.watch({
+    loggedInUser: currentUser,
     onlogin: function(assertion) {
       body.find('#loading-overlay').fadeIn();
       $.ajax({
-        url: '/persona/verify',
         type: 'POST',
-        data: { assertion: assertion, _csrf: body.data('csrf') },
-        dataType: 'json',
-        cache: false
-
-      }).done(function (data) {
-        if (data.status === 'okay') {
-
+        url: '/authenticate',
+        data: { assertion: assertion },
+        success: function(res, status, xhr) {
+          localStorage.setItem('personaEmail', res.email);
           $.get('/landing', function (data) {
             loadMessages(data);
           }).done(function () {
             body.find('#loading-overlay').fadeOut();
           });
+        },
+        error: function(res, status, xhr) {
+          alert('login failure ' + res);
         }
       });
     },
-    onlogout: function () {
+    onlogout: function() {
       $.ajax({
         url: '/logout',
         type: 'POST',
-        data: { _csrf: body.data('csrf') },
-        dataType: 'json',
-        cache: false
-      }).done(function (data) {
-        document.location.href = '/';
+        cache: false,
+        success: function(res, status, xhr) {
+          localStorage.removeItem('personaEmail');
+          window.location.reload();
+        },
+        error: function(res, status, xhr) {
+          console.log('logout failure ', res);
+        }
       });
     }
   });
@@ -128,7 +133,6 @@ define(['jquery', 'user', 'message', 'dither'],
       case 'logout':
         ev.preventDefault();
         navigator.id.logout();
-        user.logout();
         break;
 
       case 'view':

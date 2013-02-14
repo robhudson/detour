@@ -1,7 +1,7 @@
-'use strict';
-
 define(['jquery', 'dither'],
   function($, Dither) {
+
+  'use strict';
 
   var body = $('body');
 

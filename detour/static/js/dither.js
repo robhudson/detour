@@ -1,7 +1,7 @@
-'use strict';
-
 define(['jquery'],
   function ($) {
+
+  'use strict';
 
   var Dither = function (options) {
     if (options) {
