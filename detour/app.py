@@ -1,24 +1,14 @@
 # -*- coding: utf-8 -*-
-import simplejson as json
-import time
-
 import browserid
-from httplib2 import Http
-from urllib import urlencode
-
-from flask import (Flask, jsonify, redirect,
-                   render_template, request, session, url_for)
+from flask import Flask, jsonify, render_template, request, session
 
 import settings
 
-from helper import *
-from message import Message
 
 app = Flask(__name__)
+app.debug = getattr(settings, 'DEBUG', False)
 app.secret_key = settings.SESSION_SECRET
-
-h = Http()
-message = Message()
+# Database config is in database.py
 
 
 @app.route('/', methods=['GET'])
