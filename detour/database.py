@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 engine = create_engine(os.environ.get('DATABASE_URL',
                                       'sqlite:///detour_app.db'))
 db = scoped_session(sessionmaker(autocommit=False, autoflush=False,
-                                         bind=engine))
+                                 bind=engine))
 Base = declarative_base()
 Base.query = db.query_property()
 
