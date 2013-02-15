@@ -1,5 +1,7 @@
-from sqlalchemy import (Column, DateTime, ForeignKey, Integer, String, Table,
-                        Text)
+import datetime
+
+from sqlalchemy import (Column, DateTime, ForeignKey, Integer, String,
+                        Table, Text)
 from sqlalchemy.orm import backref, relationship
 
 from database import Base
@@ -31,10 +33,11 @@ class Message(Base):
     to_user_id = Column(Integer, ForeignKey('user.id'))
     from_user = relationship('User', primaryjoin=from_user_id==User.id)
     to_user = relationship('User', primaryjoin=to_user_id==User.id)
-    email = Column(String(250))
+    message = Column(String(250))
     photo = Column(Text)
     ttl = Column(Integer)
     expire = Column(DateTime)
+    created = Column(DateTime, default=datetime.datetime.now)
 
     def __repr__(self):
         return '<Message: [%s] %s => %s>' % (self.id, self.from_user_id,

@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import browserid
 from flask import Flask, jsonify, render_template, request, session
+from sqlalchemy.orm.exc import NoResultFound
 
 import settings
 from database import db
-from models import User
+from models import Message, User
 
 
 app = Flask(__name__)
@@ -17,7 +18,7 @@ app.secret_key = settings.SESSION_SECRET
 def main():
     """Default landing page."""
     authenticated = False
-    if session and session['email']:
+    if session.get('email'):
         authenticated = True
 
     return render_template('index.html',
@@ -26,8 +27,10 @@ def main():
 
 @app.route('/landing', methods=['GET'])
 def landing():
-    if session and session['email']:
-        return render_template('_dashboard.html')
+    if session.get('user_id'):
+        messages = Message.query.filter(
+            Message.to_user_id==session.get('user_id')).all()
+        return render_template('_dashboard.html', messages=messages)
     else:
         return render_template('_landing.html')
 
@@ -43,12 +46,15 @@ def set_email():
     email = data['email']
 
     # Create user record.
-    if not User.query.filter(User.email==email).count():
-        u = User(email=email)
-        db.add(u)
+    try:
+        user = User.query.filter(User.email==email).one()
+    except NoResultFound:
+        user = User(email=email)
+        db.add(user)
         db.commit()
 
-    session['email'] = email
+    session['email'] = user.email
+    session['user_id'] = user.id
     return jsonify({'message':'okay'})
 
 
