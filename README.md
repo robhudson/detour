@@ -25,7 +25,9 @@ An experiment with ephemeral messaging using email addresses.
 ## Creating the database
 
 > python
+
 > \>>> from detour.database import *
+
 > \>>> init_db()
 
 ## Running
