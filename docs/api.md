@@ -21,7 +21,7 @@ Returns:
     {
         'data': {
             'id': 1,
-            'email': 'user@detourapp.com',
+            'email': 'you@detourapp.com',
             'avatar': 'https://gravatar.com/123'
         },
         'meta': {
@@ -46,7 +46,7 @@ Returns:
 
     {
         'data': {
-            'email': 'user@detourapp.com',
+            'email': 'them@detourapp.com',
             'avatar': 'https://gravatar.com/321'
         },
         'meta': {
@@ -87,7 +87,7 @@ Returns:
     {
         'data': [
             {
-                'email': 'user@detourapp.com',
+                'email': 'them@detourapp.com',
                 'avatar': 'https://gravatar.com/321'
             }
         ],
@@ -132,7 +132,7 @@ Returns:
         'data': [
             {
                 'id': 1,
-                'email': 'user@detourapp.com',
+                'email': 'them@detourapp.com',
                 'avatar': 'https://gravatar.com/321',
                 'created': 12345
             }
@@ -157,7 +157,7 @@ Returns:
         'data': [
             {
                 'id': 1,
-                'email': 'user@detourapp.com',
+                'email': 'them@detourapp.com',
                 'avatar': 'https://gravatar.com/321',
                 'message': 'some message',
                 'photo': 'base64:12345',
@@ -188,7 +188,7 @@ Returns:
     {
         'data': [
             {
-                'email': 'user@detourapp.com',
+                'email': 'them@detourapp.com',
                 'avatar': 'https://gravatar.com/321',
                 'status': 'opened',
                 'created': 12345
