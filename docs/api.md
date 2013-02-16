@@ -80,7 +80,7 @@ Method: GET
 
 Path
 
-`/1.0/contacts
+`/1.0/contacts`
 
 Returns:
 
