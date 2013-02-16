@@ -2,6 +2,10 @@
 
 An experiment with ephemeral messaging using email addresses.
 
+## Documentation and API Specs
+
+Currently we are working on version 1.0. [View the documentation](https://github.com/ednapiranha/detour/tree/flask/docs)
+
 ## How it works
 
 * Sender creates a message and provides the receiver email address
