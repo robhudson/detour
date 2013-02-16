@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import browserid
-from flask import Flask, jsonify, render_template, request, session
+from flask import Flask, g, jsonify, render_template, request, session
 from sqlalchemy.orm.exc import NoResultFound
 
 import settings
@@ -14,22 +14,23 @@ app.secret_key = settings.SESSION_SECRET
 # Database config is in database.py
 
 
+@app.before_request
+def load_current_user():
+    g.user = (User.query.filter_by(email=session['email']).first()
+              if 'email' in session else None)
+
+
 @app.route('/', methods=['GET'])
 def main():
     """Default landing page."""
-    authenticated = False
-    if session.get('email'):
-        authenticated = True
-
-    return render_template('index.html',
-                           authenticated=authenticated)
+    return render_template('index.html', authenticated=bool(g.user))
 
 
 @app.route('/landing', methods=['GET'])
 def landing():
-    if session.get('user_id'):
+    if g.user:
         messages = Message.query.filter(
-            Message.to_user_id==session.get('user_id')).all()
+            Message.to_user==g.user).all()
         return render_template('_dashboard.html', messages=messages)
     else:
         return render_template('_landing.html')
@@ -54,7 +55,6 @@ def set_email():
         db.commit()
 
     session['email'] = user.email
-    session['user_id'] = user.id
     return jsonify({'message':'okay'})
 
 
