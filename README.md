@@ -48,4 +48,4 @@ Install [node.js](http://nodejs.org/)
 
 In the top level of the project, run the following
 
-> python -m detour.tests.test
+> nosetests
