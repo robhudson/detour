@@ -37,7 +37,7 @@ def me():
 
 @api.route('/contact', methods=['POST'])
 @login_required
-def contact():
+def add_contact():
     if request.form['email']:
         email = request.form['email']
         try:
@@ -50,3 +50,16 @@ def contact():
 
         return api_response(contact.to_json(), 200,
                             'contact added successfully')
+
+
+@api.route('/contact/<int:contact_id>', methods=['DELETE'])
+def delete_contact(contact_id):
+    try:
+        contact = User.query.filter(User.id==contact_id).one()
+    except NoResultFound:
+        return api_response({}, 404, 'contact not found')
+    g.user.contacts.remove(contact)
+    db.session.commit()
+
+    return api_response(contact.to_json(), 200,
+                        'contact removed successfully')

@@ -33,3 +33,28 @@ class TestContactApi(DetourTestCase):
         eq_(data['meta']['code'], 200)
         eq_(data['data']['email'], contact.email)
         eq_(data['data']['avatar'], contact.avatar)
+
+        # Requery user to make sure contact was added to db.
+        user = User.query.filter(User.email==self.user.email).one()
+        eq_(len(user.contacts), 1)
+        eq_(user.contacts[0].email, contact.email)
+
+    def test_delete_contact(self):
+        self.login(self.user.email)
+
+        user = User.query.filter(User.email==self.user.email).one()
+        contact = User(email='them@detourapp.com')
+        db.session.add(contact)
+        user.contacts.append(contact)
+        db.session.commit()
+
+        rv = self.client.delete('/1.0/contact/%s' % contact.id)
+        eq_(rv.status_code, 200)
+        data = json.loads(rv.data)
+        eq_(data['meta']['code'], 200)
+        eq_(data['data']['email'], contact.email)
+        eq_(data['data']['avatar'], contact.avatar)
+
+        # Requery user to make sure contact was deleted from db.
+        user = User.query.filter(User.email==self.user.email).one()
+        eq_(len(user.contacts), 0)
