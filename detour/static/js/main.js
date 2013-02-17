@@ -69,11 +69,12 @@ define(['user', 'message', 'dither', 'nunjucks'],
             body.find('#loading-overlay').fadeOut();
           });
           */
-
-          nunjucks.env.getTemplate('dashboard.html').render({
-            messages: [],
-            email_notification: false
-          });
+          body.find('#inner-wrapper').html(
+            nunjucks.env.getTemplate('dashboard.html').render({
+              messages: [],
+              email_notification: false
+            })
+          );
           body.find('#loading-overlay').fadeOut();
         },
         error: function(res, status, xhr) {
