@@ -25,3 +25,7 @@ This is the current proposed client interface mocks.
 ## New message with no photo
 
 ![messages](https://dl.dropbox.com/u/1913694/detourapp/detour-layout-new-nophoto.jpg)
+
+## Contacts management
+
+![messages](https://dl.dropbox.com/u/1913694/detourapp/detour-layout-contacts.jpg)
