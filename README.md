@@ -34,11 +34,11 @@ Currently we are working on version 1.0. [View the documentation](https://github
 
 > \>>> init_db()
 
-## Running
+## Run the app
 
 > python detour/app.py
 
-## Running Tests
+## Tests
 
 In the top level of the project, run the following
 
