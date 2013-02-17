@@ -2,7 +2,9 @@ requirejs.config({
   baseUrl: '/static/js',
   enforceDefine: true,
   paths: {
-    jquery: '/static/js/jquery'
+    'jquery': '/static/js/lib/jquery',
+    'nunjucks': '/static/js/lib/nunjucks',
+    'templates': '../../templates'
   }
 });
 
@@ -10,6 +12,9 @@ define(['jquery', 'user', 'message', 'dither'],
   function($, User, Message, Dither) {
 
   'use strict';
+
+  var nunjucks = require('nunjucks');
+  var env = new nunjucks.Environment();
 
   window.requestAnimationFrame = window.requestAnimationFrame ||
     window.mozRequestAnimationFrame ||
@@ -25,8 +30,9 @@ define(['jquery', 'user', 'message', 'dither'],
   var body = $('body');
 
   var loadMessages = function (data) {
-    body.find('#inner-wrapper').html(data);
-  }
+    body.find('#inner-wrapper').html(nunjucks.env.getTemplate('dashboard.html')
+                                             .render({ messages: data.messages })));
+  };
 
   if (body.data('authenticated') === 'False') {
     $.get('/landing', function (data) {

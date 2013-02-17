@@ -2,7 +2,7 @@
   <div id="message-view">
     <ol class="messages">
       {% for message in messages %}
-        <li id="{{ message.id }}", class="message-root">
+        <li id="message-{{ message.id }}", class="message-root">
           <a href="javascript:;" data-action="view">
             <img src="{{ message.from_user.email }}" class="avatar" data-action="view">
             <span data-action="view">{{ message.from_user.email }}</span>

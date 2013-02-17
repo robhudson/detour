@@ -26,6 +26,12 @@ Currently we are working on version 1.0. [View the documentation](https://github
 
 > cp detour/settings.py-local detour/settings.py
 
+## Install nunjucks
+
+Install [node.js](http://nodejs.org/)
+
+> npm install nunjucks
+
 ## Creating the database
 
 > python
