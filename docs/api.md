@@ -4,7 +4,7 @@ These are all the API calls that DetourApp will provide, after a user has succes
 
 ## Hostname
 
-https://api.detourapp.com
+https://api.detourapp.com/1.0
 
 ## User
 
@@ -14,7 +14,7 @@ Method: GET
 
 Path
 
-`/1.0/me`
+`/me`
 
 Returns:
 
@@ -22,11 +22,32 @@ Returns:
         'data': {
             'id': 1,
             'email': 'you@detourapp.com',
-            'avatar': 'https://gravatar.com/123'
+            'avatar': 'https://gravatar.com/123',
+            'email_notification': true
         },
         'meta': {
             'code': 200,
             'message': 'profile retrieved successfully'
+        }
+    }
+
+### Update your profile
+
+Method: PUT
+
+Parameters: email_notification
+
+Path
+
+`/me`
+
+    {
+        'data': {
+            'email_notification': true
+        },
+        'meta': {
+            'code': 200,
+            'message': 'profile updated successfully'
         }
     }
 
@@ -40,7 +61,7 @@ Parameters: email
 
 Path
 
-`/1.0/contact`
+`/contact`
 
 Returns:
 
@@ -63,7 +84,7 @@ Parameters: email
 
 Path
 
-`/1.0/contact`
+`/contact`
 
 Returns:
 
@@ -80,7 +101,7 @@ Method: GET
 
 Path
 
-`/1.0/contacts`
+`/contacts`
 
 Returns:
 
@@ -107,7 +128,7 @@ Parameters: recipient email, text message or file upload
 
 Path
 
-`/1.0/message`
+`/message`
 
 Returns:
 
@@ -124,7 +145,7 @@ Method: GET
 
 Path
 
-`/1.0/messages/unread`
+`/messages/unread`
 
 Returns:
 
@@ -149,7 +170,7 @@ Method: GET
 
 Path
 
-`/1.0/message/<id>`
+`/message/<id>`
 
 Returns:
 
@@ -181,7 +202,7 @@ Method: GET
 
 Path
 
-`/1.0/messages/sent`
+`/messages/sent`
 
 Returns:
 
