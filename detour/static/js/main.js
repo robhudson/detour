@@ -3,7 +3,6 @@ requirejs.config({
   enforceDefine: true,
   paths: {
     'jquery': '/static/js/lib/jquery',
-    'underscore': 'lib/underscore',
     'nunjucks': '/static/js/lib/nunjucks'
   },
   shim: {
@@ -14,17 +13,17 @@ requirejs.config({
   }
 });
 
-define(['jquery', 'user', 'message', 'dither', 'nunjucks'],
-  function($, User, Message, Dither) {
+define(['user', 'message', 'dither', 'nunjucks'],
+  function(User, Message, Dither) {
 
   'use strict';
 
   var API_VERSION = '1.0';
+
   var env = new nunjucks.Environment();
 
   if(!nunjucks.env) {
-      // If not precompiled, create an environment with an HTTP
-      // loader
+      // If not precompiled, create an environment with an HTTP loader
       nunjucks.env = new nunjucks.Environment(new nunjucks.HttpLoader('/static/templates'));
   }
 
@@ -41,45 +40,41 @@ define(['jquery', 'user', 'message', 'dither', 'nunjucks'],
 
   var body = $('body');
 
-  var loadMessages = function (data) {
-    body.find('#inner-wrapper').html(
-      nunjucks.env.getTemplate('dashboard.html').render({ messages: data.messages }));
-  }
-
   if (body.data('authenticated') === 'False') {
-    /*
-    $.get('/' + API_VERSION + '/messages', function (data) {
-      loadMessages(data);
-    });
-    */
-    // Currently a stub until the call is ready
     body.find('#inner-wrapper').html(
-      nunjucks.env.getTemplate('dashboard.html').render({
-        messages: [],
-        email_notification: false
-      }));
+      nunjucks.env.getTemplate('landing.html').render()
+    );
   }
 
   var currentUser = localStorage.getItem('personaEmail');
 
   navigator.id.watch({
     loggedInUser: currentUser,
-    onlogin: function(assertion) {
+    onlogin: function (assertion) {
       body.find('#loading-overlay').fadeIn();
       $.ajax({
         type: 'POST',
         url: '/authenticate',
         data: { assertion: assertion },
-        success: function(res, status, xhr) {
+        success: function (res, status, xhr) {
           localStorage.setItem('personaEmail', res.email);
           // Commenting out until call is ready
           /*
           $.get('/' + API_VERSION + '/messages', function (data) {
-            loadMessages(data);
+            nunjucks.env.getTemplate('dashboard.html').render({
+              messages: [],
+              email_notification: false
+            }));
           }).done(function () {
             body.find('#loading-overlay').fadeOut();
           });
           */
+
+          nunjucks.env.getTemplate('dashboard.html').render({
+            messages: [],
+            email_notification: false
+          });
+          body.find('#loading-overlay').fadeOut();
         },
         error: function(res, status, xhr) {
           alert('login failure ' + res);
@@ -103,11 +98,9 @@ define(['jquery', 'user', 'message', 'dither', 'nunjucks'],
   });
 
   // for now ... O_O
-  /*
   var isInvalidFileInput = function () {
     return nav.match(/Mobile/i) && ((nav.match(/Firefox/i) && nav.match(/Mobile/i) && !nav.match(/Android/i)));
   }
-  */
 
   body.on('click', function (ev) {
     var self = $(ev.target);
@@ -153,7 +146,6 @@ define(['jquery', 'user', 'message', 'dither', 'nunjucks'],
     };
 
     switch (self.data('action')) {
-      // persona login
       case 'login-persona':
         ev.preventDefault();
         navigator.id.request();
@@ -229,11 +221,9 @@ define(['jquery', 'user', 'message', 'dither', 'nunjucks'],
     }
   });
 
-  /*
   if (isInvalidFileInput()) {
     body.addClass('file-disabled');
   }
-  */
 
   body.on('change', 'input[type="file"]', function (ev) {
     var canvas = $('#dither-preview');
