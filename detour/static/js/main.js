@@ -3,18 +3,30 @@ requirejs.config({
   enforceDefine: true,
   paths: {
     'jquery': '/static/js/lib/jquery',
-    'nunjucks': '/static/js/lib/nunjucks',
-    'templates': '../../templates'
+    'underscore': 'lib/underscore',
+    'nunjucks': '/static/js/lib/nunjucks'
+  },
+  shim: {
+    'nunjucks': {
+      /* Currently loading dev version */
+      exports: 'nunjucks'
+    }
   }
 });
 
-define(['jquery', 'user', 'message', 'dither'],
+define(['jquery', 'user', 'message', 'dither', 'nunjucks'],
   function($, User, Message, Dither) {
 
   'use strict';
 
-  var nunjucks = require('nunjucks');
+  var API_VERSION = '1.0';
   var env = new nunjucks.Environment();
+
+  if(!nunjucks.env) {
+      // If not precompiled, create an environment with an HTTP
+      // loader
+      nunjucks.env = new nunjucks.Environment(new nunjucks.HttpLoader('/static/templates'));
+  }
 
   window.requestAnimationFrame = window.requestAnimationFrame ||
     window.mozRequestAnimationFrame ||
@@ -30,14 +42,22 @@ define(['jquery', 'user', 'message', 'dither'],
   var body = $('body');
 
   var loadMessages = function (data) {
-    body.find('#inner-wrapper').html(nunjucks.env.getTemplate('dashboard.html')
-                                             .render({ messages: data.messages })));
-  };
+    body.find('#inner-wrapper').html(
+      nunjucks.env.getTemplate('dashboard.html').render({ messages: data.messages }));
+  }
 
   if (body.data('authenticated') === 'False') {
-    $.get('/landing', function (data) {
+    /*
+    $.get('/' + API_VERSION + '/messages', function (data) {
       loadMessages(data);
     });
+    */
+    // Currently a stub until the call is ready
+    body.find('#inner-wrapper').html(
+      nunjucks.env.getTemplate('dashboard.html').render({
+        messages: [],
+        email_notification: false
+      }));
   }
 
   var currentUser = localStorage.getItem('personaEmail');
@@ -52,11 +72,14 @@ define(['jquery', 'user', 'message', 'dither'],
         data: { assertion: assertion },
         success: function(res, status, xhr) {
           localStorage.setItem('personaEmail', res.email);
-          $.get('/landing', function (data) {
+          // Commenting out until call is ready
+          /*
+          $.get('/' + API_VERSION + '/messages', function (data) {
             loadMessages(data);
           }).done(function () {
             body.find('#loading-overlay').fadeOut();
           });
+          */
         },
         error: function(res, status, xhr) {
           alert('login failure ' + res);
