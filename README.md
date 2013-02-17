@@ -30,9 +30,17 @@ Currently we are working on version 1.0. [View the documentation](https://github
 
 > python
 
-> \>>> from detour.database import *
+> \>>> from detour.database import db
 
-> \>>> init_db()
+> \>>> from detour.app import create_app
+
+> \>>> app = create_app({'DEBUG': True, 'SQLALCHEMY_DATABASE_URI': 'sqlite:///detour_app.db'})
+
+> \>>> db.app = app
+
+> \>>> db.init_app(app)
+
+> \>>> db.create_all()
 
 ## Run the app
 
