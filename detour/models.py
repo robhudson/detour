@@ -1,7 +1,7 @@
 import datetime
 import hashlib
 
-from detour.database import db
+from database import db
 
 
 user_to_user = db.Table('contacts', db.metadata,

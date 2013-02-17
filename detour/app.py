@@ -51,8 +51,8 @@ def create_app(config):
             user = User.query.filter(User.email==email).one()
         except NoResultFound:
             user = User(email=email)
-            db.add(user)
-            db.commit()
+            db.session.add(user)
+            db.session.commit()
 
         session['email'] = user.email
         return jsonify({'message':'okay'})
