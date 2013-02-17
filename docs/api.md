@@ -67,6 +67,7 @@ Returns:
 
     {
         'data': {
+            'id': 1,
             'email': 'them@detourapp.com',
             'avatar': 'https://gravatar.com/321'
         },
@@ -84,7 +85,7 @@ Parameters: email
 
 Path
 
-`/contact`
+`/contact/<id>`
 
 Returns:
 
