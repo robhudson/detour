@@ -1,6 +1,6 @@
 # Screenshots
 
-This is the current client interface mocks.
+This is the current proposed client interface mocks.
 
 ## Message - viewing
 
