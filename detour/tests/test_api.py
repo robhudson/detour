@@ -17,8 +17,8 @@ class TestMeApi(DetourTestCase):
         eq_(rv.status_code, 200)
         data = json.loads(rv.data)
         eq_(data['meta']['code'], 200)
-        eq_(data['data']['email'], self.user.email)
-        eq_(data['data']['avatar'], self.user.avatar)
+        for attr in ('id', 'email', 'avatar'):
+            eq_(data['data'][attr], getattr(self.user, attr))
 
 
 class TestContactApi(DetourTestCase):
@@ -31,8 +31,9 @@ class TestContactApi(DetourTestCase):
         eq_(rv.status_code, 200)
         data = json.loads(rv.data)
         eq_(data['meta']['code'], 200)
-        eq_(data['data']['email'], contact.email)
-        eq_(data['data']['avatar'], contact.avatar)
+        for attr in ('email', 'avatar'):
+            eq_(data['data'][attr], getattr(contact, attr))
+        ok_(data['data']['id'] > 0)
 
         # Requery user to make sure contact was added to db.
         user = User.query.filter(User.email==self.user.email).one()
@@ -52,8 +53,8 @@ class TestContactApi(DetourTestCase):
         eq_(rv.status_code, 200)
         data = json.loads(rv.data)
         eq_(data['meta']['code'], 200)
-        eq_(data['data']['email'], contact.email)
-        eq_(data['data']['avatar'], contact.avatar)
+        for attr in ('id', 'email', 'avatar'):
+            eq_(data['data'][attr], getattr(contact, attr))
 
         # Requery user to make sure contact was deleted from db.
         user = User.query.filter(User.email==self.user.email).one()

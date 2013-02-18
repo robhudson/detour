@@ -28,7 +28,7 @@ class User(db.Model):
             hashlib.md5(self.email).hexdigest())
 
     def to_json(self):
-        return dict(email=self.email, avatar=self.avatar)
+        return dict(id=self.id, email=self.email, avatar=self.avatar)
 
 
 class Message(db.Model):
