@@ -114,6 +114,23 @@ class TestMessageApi(DetourTestCase):
         message = Message.query.filter(Message.id==message.id).one()
         ok_(message.expire is not None)
 
+    def test_get_message_404(self):
+        self.login(self.user.email)
+
+        # Create 'other' user.
+        other = User(email='other@detourapp.com')
+        db.session.add(other)
+
+        # Add a message from other to them.
+        message = Message(from_user=other, to_user=self.contact,
+                          message='test message', ttl=10)
+        db.session.add(message)
+        db.session.commit()
+
+        # Try to get message from API as user 'you'.
+        rv = self.client.get('/1.0/message/%s' % message.id)
+        eq_(rv.status_code, 404)
+
     def test_post_message(self):
         self.login(self.user.email)
 

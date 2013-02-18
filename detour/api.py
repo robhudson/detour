@@ -99,7 +99,8 @@ def get_unread_messages():
 @api.route('/message/<int:message_id>')
 def get_message(message_id):
     try:
-        message = Message.query.filter(Message.id==message_id).one()
+        message = Message.query.filter(Message.id==message_id,
+                                       Message.to_user==g.user).one()
     except NoResultFound:
         return api_response(None, 404, 'message not found')
 
