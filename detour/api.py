@@ -15,8 +15,8 @@ api = Blueprint('api', __name__)
 #    pass  # link to docs?
 
 
-def api_response(data, code, kind):
-    return jsonify(data=data, meta={'code': code, 'message': ''})
+def api_response(data, code, msg):
+    return jsonify(data=data, meta={'code': code, 'message': msg})
 
 
 def login_required(f):
@@ -30,14 +30,14 @@ def login_required(f):
 
 @api.route('/me')
 @login_required
-def me():
+def get_me():
     return api_response(g.user.to_json(), 200,
                         'profile retrieved successfully')
 
 
 @api.route('/contact', methods=['POST'])
 @login_required
-def add_contact():
+def post_contact():
     if request.form['email']:
         email = request.form['email']
         try:
@@ -63,3 +63,9 @@ def delete_contact(contact_id):
 
     return api_response(contact.to_json(), 200,
                         'contact removed successfully')
+
+
+@api.route('/contacts')
+def get_contacts():
+    return api_response([c.to_json() for c in g.user.contacts], 200,
+                        'contacts retrieved successfully')

@@ -59,3 +59,20 @@ class TestContactApi(DetourTestCase):
         # Requery user to make sure contact was deleted from db.
         user = User.query.filter(User.email==self.user.email).one()
         eq_(len(user.contacts), 0)
+
+    def test_get_contacts(self):
+        self.login(self.user.email)
+
+        user = User.query.filter(User.email==self.user.email).one()
+        contact = User(email='them@detourapp.com')
+        db.session.add(contact)
+        user.contacts.append(contact)
+        db.session.commit()
+
+        rv = self.client.get('/1.0/contacts')
+        eq_(rv.status_code, 200)
+        data = json.loads(rv.data)
+        eq_(data['meta']['code'], 200)
+        eq_(len(data['data']), 1)
+        for attr in ('id', 'email', 'avatar'):
+            eq_(data['data'][0][attr], getattr(contact, attr))
