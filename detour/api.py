@@ -1,10 +1,11 @@
+import time
 from functools import wraps
 
 from flask import Blueprint, g, jsonify, request
 from sqlalchemy.orm.exc import NoResultFound
 
 from database import db
-from models import User
+from models import Message, User
 
 
 api = Blueprint('api', __name__)
@@ -69,3 +70,13 @@ def delete_contact(contact_id):
 def get_contacts():
     return api_response([c.to_json() for c in g.user.contacts], 200,
                         'contacts retrieved successfully')
+
+
+@api.route('/messages/unread')
+def get_unread_messages():
+    messages = Message.query.filter(Message.to_user==g.user)
+    return api_response([dict(id=m.id, email=m.from_user.email,
+                              avatar=m.from_user.avatar,
+                              created=int(time.mktime(m.created.timetuple())))
+                         for m in messages], 200,
+                        'messages retrieved successfully')
