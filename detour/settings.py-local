@@ -5,3 +5,5 @@ SITE_URL = 'http://localhost:5000'
 DEBUG = True
 
 POSTMARK_API_KEY = 'postmark_key'
+
+DEFAULT_TTL = 10
