@@ -7,14 +7,13 @@ requirejs.config({
   },
   shim: {
     'nunjucks': {
-      /* Currently loading dev version */
       exports: 'nunjucks'
     }
   }
 });
 
-define(['user', 'message', 'dither', 'nunjucks'],
-  function(User, Message, Dither) {
+define(['user', 'message', 'nunjucks'],
+  function(User, Message) {
 
   'use strict';
 
@@ -27,14 +26,8 @@ define(['user', 'message', 'dither', 'nunjucks'],
       nunjucks.env = new nunjucks.Environment(new nunjucks.HttpLoader('/static/templates'));
   }
 
-  window.requestAnimationFrame = window.requestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.msRequestAnimationFrame;
-
   var message = new Message();
   var user = new User();
-  var dither = new Dither();
 
   var nav = navigator.userAgent;
 
@@ -58,24 +51,17 @@ define(['user', 'message', 'dither', 'nunjucks'],
         data: { assertion: assertion },
         success: function (res, status, xhr) {
           localStorage.setItem('personaEmail', res.email);
-          // Commenting out until call is ready
-          /*
-          $.get('/' + API_VERSION + '/messages', function (data) {
-            nunjucks.env.getTemplate('dashboard.html').render({
-              messages: [],
-              email_notification: false
-            }));
+
+          $.get('/' + API_VERSION + '/messages/unread', function (resp) {
+            body.find('#inner-wrapper').html(
+              nunjucks.env.getTemplate('dashboard.html').render({
+                messages: resp.data,
+                email_notification: false // move to secondary call
+              })
+            );
           }).done(function () {
             body.find('#loading-overlay').fadeOut();
           });
-          */
-          body.find('#inner-wrapper').html(
-            nunjucks.env.getTemplate('dashboard.html').render({
-              messages: [],
-              email_notification: false
-            })
-          );
-          body.find('#loading-overlay').fadeOut();
         },
         error: function(res, status, xhr) {
           alert('login failure ' + res);
@@ -100,7 +86,8 @@ define(['user', 'message', 'dither', 'nunjucks'],
 
   // for now ... O_O
   var isInvalidFileInput = function () {
-    return nav.match(/Mobile/i) && ((nav.match(/Firefox/i) && nav.match(/Mobile/i) && !nav.match(/Android/i)));
+    return nav.match(/Mobile/i) && ((nav.match(/Firefox/i) &&
+      nav.match(/Mobile/i) && !nav.match(/Android/i)));
   }
 
   body.on('click', function (ev) {
@@ -134,16 +121,12 @@ define(['user', 'message', 'dither', 'nunjucks'],
         .empty()
         .removeClass('on');
       messageForm.find('textarea, input[name="email"]').val('');
-      messageForm.find('input[name="dither"]')
-        .attr('checked', false)
-        .removeClass('on');
       messageForm.find('img').attr('src', '');
       apiForm.hide();
       contactsForm.hide();
       messageForm.hide();
       notificationForm.hide();
       body.removeClass('fixed');
-      messageForm.find('.dither-toggle').removeClass('on');
     };
 
     switch (self.data('action')) {

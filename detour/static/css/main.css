@@ -61,7 +61,7 @@ html, body {
 }
 
 body {
-    background-color: #111;
+    background-color: #2d3235;
     font-family: Helvetica, Arial, sans-serif;
     position: relative;
 }
@@ -181,7 +181,7 @@ form p.tip {
 }
 
 #inner-wrapper {
-    background-color: rgba(2, 2, 2, 0.25);
+    background-color: rgba(41, 41, 41, 0.15);
     clear: both;
     float: left;
     min-height: 100%;
@@ -218,12 +218,11 @@ ol.home {
 }
 
 ol.home li {
-    color: #444;
-    font-size: 14px;
+    color: #929292;
+    font-size: 15px;
     font-weight: 100;
     margin-bottom: 2px;
-    padding: 5px 8px;
-    text-shadow: #111 1px 1px 2px;
+    padding: 5px 5px;
 }
 
 .login {
@@ -275,11 +274,6 @@ textarea, input[type="text"] {
     margin: 10px auto;
     padding: 5px;
     width: 290px;
-}
-
-::-webkit-input-placeholder, ::-moz-placeholder,
-:-moz-placeholder {
-    color: #24535b;
 }
 
 textarea:focus, input[type="text"]:focus {
@@ -614,8 +608,8 @@ time {
 }
 
 #footer a {
-    background-color: #171717;
-    color: #666;
+    background-color: #202122;
+    color: #929292;
     display: block;
     float: left;
     font-family: 'Oswald';
@@ -629,6 +623,13 @@ time {
 }
 
 #footer a:hover {
-    background-color: #222;
-    color: #1a85b6;
+    background-color: #929292;
+    color: #111;
+}
+
+#new-message {
+    font-size: 1px;
+    height: 36px;
+    text-indent: -9999px;
+    width: 36px;
 }

@@ -1,5 +1,5 @@
-define(['jquery', 'dither'],
-  function($, Dither) {
+define(['jquery'],
+  function($) {
 
   'use strict';
 
@@ -8,7 +8,6 @@ define(['jquery', 'dither'],
   var countdownInterval;
   var countdownDisplay;
 
-  var dither = new Dither();
   var Message = function() { };
 
   var dateDisplay = function(time) {
@@ -36,8 +35,6 @@ define(['jquery', 'dither'],
   Message.prototype.create = function () {
     var self = this;
     this.form = $('#message-form');
-
-    dither.canvas = $('#dither-preview');
 
     var fd = new FormData(this.form[0]);
     var ts = Math.round((new Date()).getTime() / 1000);
@@ -81,10 +78,6 @@ define(['jquery', 'dither'],
       body.removeClass('fixed');
       body.find('#uploading-overlay').fadeOut();
       self.clear();
-      body.find('input[name="dither"]')
-        .attr('checked', false)
-        .removeClass('on');
-      body.find('.dither-toggle').removeClass('on');
 
     }).error(function (data) {
       body.find('#uploading-overlay').fadeOut();
@@ -116,20 +109,12 @@ define(['jquery', 'dither'],
       cache: false
 
     }).done(function (data) {
-      dither.canvas = $('#dither-view');
       var seconds = data.message.ttl;
 
       self.currentContact = self.currentView[0].id.split(':')[1];
 
       if (data.message.photo.length > 0) {
-        dither.canvas
-          .attr('width', data.message.width)
-          .attr('height', data.message.height);
-
-        dither.ctx = dither.canvas[0].getContext('2d');
-        dither.width = data.message.width;
-        dither.height = data.message.height;
-        dither.currentSource = data.message.photo;
+        img.src = data.message.photo;
 
         if (data.message.dither !== 'false') {
           dither.start = window.mozAnimationStartTime || new Date().getTime();
@@ -137,13 +122,6 @@ define(['jquery', 'dither'],
         } else {
           dither.preview();
         }
-
-        dither.canvas.removeClass('hidden');
-
-      } else {
-        dither.canvas
-          .attr('width', 300)
-          .attr('height', 1);
       }
 
       body.find('#viewing-overlay').fadeOut();
