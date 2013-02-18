@@ -2,6 +2,7 @@ import json
 
 from nose.tools import ok_, eq_
 
+from detour import settings
 from detour.models import Message, User
 from detour.database import db
 
@@ -108,3 +109,21 @@ class TestMessageApi(DetourTestCase):
         # Verify that the message was set to expire.
         message = Message.query.filter(Message.id==message.id).one()
         ok_(message.expire is not None)
+
+    def test_post_message(self):
+        self.login(self.user.email)
+
+        rv = self.client.post('/1.0/message', data={
+            'email': self.contact.email,
+            'message': 'test message',
+        })
+        eq_(rv.status_code, 200)
+        data = json.loads(rv.data)
+        eq_(data['meta']['code'], 200)
+
+        # Check message from db.
+        message = Message.query.first()
+        eq_(message.from_user.email, self.user.email)
+        eq_(message.to_user.email, self.contact.email)
+        eq_(message.message, 'test message')
+        eq_(message.ttl, settings.DEFAULT_TTL)

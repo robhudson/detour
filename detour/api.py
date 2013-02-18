@@ -1,12 +1,21 @@
+import base64
 import datetime
+import os
+import StringIO
+import tempfile
 import time
 from functools import wraps
 
 from flask import Blueprint, g, jsonify, request
+from PIL import Image
 from sqlalchemy.orm.exc import NoResultFound
 
+import settings
 from database import db
 from models import Message, User
+
+
+IMAGE_WIDTH = 300
 
 
 api = Blueprint('api', __name__)
@@ -18,7 +27,11 @@ api = Blueprint('api', __name__)
 
 
 def api_response(data, code, msg):
-    return jsonify(data=data, meta={'code': code, 'message': msg})
+    content = {}
+    if data is not None:
+        content['data'] = data
+    content['meta'] = {'code': code, 'message': msg}
+    return jsonify(**content)
 
 
 def login_required(f):
@@ -96,3 +109,47 @@ def get_message(message_id):
 
     return api_response(message.to_json(), 200,
                         'message retrieved successfully')
+
+
+@api.route('/message', methods=['POST'])
+def post_message():
+    if not request.form.get('email') or not (
+        request.form.get('message') or request.files.get('photo')):
+        return api_response({}, 400, 'bad request')
+
+    email = request.form.get('email')
+    message = request.form.get('message')
+    photo = request.files.get('photo')
+
+    # Look for user. If not found, ignore message.
+    try:
+        to_user = User.query.filter(User.email==email).one()
+    except NoResultFound:
+        return api_response({}, 404, 'recipient not found')
+
+    # Handle photo.
+    if (photo and '.' in photo.filename):
+        ext = photo.filename.rsplit('.', 1)[1]
+        if ext in ('gif', 'jpg', 'jpeg', 'png'):
+            path = tempfile.mkstemp()[1]
+            photo.save(path)
+            img = Image.open(path)
+            # Find ratio to scale to IMAGE_WIDTH and keep aspect ratio.
+            x, y = img.size()
+            ratio = IMAGE_WIDTH / x
+            img = img.resize((x * ratio, y * ratio), Image.ANTIALIAS)
+            buf = StringIO.StringIO()
+            img.save(buf, 'JPEG')
+            b64photo = 'data:image/jpg;base64,%s' % (
+                base64.b64encode(buf.read()))
+            os.unlink(path)
+    else:
+        b64photo = ''
+
+    message = Message(to_user=to_user, from_user=g.user,
+                      message=message, photo=b64photo,
+                      ttl=request.form.get('ttl', settings.DEFAULT_TTL))
+    db.session.add(message)
+    db.session.commit()
+
+    return api_response(None, 200, 'message created successfully')

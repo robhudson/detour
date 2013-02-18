@@ -40,8 +40,8 @@ def create_app(config):
     def set_email():
         """Verify via Persona.
 
-        Upon success, create the user if it doesn't already exist and set the email
-        for the user's session.
+        Upon success, create the user if it doesn't already exist and set the
+        email for the user's session.
         """
         data = browserid.verify(request.form['assertion'], settings.SITE_URL)
         email = data['email']
@@ -55,13 +55,13 @@ def create_app(config):
             db.session.commit()
 
         session['email'] = user.email
-        return jsonify({'message':'okay'})
+        return jsonify({'message': 'okay'})
 
     @app.route('/logout', methods=['GET', 'POST'])
     def logout():
         """Log the user out."""
         session.pop('email', None)
-        return jsonify({'message':'okay'})
+        return jsonify({'message': 'okay'})
 
     @app.errorhandler(404)
     def page_not_found(error):
