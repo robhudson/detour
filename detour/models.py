@@ -1,5 +1,6 @@
 import datetime
 import hashlib
+import time
 
 from database import db
 
@@ -47,3 +48,11 @@ class Message(db.Model):
     def __repr__(self):
         return '<Message: [%s] %s => %s>' % (self.id, self.from_user_id,
                                              self.to_user_id)
+
+    def to_json(self):
+        return dict(
+            id=self.id, email=self.from_user.email,
+            avatar=self.from_user.avatar,
+            message=self.message if self.message else '',
+            photo=self.photo if self.photo else '',
+            ttl=self.ttl, created=int(time.mktime(self.created.timetuple())))

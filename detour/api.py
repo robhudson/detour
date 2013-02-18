@@ -1,3 +1,4 @@
+import datetime
 import time
 from functools import wraps
 
@@ -80,3 +81,18 @@ def get_unread_messages():
                               created=int(time.mktime(m.created.timetuple())))
                          for m in messages], 200,
                         'messages retrieved successfully')
+
+
+@api.route('/message/<int:message_id>')
+def get_message(message_id):
+    try:
+        message = Message.query.filter(Message.id==message_id).one()
+    except NoResultFound:
+        return api_response({}, 404, 'message not found')
+
+    # Update message with expired to schedule it for removal.
+    message.expire = message.created + datetime.timedelta(seconds=message.ttl)
+    db.session.commit()
+
+    return api_response(message.to_json(), 200,
+                        'message retrieved successfully')

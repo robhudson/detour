@@ -77,13 +77,34 @@ class TestMessageApi(DetourTestCase):
         db.session.add(message)
         db.session.commit()
 
-        # Get message from API.
+        # Get message list from API.
         rv = self.client.get('/1.0/messages/unread')
         eq_(rv.status_code, 200)
 
         data = json.loads(rv.data)
-        print data
         eq_(len(data['data']), 1)
         eq_(data['data'][0]['id'], message.id)
         for attr in ('email', 'avatar'):
             eq_(data['data'][0][attr], getattr(self.contact, attr))
+
+    def test_get_message(self):
+        self.login(self.user.email)
+
+        # Add a message.
+        message = Message(from_user=self.contact, to_user=self.user,
+                          message='test message', ttl=10)
+        db.session.add(message)
+        db.session.commit()
+
+        # Get message from API.
+        rv = self.client.get('/1.0/message/%s' % message.id)
+        eq_(rv.status_code, 200)
+
+        data = json.loads(rv.data)
+        message_data = message.to_json()
+        for k in data['data'].keys():
+            eq_(data['data'][k], message_data[k])
+
+        # Verify that the message was set to expire.
+        message = Message.query.filter(Message.id==message.id).one()
+        ok_(message.expire is not None)
