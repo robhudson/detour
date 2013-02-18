@@ -128,23 +128,23 @@ def post_message():
         return api_response({}, 404, 'recipient not found')
 
     # Handle photo.
+    b64photo = ''
     if (photo and '.' in photo.filename):
         ext = photo.filename.rsplit('.', 1)[1]
-        if ext in ('gif', 'jpg', 'jpeg', 'png'):
+        if ext.lower() in ('gif', 'jpg', 'jpeg', 'png'):
             path = tempfile.mkstemp()[1]
             photo.save(path)
             img = Image.open(path)
             # Find ratio to scale to IMAGE_WIDTH and keep aspect ratio.
-            x, y = img.size()
-            ratio = IMAGE_WIDTH / x
-            img = img.resize((x * ratio, y * ratio), Image.ANTIALIAS)
+            x, y = img.size
+            ratio = float(IMAGE_WIDTH) / x
+            img = img.resize((int(x * ratio), int(y * ratio)), Image.ANTIALIAS)
             buf = StringIO.StringIO()
             img.save(buf, 'JPEG')
+            buf.seek(0)
             b64photo = 'data:image/jpg;base64,%s' % (
                 base64.b64encode(buf.read()))
             os.unlink(path)
-    else:
-        b64photo = ''
 
     message = Message(to_user=to_user, from_user=g.user,
                       message=message, photo=b64photo,
