@@ -33,6 +33,7 @@ class DetourTestCase(unittest.TestCase):
         _ = self.contact.id
 
     def tearDown(self):
+        db.session.remove()
         db.drop_all()
 
     def login(self, email):
