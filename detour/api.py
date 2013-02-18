@@ -31,7 +31,7 @@ def api_response(data, code, msg):
     if data is not None:
         content['data'] = data
     content['meta'] = {'code': code, 'message': msg}
-    return jsonify(**content)
+    return jsonify(**content), code
 
 
 def login_required(f):
