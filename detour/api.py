@@ -38,7 +38,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if g.user is None:
-            return api_response({}, 403, 'not authorized')
+            return api_response(None, 403, 'not authorized')
         return f(*args, **kwargs)
     return decorated_function
 
@@ -72,7 +72,7 @@ def delete_contact(contact_id):
     try:
         contact = User.query.filter(User.id==contact_id).one()
     except NoResultFound:
-        return api_response({}, 404, 'contact not found')
+        return api_response(None, 404, 'contact not found')
     g.user.contacts.remove(contact)
     db.session.commit()
 
@@ -101,7 +101,7 @@ def get_message(message_id):
     try:
         message = Message.query.filter(Message.id==message_id).one()
     except NoResultFound:
-        return api_response({}, 404, 'message not found')
+        return api_response(None, 404, 'message not found')
 
     # Update message with expired to schedule it for removal.
     message.expire = message.created + datetime.timedelta(seconds=message.ttl)
@@ -115,7 +115,7 @@ def get_message(message_id):
 def post_message():
     if not request.form.get('email') or not (
         request.form.get('message') or request.files.get('photo')):
-        return api_response({}, 400, 'bad request')
+        return api_response(None, 400, 'bad request')
 
     email = request.form.get('email')
     message = request.form.get('message')
@@ -125,7 +125,7 @@ def post_message():
     try:
         to_user = User.query.filter(User.email==email).one()
     except NoResultFound:
-        return api_response({}, 404, 'recipient not found')
+        return api_response(None, 404, 'recipient not found')
 
     # Handle photo.
     b64photo = ''
