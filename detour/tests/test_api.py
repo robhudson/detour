@@ -9,12 +9,15 @@ from detour.database import db
 from . import DetourTestCase
 
 
+API_VERSION = '1.0'
+
+
 class TestMeApi(DetourTestCase):
 
     def test_get_me(self):
         self.login(self.user.email)
 
-        rv = self.client.get('/1.0/me')
+        rv = self.client.get('/%s/me' % API_VERSION)
         eq_(rv.status_code, 200)
         data = json.loads(rv.data)
         eq_(data['meta']['code'], 200)
@@ -28,7 +31,8 @@ class TestContactApi(DetourTestCase):
         self.login(self.user.email)
 
         contact = User(email='them2@detourapp.com')
-        rv = self.client.post('/1.0/contact', data={'email': contact.email})
+        rv = self.client.post('/%s/contact' % API_VERSION,
+                              data={'email': contact.email})
         eq_(rv.status_code, 200)
         data = json.loads(rv.data)
         eq_(data['meta']['code'], 200)
@@ -44,7 +48,7 @@ class TestContactApi(DetourTestCase):
     def test_delete_contact(self):
         self.login(self.user.email)
 
-        rv = self.client.delete('/1.0/contact/%s' % self.contact.id)
+        rv = self.client.delete('/%s/contact/%s' % (API_VERSION, self.contact.id))
         eq_(rv.status_code, 200)
         data = json.loads(rv.data)
         eq_(data['meta']['code'], 200)
@@ -58,7 +62,7 @@ class TestContactApi(DetourTestCase):
     def test_get_contacts(self):
         self.login(self.user.email)
 
-        rv = self.client.get('/1.0/contacts')
+        rv = self.client.get('/%s/contacts' % API_VERSION)
         eq_(rv.status_code, 200)
         data = json.loads(rv.data)
         eq_(data['meta']['code'], 200)
@@ -79,7 +83,7 @@ class TestMessageApi(DetourTestCase):
         db.session.commit()
 
         # Get message list from API.
-        rv = self.client.get('/1.0/messages/unread')
+        rv = self.client.get('/%s/messages/unread' % API_VERSION)
         eq_(rv.status_code, 200)
 
         data = json.loads(rv.data)
@@ -98,7 +102,7 @@ class TestMessageApi(DetourTestCase):
         db.session.commit()
 
         # Get message from API.
-        rv = self.client.get('/1.0/message/%s' % message.id)
+        rv = self.client.get('/%s/message/%s' % (API_VERSION, message.id))
         eq_(rv.status_code, 200)
 
         data = json.loads(rv.data)
@@ -113,7 +117,7 @@ class TestMessageApi(DetourTestCase):
     def test_post_message(self):
         self.login(self.user.email)
 
-        rv = self.client.post('/1.0/message', data={
+        rv = self.client.post('/%s/message' % API_VERSION, data={
             'email': self.contact.email,
             'message': 'test message',
         })
