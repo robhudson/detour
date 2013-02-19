@@ -124,11 +124,15 @@ def post_message():
     ttl = request.form.get('ttl', settings.DEFAULT_TTL)
     photo = request.files.get('photo')
 
-    # Look for user. If not found, ignore message.
+    # Look for "to" user in contacts. If not found, ignore message.
+    # Note: We return the same message in the response to not leak who is
+    # already in our db and who isn't.
     try:
         to_user = User.query.filter(User.email==email).one()
     except NoResultFound:
-        return api_response(None, 404, 'recipient not found')
+        return api_response(None, 400, 'recipient not a contact')
+    if not to_user in g.user.contacts:
+        return api_response(None, 400, 'recipient not a contact')
 
     # Handle photo.
     b64photo = ''

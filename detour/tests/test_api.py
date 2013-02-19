@@ -149,3 +149,14 @@ class TestMessageApi(DetourTestCase):
         eq_(message.to_user.email, self.contact.email)
         eq_(message.message, 'test message')
         eq_(message.ttl, 20)
+
+    def test_post_message_unknown_recipient(self):
+        self.login(self.user.email)
+
+        rv = self.client.post('/%s/message' % API_VERSION, data={
+            'email': 'other@detourapp.com',
+            'message': 'test message',
+        })
+        eq_(rv.status_code, 400)
+        data = json.loads(rv.data)
+        eq_(data['meta']['code'], 400)

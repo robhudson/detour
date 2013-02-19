@@ -23,6 +23,9 @@ class User(db.Model):
     def __repr__(self):
         return '<User: %s>' % self.email
 
+    def __eq__(self, other):
+        return self.id == other.id
+
     @property
     def avatar(self):
         return 'http://www.gravatar.com/avatar/%s?s=40' % (
