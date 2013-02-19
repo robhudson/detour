@@ -3253,7 +3253,6 @@ var Environment = Object.extend({
 
     getTemplate: function(name, eagerCompile) {
         var info = null;
-        this.cache[name] = undefined;
         var tmpl = this.cache[name];
         var upToDate;
 
