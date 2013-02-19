@@ -143,11 +143,13 @@ define(['jquery'],
 
   Message.prototype.clear = function() {
     var self = this;
+    var img = $('#preview-img');
     this.currentContact = null;
     this.messageDetail = $('#message-detail');
     this.messageDetail.find('p span, p time, .countdown').empty();
     this.messageDetail.removeAttr('data-email');
     this.messageDetail.hide();
+    img.attr('src', '');
 
     if (this.currentView) {
       this.currentView.remove();

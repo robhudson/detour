@@ -326,7 +326,7 @@ button:hover, #message-detail .actions:hover {
     float: left;
     height: 100%;
     margin-bottom: 10px;
-    width: 318px;
+    width: 320px;
 }
 
 .messages {
@@ -628,7 +628,8 @@ time {
 #footer #new-message {
     background: url(/static/images/new-message.png) no-repeat;
     font-size: 1px;
-    height: 37px;
+    height: 36px;
+    outline: hidden;
     padding: 0;
     text-indent: -9999px;
     width: 36px;
