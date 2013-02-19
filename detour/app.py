@@ -53,6 +53,9 @@ def create_app(config):
             user = User(email=email)
             db.session.add(user)
             db.session.commit()
+            # Add self as contact.
+            user.contacts.append(user)
+            db.session.commit()
 
         session['email'] = user.email
         return jsonify({'message': 'okay'})
