@@ -1,11 +1,14 @@
+<img id="preview-img" class="hidden" width="320">
 <div id="messages">
   <div id="message-view">
     <ol class="messages">
       {% for message in messages %}
-        <li id="message-{{ message.id }}", class="message-root">
+        <li data-id="{{ message.id }}" data-email="{{ message.email }}"
+            class="message-root">
           <a href="javascript:;" data-action="view">
-            <img src="{{ message.from_user.email }}" class="avatar" data-action="view">
-            <span data-action="view">{{ message.from_user.email }}</span>
+            <img src="{{ message.avatar }}" class="avatar" data-action="view">
+            <span data-action="view">{{ message.email }}</span>
+            <time data-action="view">{{ message.created }}</time>
           </a>
         </li>
       {% endfor %}
@@ -24,25 +27,14 @@
   </div>
 
   <form method="post" id="message-form" enctype="multipart/form-data">
+    <span id="current-contact"></span>
     <textarea name="message" placeholder="write your message (maximum 200 characters)"></textarea>
-    <img id="dither-preview-img" class="hidden" width="300">
     <input type="file" name="photo" id="photo-file" accept="image/*">
-    <input type="hidden" name="width" id="image-width">
-    <input type="hidden" name="height" id="image-height">
-    <div class="dither-toggle">
-      <label for="dither" class="checkbox">
-        Dither photo
-        <input type="checkbox" name="dither" data-action="dither">
-      </label>
-    </div>
     <input type="hidden" name="email">
     <input type="hidden" name="ttl">
-    <span id="current-contact"></span>
     <div class="button-wrapper">
-      <button data-action="contacts" class="selectors" type="button">choose a contact</button>
       <button data-action="upload-photo" class="selectors" type="button">upload a photo</button>
     </div>
-    <ol id="contacts"></ol>
     <div id="message-status"></div>
     <button type="submit">Send</button>
     <a href="javascript:;" data-action="cancel" class="cancel">Cancel</a>
@@ -50,10 +42,6 @@
 
   <form method="post" id="contacts-form">
     <h2>Add a new contact</h2>
-    <p class="tip">
-      Contacts will receive notifications only if they sign in and set it. So let them know
-      the first time!
-    </p>
     <input type="text" name="email" placeholder="add contact email">
     <div id="contact-status"></div>
     <button type="submit">Add</button>
@@ -69,6 +57,7 @@
     <button type="submit">Update</button>
     <a href="javascript:;" data-action="cancel" class="cancel">Close</a>
   </form>
+  <div id="message-body"></div>
 
   <div id="footer">
     <a href="javascript:;" data-action="new-message" id="new-message">New</a>

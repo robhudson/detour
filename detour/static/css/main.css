@@ -94,6 +94,7 @@ a {
 }
 
 form {
+    background: rgba(3, 3, 3, 0.5);
     clear: both;
     display: none;
     float: left;
@@ -105,7 +106,11 @@ form {
     z-index: 2;
 }
 
-#dither-preview-img.hidden {
+#preview-img {
+    position: absolute;
+}
+
+#preview-img.hidden {
     display: none;
 }
 
@@ -196,10 +201,10 @@ form p.tip {
 }
 
 h1, h2 {
-    color: #232323;
+    color: #fff;
     display: block;
     font-size: 25px;
-    margin: 20px 0;
+    margin: 10px 0;
     text-align: center;
     text-transform: uppercase;
 }
@@ -323,27 +328,17 @@ button:hover, #message-detail .actions:hover {
 }
 
 .messages {
-    background-color: rgba(2, 2, 2, 0.25);
-    border: 1px solid #191919;
     display: block;
     float: left;
     height: 100%;
     width: 100%;
 }
 
-.messages li:first-child {
-    border-top: 0;
-}
-
-.messages li:last-child {
-    border-bottom: 0;
-}
-
 .messages li {
-    border-bottom: 1px solid #111;
-    border-top: 1px solid #191919;
+    background-color: rgba(2, 2, 2, 0.25);
     clear: both;
     float: left;
+    margin-bottom: 2px;
     width: 100%;
 }
 
@@ -408,8 +403,12 @@ button:hover, #message-detail .actions:hover {
 
 .cancel {
     bottom: 10px;
+    color: #fff;
+    font-family: Oswald;
+    font-size: 20px;
     left: 10px;
     position: absolute;
+    text-transform: uppercase;
 }
 
 #message-detail .close {
@@ -496,7 +495,6 @@ time {
 #contacts {
     clear: both;
     float: left;
-    margin-top: 20px;
     width: 100%;
 }
 
@@ -515,12 +513,12 @@ time {
 
 #contacts li a {
     background-color: #1a1a1a;
-    color: #666;
+    color: #fff;
     display: block;
     float: left;
     margin-bottom: 2px;
     padding: 3px;
-    width: 294px;
+    width: 314px;
 }
 
 #contacts li.button {
@@ -601,35 +599,36 @@ time {
 
 #footer {
     bottom: 0;
-    padding: 2px;
     position: fixed;
-    width: 316px;
+    width: 320px;
     z-index: 3;
 }
 
 #footer a {
-    background-color: #202122;
+    background-color: rgba(3, 3, 3, 0.5);
     color: #929292;
     display: block;
     float: left;
     font-family: 'Oswald';
-    font-size: 16px;
-    font-weight: 100;
-    margin: 2px;
-    padding: 10px 2px;
+    font-size: 17px;
+    height: 37px;
+    line-height: 37px;
+    margin: 2px 1px 0;
+    padding: 0 1px;
     text-align: center;
     text-transform: uppercase;
-    width: 97px;
+    width: 90px;
 }
 
 #footer a:hover {
-    background-color: #929292;
-    color: #111;
+    color: #fff;
 }
 
-#new-message {
+#footer #new-message {
+    background: url(/static/images/new-message.png) no-repeat;
     font-size: 1px;
-    height: 36px;
+    height: 37px;
+    padding: 0;
     text-indent: -9999px;
     width: 36px;
 }

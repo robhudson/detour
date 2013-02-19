@@ -5,6 +5,8 @@ define(['jquery'],
 
   var body = $('body');
 
+  var API_VERSION = '1.0';
+
   var countdownInterval;
   var countdownDisplay;
 
@@ -46,7 +48,7 @@ define(['jquery'],
     }
 
     $.ajax({
-      url: '/message?ts=' + ts,
+      url: '/' + API_VERSION + '/message',
       data: fd,
       type: 'POST',
       processData: false,
@@ -58,7 +60,7 @@ define(['jquery'],
       self.form
         .find('#current-contact, #contacts').empty();
       self.form.find('input[type="file"], input[name="email"], textarea, input[type="text"], #image-width, #image-height').val('');
-      self.form.find('img')
+      body.find('#preview-img')
         .attr('src', '')
         .addClass('hidden');
       self.form.find('#message-status')
@@ -103,32 +105,27 @@ define(['jquery'],
     this.messageDetail = $('#message-detail');
 
     $.ajax({
-      url: '/message/' + self.currentView[0].id,
+      url: '/' + API_VERSION + '/message/' + self.currentView.data('id'),
       type: 'GET',
       dataType: 'json',
       cache: false
 
     }).done(function (data) {
-      var seconds = data.message.ttl;
+      var seconds = data.ttl;
 
-      self.currentContact = self.currentView[0].id.split(':')[1];
+      self.currentContact = self.currentView.data('email');
 
-      if (data.message.photo.length > 0) {
-        img.src = data.message.photo;
+      if (data.photo) {
+        img.src = data.photo;
 
-        if (data.message.dither !== 'false') {
-          dither.start = window.mozAnimationStartTime || new Date().getTime();
-          dither.run();
-        } else {
-          dither.preview();
-        }
+        dither.preview();
       }
 
       body.find('#viewing-overlay').fadeOut();
       body.addClass('fixed');
-      self.messageDetail.find('p span').text(data.message.text);
+      self.messageDetail.find('p span').text(data.text);
       self.messageDetail.find('p time').append('Sent ' +
-          dateDisplay(data.message.created));
+          dateDisplay(data.created));
       self.messageDetail.find('.countdown').text(seconds);
       self.messageDetail.fadeIn();
 
@@ -142,9 +139,6 @@ define(['jquery'],
 
     }).error(function (data) {
       body.find('#viewing-overlay').fadeOut();
-      form.find('#message-status')
-        .text(JSON.parse(data.responseText).message)
-        .addClass('on');
     });
   };
 

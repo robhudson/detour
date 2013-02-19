@@ -12,8 +12,8 @@ requirejs.config({
   }
 });
 
-define(['user', 'message', 'nunjucks'],
-  function(User, Message) {
+define(['jquery', 'user', 'message', 'nunjucks'],
+  function($, User, Message) {
 
   'use strict';
 
@@ -49,9 +49,9 @@ define(['user', 'message', 'nunjucks'],
         type: 'POST',
         url: '/authenticate',
         data: { assertion: assertion },
+        cache: false,
         success: function (res, status, xhr) {
           localStorage.setItem('personaEmail', res.email);
-
           $.get('/' + API_VERSION + '/messages/unread', function (resp) {
             body.find('#inner-wrapper').html(
               nunjucks.env.getTemplate('dashboard.html').render({
@@ -126,6 +126,9 @@ define(['user', 'message', 'nunjucks'],
       contactsForm.hide();
       messageForm.hide();
       notificationForm.hide();
+      body.find('#preview-img')
+          .attr('src', '')
+          .addClass('hidden');
       body.removeClass('fixed');
     };
 
@@ -167,22 +170,16 @@ define(['user', 'message', 'nunjucks'],
         body.addClass('fixed');
         break;
 
-      case 'contacts':
-        user.getContacts();
-        break;
-
       case 'contact-add':
         var email = self.data('email') || self.parent().data('email');
         insertContact(email);
-        contacts.empty();
-        messageForm.find('#message-status')
-          .empty()
-          .removeClass('on');
+        body.find('#message-body').hide();
+        messageForm.fadeIn();
         message.clear();
         break;
 
       case 'contact-delete':
-        user.deleteContact({ email: self.data('email'), _csrf: body.data('csrf') });
+        user.deleteContact({ email: self.data('email') });
         self.closest('li').remove();
         break;
 
@@ -200,7 +197,8 @@ define(['user', 'message', 'nunjucks'],
         contactsForm.fadeOut();
         notificationForm.fadeOut();
         messageDetail.hide();
-        messageForm.fadeIn();
+        user.getContacts(nunjucks);
+        //messageForm.fadeIn();
         break;
     }
   });
@@ -210,8 +208,7 @@ define(['user', 'message', 'nunjucks'],
   }
 
   body.on('change', 'input[type="file"]', function (ev) {
-    var canvas = $('#dither-preview');
-    var img = $('#dither-preview-img');
+    var img = $('#preview-img');
     var messageForm = $('#message-form');
     var files = ev.target.files;
     var file;
@@ -222,8 +219,6 @@ define(['user', 'message', 'nunjucks'],
       var fileReader = new FileReader();
 
       fileReader.onload = function (evt) {
-        body.find('.dither-toggle').addClass('on');
-
         img[0].onload = function () {
           messageForm.find('#image-width').val(img.width());
           messageForm.find('#image-height').val(img.height());
@@ -242,20 +237,22 @@ define(['user', 'message', 'nunjucks'],
   });
 
   body.on('submit', 'form', function (ev) {
-    ev.preventDefault();
     var self = $(ev.target);
 
     switch (self[0].id) {
       case 'message-form':
+        ev.preventDefault();
         body.find('#uploading-overlay').fadeIn();
         message.create();
         break;
 
       case 'contacts-form':
+        ev.preventDefault();
         user.addContact(self.serialize());
         break;
 
       case 'email-notification-form':
+        ev.preventDefault();
         user.addEmailNotification(self.serialize());
         break;
     }

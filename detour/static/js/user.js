@@ -5,6 +5,8 @@ define(['jquery'],
 
   var body = $('body');
 
+  var API_VERSION = '1.0';
+
   var User = function() {
     this.form = null;
   };
@@ -15,7 +17,7 @@ define(['jquery'],
     this.form = $('#contacts-form');
 
     $.ajax({
-      url: '/contact',
+      url: '/' + API_VERSION + '/contact',
       data: data,
       type: 'POST',
       dataType: 'json',
@@ -34,7 +36,7 @@ define(['jquery'],
 
   User.prototype.deleteContact = function (data) {
     $.ajax({
-      url: '/contact',
+      url: '/' + API_VERSION + '/contact',
       data: data,
       type: 'DELETE',
       dataType: 'json',
@@ -42,27 +44,32 @@ define(['jquery'],
     });
   };
 
-  User.prototype.getContacts = function () {
+  User.prototype.getContacts = function (nunjucks) {
     var self = this;
 
     this.form = $('#message-form');
+    var contactWrapper = body.find('#message-body');
 
     $.ajax({
-      url: '/contacts',
+      url: '/' + API_VERSION + '/contacts',
       type: 'GET',
-      async: false
-    }).done(function (data) {
-      self.form.find('#contacts').html(data);
+      async: false,
+      cache: false,
+    }).done(function (resp) {
+      contactWrapper.html(
+        nunjucks.env.getTemplate('contacts.html').render({
+          contacts: resp.data
+        })
+      );
+
+      contactWrapper.show();
+    }).error(function (resp) {
       self.form.find('#contact-status')
-        .empty()
-        .removeClass('on');
-    }).error(function (data) {
-      self.form.find('#contact-status')
-        .text(JSON.parse(data.responseText).message)
+        .text(resp.meta.message)
         .addClass('on');
     });
   };
-
+  /*
   User.prototype.addEmailNotification = function (data) {
     var self = this;
 
@@ -86,6 +93,6 @@ define(['jquery'],
         .addClass('on');
     });
   };
-
+  */
   return User;
 });
