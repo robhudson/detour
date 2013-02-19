@@ -14,7 +14,8 @@ define(['jquery'],
 
   var dateDisplay = function(time) {
     var date = new Date(parseInt(time, 10));
-    var diff = (Date.now() - date) / 1000;
+    var now = Math.round(new Date().getTime() / 1000);
+    var diff = (now - date);
     var dayDiff = Math.floor(diff / 86400);
 
     if (isNaN(dayDiff)) {
@@ -91,8 +92,7 @@ define(['jquery'],
 
   Message.prototype.view = function (preview) {
     var self = this;
-    var img = $('#dither-preview-img');
-    img.src = '';
+    var img = $('#preview-img');
 
     body.find('#viewing-overlay').fadeIn();
 
@@ -110,22 +110,21 @@ define(['jquery'],
       dataType: 'json',
       cache: false
 
-    }).done(function (data) {
-      var seconds = data.ttl;
+    }).done(function (resp) {
+      var seconds = resp.data.ttl;
 
       self.currentContact = self.currentView.data('email');
 
-      if (data.photo) {
-        img.src = data.photo;
-
-        dither.preview();
+      if (resp.data.photo) {
+        img.attr('src', resp.data.photo);
+        img.removeClass('hidden');
       }
 
       body.find('#viewing-overlay').fadeOut();
       body.addClass('fixed');
-      self.messageDetail.find('p span').text(data.text);
+      self.messageDetail.find('p span').text(resp.data.message);
       self.messageDetail.find('p time').append('Sent ' +
-          dateDisplay(data.created));
+          dateDisplay(resp.data.created));
       self.messageDetail.find('.countdown').text(seconds);
       self.messageDetail.fadeIn();
 
@@ -146,10 +145,8 @@ define(['jquery'],
     var self = this;
     this.currentContact = null;
     this.messageDetail = $('#message-detail');
-    this.messageDetail.find('p span').empty();
-    this.messageDetail.find('p time').empty();
+    this.messageDetail.find('p span, p time, .countdown').empty();
     this.messageDetail.removeAttr('data-email');
-    this.messageDetail.find('.countdown').text('');
     this.messageDetail.hide();
 
     if (this.currentView) {

@@ -25,7 +25,7 @@ class User(db.Model):
 
     @property
     def avatar(self):
-        return 'http://www.gravatar.com/avatar/%s?s=35' % (
+        return 'http://www.gravatar.com/avatar/%s?s=40' % (
             hashlib.md5(self.email).hexdigest())
 
     def to_json(self):

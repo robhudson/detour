@@ -20,10 +20,9 @@
       <span></span>
       <time></time>
     </p>
-    <canvas id="dither-view" class="hidden"></canvas>
+    <div class="countdown"></div>
     <a href="javascript:;" data-action="reply" class="actions reply">Reply</a>
     <a href="javascript:;" data-action="close" class="actions close">Close</a>
-    <div class="countdown"></div>
   </div>
 
   <form method="post" id="message-form" enctype="multipart/form-data">
@@ -31,7 +30,7 @@
     <textarea name="message" placeholder="write your message (maximum 200 characters)"></textarea>
     <input type="file" name="photo" id="photo-file" accept="image/*">
     <input type="hidden" name="email">
-    <input type="hidden" name="ttl">
+    <input type="hidden" name="ttl" value="10">
     <div class="button-wrapper">
       <button data-action="upload-photo" class="selectors" type="button">upload a photo</button>
     </div>
