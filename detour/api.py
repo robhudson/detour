@@ -16,6 +16,7 @@ from models import Message, User
 
 
 IMAGE_WIDTH = 300
+ALLOWED_EXTENSIONS = ('gif', 'jpg', 'jpeg', 'png')
 
 
 api = Blueprint('api', __name__)
@@ -120,6 +121,7 @@ def post_message():
 
     email = request.form.get('email')
     message = request.form.get('message')
+    ttl = request.form.get('ttl', settings.DEFAULT_TTL)
     photo = request.files.get('photo')
 
     # Look for user. If not found, ignore message.
@@ -132,7 +134,7 @@ def post_message():
     b64photo = ''
     if (photo and '.' in photo.filename):
         ext = photo.filename.rsplit('.', 1)[1]
-        if ext.lower() in ('gif', 'jpg', 'jpeg', 'png'):
+        if ext.lower() in ALLOWED_EXTENSIONS:
             path = tempfile.mkstemp()[1]
             photo.save(path)
             img = Image.open(path)
@@ -148,8 +150,7 @@ def post_message():
             os.unlink(path)
 
     message = Message(to_user=to_user, from_user=g.user,
-                      message=message, photo=b64photo,
-                      ttl=request.form.get('ttl', settings.DEFAULT_TTL))
+                      message=message, photo=b64photo, ttl=ttl)
     db.session.add(message)
     db.session.commit()
 

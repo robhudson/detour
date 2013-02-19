@@ -137,6 +137,7 @@ class TestMessageApi(DetourTestCase):
         rv = self.client.post('/%s/message' % API_VERSION, data={
             'email': self.contact.email,
             'message': 'test message',
+            'ttl': '20',
         })
         eq_(rv.status_code, 200)
         data = json.loads(rv.data)
@@ -147,4 +148,4 @@ class TestMessageApi(DetourTestCase):
         eq_(message.from_user.email, self.user.email)
         eq_(message.to_user.email, self.contact.email)
         eq_(message.message, 'test message')
-        eq_(message.ttl, settings.DEFAULT_TTL)
+        eq_(message.ttl, 20)
