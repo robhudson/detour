@@ -128,7 +128,7 @@ class TestMessageApi(DetourTestCase):
         db.session.commit()
 
         # Try to get message from API as user 'you'.
-        rv = self.client.get('/1.0/message/%s' % message.id)
+        rv = self.client.get('/%s/message/%s' % (API_VERSION, message.id))
         eq_(rv.status_code, 404)
 
     def test_post_message(self):
