@@ -315,6 +315,7 @@ var Pair = Node.extend("Pair", { fields: ['key', 'value'] });
 var Dict = NodeList.extend("Dict");
 var LookupVal = Node.extend("LookupVal", { fields: ['target', 'val'] });
 var If = Node.extend("If", { fields: ['cond', 'body', 'else_'] });
+var InlineIf = Node.extend("InlineIf", { fields: ['cond', 'body', 'else_'] });
 var For = Node.extend("For", { fields: ['arr', 'name', 'body'] });
 var Macro = Node.extend("Macro", { fields: ['name', 'args', 'body'] });
 var Import = Node.extend("Import", { fields: ['template', 'target'] });
@@ -443,6 +444,7 @@ modules['nodes'] = {
     Output: Output,
     TemplateData: TemplateData,
     If: If,
+    InlineIf: InlineIf,
     For: For,
     Macro: Macro,
     Import: Import,
@@ -472,7 +474,8 @@ modules['nodes'] = {
     CompareOperand: CompareOperand,
 
     printNodes: printNodes
-};})();
+};
+})();
 (function() {
 var lib = modules["lib"];
 var Object = modules["object"];
@@ -607,6 +610,17 @@ function suppressLookupValue(obj, val) {
     }
 }
 
+function callWrap(obj, name, args) {
+    if(!obj) {
+        throw new Error('Unable to call `' + name + '`, which is undefined or falsey');
+    }
+    else if(typeof obj !== 'function') {
+        throw new Error('Unable to call `' + name + '`, which is not a function');
+    }
+
+    return obj.apply(this, args);
+}
+
 function contextOrFrameLookup(context, frame, name) {
     var val = context.lookup(name);
     return (val !== undefined && val !== null) ?
@@ -631,6 +645,7 @@ modules['runtime'] = {
     suppressValue: suppressValue,
     suppressLookupValue: suppressLookupValue,
     contextOrFrameLookup: contextOrFrameLookup,
+    callWrap: callWrap,
     handleError: handleError,
     isArray: lib.isArray
 };
@@ -1596,7 +1611,25 @@ var Parser = Object.extend({
     },
 
     parseExpression: function() {
+        var node = this.parseInlineIf();
+        return node;
+    },
+
+    parseInlineIf: function() {
         var node = this.parseOr();
+        if(this.skipSymbol('if')) {
+            var cond_node = this.parseOr();
+            var body_node = node;
+            node = new nodes.InlineIf(node.lineno, node.colno);
+            node.body = body_node;
+            node.cond = cond_node;
+            if(this.skipSymbol('else')) {
+                node.else_ = this.parseOr();
+            } else {
+                node.else_ = null;
+            }
+        }
+
         return node;
     },
 
@@ -2198,6 +2231,7 @@ var Compiler = Object.extend({
             nodes.Filter,
             nodes.LookupVal,
             nodes.Compare,
+            nodes.InlineIf,
             nodes.And,
             nodes.Or,
             nodes.Not,
@@ -2294,6 +2328,19 @@ var Compiler = Object.extend({
         this._compileExpression(val, frame);
     },
 
+    compileInlineIf: function(node, frame) {
+        this.emit('(');
+        this.compile(node.cond, frame);
+        this.emit('?');
+        this.compile(node.body, frame);
+        this.emit(':');
+        if(node.else_ !== null)
+            this.compile(node.else_, frame);
+        else
+            this.emit('""');
+        this.emit(')');
+    },
+
     compileOr: binOpEmitter(' || '),
     compileAnd: binOpEmitter(' && '),
     compileAdd: binOpEmitter(' + '),
@@ -2351,6 +2398,22 @@ var Compiler = Object.extend({
         this.emit(')');
     },
 
+    _getNodeName: function(node) {
+        switch (node.typename) {
+            case 'Symbol':
+                return node.value;
+            case 'FunCall':
+                return 'the return value of (' + this._getNodeName(node.name) + ')';
+            case 'LookupVal':
+                return this._getNodeName(node.target) + '["' +
+                       this._getNodeName(node.val) + '"]';
+            case 'Literal':
+                return node.value.toString().substr(0, 10);
+            default:
+                return '--expression--';
+        }
+    },
+
     compileFunCall: function(node, frame) {
         // Keep track of line/col info at runtime by settings
         // variables within an expression. An expression in javascript
@@ -2359,11 +2422,15 @@ var Compiler = Object.extend({
         this.emit('(lineno = ' + node.lineno +
                   ', colno = ' + node.colno + ', ');
 
-        this.emit('(');
+        this.emit('runtime.callWrap(');
+        // Compile it as normal.
         this._compileExpression(node.name, frame);
-        this.emit(')');
 
-        this._compileAggregate(node.args, frame, '(', ')');
+        // Output the name of what we're calling so we can get friendly errors
+        // if the lookup fails.
+        this.emit(', "' + this._getNodeName(node.name).replace(/"/g, '\\"') + '", ');
+
+        this._compileAggregate(node.args, frame, '[', '])');
 
         this.emit(')');
     },
@@ -2716,6 +2783,17 @@ var Compiler = Object.extend({
     },
 
     compileOutput: function(node, frame) {
+        if (node.children.length == 1 &&
+            node.children[0].typename == 'TemplateData') {
+            var val = node.children[0].value;
+            if (val !== undefined && val !== null) {
+                this.emit(this.buffer + ' += ');
+                this.compileLiteral(node.children[0], frame);
+                this.emit(';\n');
+                return;
+            }
+        }
+
         this.emit(this.buffer + ' += runtime.suppressValue(');
         this._compileChildren(node, frame);
         this.emit(');\n');
@@ -3119,6 +3197,22 @@ var filters = {
         return str.replace(/^\s*|\s*$/g, '');
     },
 
+    truncate: function(input, length, killwords, end) {
+        length = length || 255;
+
+        if (input.length <= length)
+            return input;
+
+        if (killwords) {
+            input = input.substring(0, length);
+        } else {
+            input = input.substring(0, input.lastIndexOf(' ', length));
+        }
+
+        input += (end !== undefined && end !== null) ? end : '...';
+        return input;
+    },
+
     upper: function(str) {
         return str.toUpperCase();
     },
@@ -3173,12 +3267,14 @@ var HttpLoader = Object.extend({
         // Only in the browser please
         var ajax = new XMLHttpRequest();
         var src = null;
-
+        console.log('got here')
         ajax.onreadystatechange = function() {
             if(ajax.readyState == 4 && ajax.status == 200) {
                 src = ajax.responseText;
             }
         };
+
+        url += (url.indexOf('?') === -1 ? '?' : '&') + 's=' + Date.now();
 
         // Synchronous because this API shouldn't be used in
         // production (pre-load compiled templates instead)
@@ -3191,7 +3287,8 @@ var HttpLoader = Object.extend({
 
 modules['web-loaders'] = {
     HttpLoader: HttpLoader
-};})();
+};
+})();
 (function() {
 if(typeof window === 'undefined') {
     modules['loaders'] = modules["node-loaders"];
@@ -3559,6 +3656,7 @@ if(loaders) {
 window.nunjucks.compiler = compiler;
 window.nunjucks.parser = parser;
 window.nunjucks.lexer = lexer;
+
 window.nunjucks.require =
    function(name) { return modules[name]; };
 
