@@ -105,8 +105,6 @@ def get_message(message_id):
         return api_response(None, 404, 'message not found')
 
     # Update message with expired to schedule it for removal.
-    if not message.ttl:
-        message.ttl = settings.DEFAULT_TTL
     message.expire = message.created + datetime.timedelta(seconds=message.ttl)
     db.session.commit()
 
