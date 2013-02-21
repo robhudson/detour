@@ -77,9 +77,12 @@ def create_app(config):
     return app
 
 if __name__ == '__main__':
-    app = create_app({'DEBUG': True,
-                      'TRAP_HTTP_EXCEPTIONS': True,
-                      'TRAP_BAD_REQUEST_ERRORS': True,
-                      'SQLALCHEMY_DATABASE_URI': os.environ.get(
-                          'DATABASE_URL', 'sqlite:///detour_app.db')})
+    app = create_app({
+        'DEBUG': True,
+        'TRAP_HTTP_EXCEPTIONS': True,
+        'TRAP_BAD_REQUEST_ERRORS': True,
+        'SQLALCHEMY_DATABASE_URI': os.environ.get(
+            'DATABASE_URL', 'sqlite:///detour_app.db'),
+        #'SQLALCHEMY_ECHO': True  # Show SQL on console.
+    })
     app.run()

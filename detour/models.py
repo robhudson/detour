@@ -18,7 +18,8 @@ class User(db.Model):
     contacts = db.relationship('User', secondary=user_to_user,
                                primaryjoin=id==user_to_user.c.user_id,
                                secondaryjoin=id==user_to_user.c.contact_id,
-                               backref=db.backref('users', lazy='dynamic'))
+                               backref=db.backref('users', lazy='joined'),
+                               order_by='User.email')
 
     def __repr__(self):
         return '<User: %s>' % self.email

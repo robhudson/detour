@@ -29,7 +29,7 @@ class TestContactApi(DetourTestCase):
     def test_post_contact(self):
         self.login(self.user.email)
 
-        contact = User(email='them2@detourapp.com')
+        contact = User(email='other@detourapp.com')
         rv = self.client.post('/%s/contact' % API_VERSION,
                               data={'email': contact.email})
         eq_(rv.status_code, 200)
@@ -42,7 +42,7 @@ class TestContactApi(DetourTestCase):
         # Requery user to make sure contact was added to db.
         user = User.query.filter(User.email==self.user.email).one()
         eq_(len(user.contacts), 2)
-        eq_(user.contacts[1].email, contact.email)
+        eq_(user.contacts[0].email, contact.email)
 
     def test_delete_contact(self):
         self.login(self.user.email)
@@ -61,13 +61,24 @@ class TestContactApi(DetourTestCase):
     def test_get_contacts(self):
         self.login(self.user.email)
 
+        # Create 'other' user to test sorting.
+        other = User(email='other@detourapp.com')
+        db.session.add(other)
+        user = User.query.filter(User.id==self.user.id).one()
+        user.contacts.append(other)
+        db.session.commit()
+
         rv = self.client.get('/%s/contacts' % API_VERSION)
         eq_(rv.status_code, 200)
         data = json.loads(rv.data)
         eq_(data['meta']['code'], 200)
-        eq_(len(data['data']), 1)
+        eq_(len(data['data']), 2)
+        # 'other' comes first.
         for attr in ('id', 'email', 'avatar'):
-            eq_(data['data'][0][attr], getattr(self.contact, attr))
+            eq_(data['data'][0][attr], getattr(other, attr))
+        # 'them' comes 2nd.
+        for attr in ('id', 'email', 'avatar'):
+            eq_(data['data'][1][attr], getattr(self.contact, attr))
 
 
 class TestMessageApi(DetourTestCase):
