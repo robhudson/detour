@@ -83,6 +83,6 @@ if __name__ == '__main__':
         'TRAP_BAD_REQUEST_ERRORS': True,
         'SQLALCHEMY_DATABASE_URI': os.environ.get(
             'DATABASE_URL', 'sqlite:///detour_app.db'),
-        #'SQLALCHEMY_ECHO': True  # Show SQL on console.
+        'SQLALCHEMY_ECHO': True  # Show SQL on console.
     })
     app.run()

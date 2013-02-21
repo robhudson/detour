@@ -2,6 +2,7 @@ import datetime
 import hashlib
 import time
 
+import settings
 from database import db
 
 
@@ -45,7 +46,7 @@ class Message(db.Model):
     to_user = db.relationship('User', primaryjoin=to_user_id==User.id)
     message = db.Column(db.String(250))
     photo = db.Column(db.Text)
-    ttl = db.Column(db.Integer)
+    ttl = db.Column(db.Integer, default=settings.DEFAULT_TTL)
     expire = db.Column(db.DateTime)
     created = db.Column(db.DateTime, default=datetime.datetime.now)
 

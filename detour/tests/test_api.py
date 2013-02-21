@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from nose.tools import ok_, eq_
@@ -86,10 +87,15 @@ class TestMessageApi(DetourTestCase):
     def test_get_unread_messages(self):
         self.login(self.user.email)
 
-        # Add a message.
-        message = Message(from_user=self.contact, to_user=self.user,
-                          message='test message', ttl=10)
-        db.session.add(message)
+        hour_ago = datetime.datetime.now() - datetime.timedelta(hours=1)
+
+        # Add older message.
+        message1 = Message(from_user=self.contact, to_user=self.user,
+                           message='test message', ttl=10, created=hour_ago)
+        message2 = Message(from_user=self.contact, to_user=self.user,
+                           message='test message 2', ttl=10)
+        db.session.add(message2)
+        db.session.add(message1)
         db.session.commit()
 
         # Get message list from API.
@@ -97,8 +103,10 @@ class TestMessageApi(DetourTestCase):
         eq_(rv.status_code, 200)
 
         data = json.loads(rv.data)
-        eq_(len(data['data']), 1)
-        eq_(data['data'][0]['id'], message.id)
+        eq_(len(data['data']), 2)
+        # First created stamp is less than second.
+        ok_(data['data'][0]['created'] < data['data'][1]['created'],
+            'Messages not sorted by created descending.')
         for attr in ('email', 'avatar'):
             eq_(data['data'][0][attr], getattr(self.contact, attr))
 
