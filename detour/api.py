@@ -3,7 +3,6 @@ import datetime
 import os
 import StringIO
 import tempfile
-import time
 from functools import wraps
 
 from flask import Blueprint, g, jsonify, request
@@ -90,11 +89,10 @@ def get_contacts():
 @api.route('/messages/unread')
 def get_unread_messages():
     messages = Message.query.filter(Message.to_user==g.user)
-    return api_response([dict(id=m.id, email=m.from_user.email,
-                              avatar=m.from_user.avatar,
-                              created=int(time.mktime(m.created.timetuple())))
-                         for m in messages], 200,
-                        'messages retrieved successfully')
+    return api_response(
+        [dict(id=m.id, email=m.from_user.email, avatar=m.from_user.avatar,
+              created=m.created_stamp) for m in messages], 200,
+        'messages retrieved successfully')
 
 
 @api.route('/message/<int:message_id>')

@@ -2,7 +2,6 @@ import json
 
 from nose.tools import ok_, eq_
 
-from detour import settings
 from detour.models import Message, User
 from detour.database import db
 
