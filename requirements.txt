@@ -1,7 +1,7 @@
 Flask==0.9
 Flask-SQLAlchemy==0.16
 PIL==1.1.7
-SQLAlchemy==0.7.8
+SQLAlchemy==0.8.0b2
 httplib2==0.7.7
 nose==1.2.1
 python-postmark==0.3.2
