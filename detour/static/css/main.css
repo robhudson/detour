@@ -469,7 +469,13 @@ time {
 #current-contact {
     color: #eee;
     display: block;
-    margin: 5px 0;
+    line-height: 35px;
+    margin: 0;
+}
+
+#current-contact .avatar {
+    margin-bottom: 5px;
+    width: 35px;
 }
 
 #contacts li {

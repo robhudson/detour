@@ -133,6 +133,7 @@ define(['jquery'],
       var seconds = resp.data.ttl;
 
       self.currentContact = self.currentView.data('email');
+      self.currentAvatar = self.currentView.data('avatar');
 
       if (resp.data.photo) {
         img.attr('src', resp.data.photo);
@@ -146,7 +147,7 @@ define(['jquery'],
           dateDisplay(resp.data.created));
       self.messageDetail.find('.countdown').text(seconds);
       self.messageDetail.fadeIn();
-/*
+
       countdownInterval = setInterval(function () {
         self.messageDetail.find('.countdown').text(--seconds);
       }, 1000);
@@ -154,7 +155,7 @@ define(['jquery'],
       countdownDisplay = setTimeout(function () {
         self.clear();
       }, seconds * 1000);
-*/
+
     }).error(function (data) {
       body.find('#viewing-overlay').fadeOut();
     });
@@ -164,6 +165,7 @@ define(['jquery'],
     var self = this;
     var img = $('#preview-img');
     this.currentContact = null;
+    this.currentAvatar = null;
     this.messageDetail = $('#message-detail');
     this.messageDetail.find('p span, p time, .countdown').empty();
     this.messageDetail.removeAttr('data-email');

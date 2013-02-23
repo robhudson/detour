@@ -91,9 +91,11 @@ define(['jquery', 'user', 'message', 'nunjucks'],
     var contacts = $('#contacts');
     var messages = $('ol.messages');
 
-    var insertContact = function (email) {
+    var insertContact = function (email, avatar) {
       messageForm.find('input[name="email"]').val(email);
-      messageForm.find('#current-contact').text(email);
+      messageForm.find('#current-contact')
+        .text(email)
+        .prepend('<img src="' + avatar + '" class="avatar">');
     };
 
     var clearFields = function () {
@@ -153,7 +155,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         messageForm.find('input[name="dither"]')
           .attr('checked', false)
           .removeClass('on');
-        insertContact(message.currentContact);
+        insertContact(message.currentContact, message.currentAvatar);
         messageForm.removeClass('hidden');
         message.clear();
         body.addClass('fixed');
@@ -161,7 +163,8 @@ define(['jquery', 'user', 'message', 'nunjucks'],
 
       case 'contact-add':
         var email = self.data('email') || self.parent().data('email');
-        insertContact(email);
+        var avatar = self.data('avatar') || self.parent().data('avatar');
+        insertContact(email, avatar);
         body.find('#message-body').addClass('hidden');
         messageForm.removeClass('hidden');
         message.clear();
