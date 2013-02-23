@@ -53,8 +53,9 @@ def get_me():
 @api.route('/contact', methods=['POST'])
 @login_required
 def post_contact():
-    if request.form['email']:
-        email = request.form['email']
+    email = request.form['email'].strip();
+
+    if email:
         try:
             contact = User.query.filter(User.email==email).one()
         except NoResultFound:
@@ -68,6 +69,7 @@ def post_contact():
                             'contact added successfully')
     else:
         return api_response(None, 400, 'Invalid contact format')
+
 
 @api.route('/contact/<int:contact_id>', methods=['DELETE'])
 def delete_contact(contact_id):
