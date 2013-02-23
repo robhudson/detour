@@ -21,40 +21,40 @@
       <time></time>
     </p>
     <div class="countdown"></div>
-    <a href="javascript:;" data-action="reply" class="actions reply">Reply</a>
-    <a href="javascript:;" data-action="close" class="actions close">Close</a>
+    <a href="javascript:;" data-action="close" class="actions cancel">Close</a>
+    <a href="javascript:;" data-action="reply" class="actions reply right">Reply</a>
   </div>
 
-  <form method="post" id="message-form" enctype="multipart/form-data">
+  <form method="post" id="message-form" enctype="multipart/form-data" class="hidden">
     <span id="current-contact"></span>
     <textarea name="message" placeholder="write your message (maximum 200 characters)"></textarea>
     <input type="file" name="photo" id="photo-file" accept="image/*">
     <input type="hidden" name="email">
     <input type="hidden" name="ttl" value="10">
     <div class="button-wrapper">
-      <button data-action="upload-photo" class="selectors" type="button">upload a photo</button>
+      <button data-action="upload-photo" type="button">upload a photo</button>
     </div>
     <div id="message-status"></div>
-    <button type="submit">Send</button>
     <a href="javascript:;" data-action="cancel" class="cancel">Cancel</a>
+    <button type="submit" class="right">Send</button>
   </form>
 
-  <form method="post" id="contacts-form">
+  <form method="post" id="contacts-form" class="hidden">
     <h2>Add a new contact</h2>
     <input type="text" name="email" placeholder="add contact email">
     <div id="contact-status"></div>
     <button type="submit">Add</button>
   </form>
 
-  <form method="post" id="email-notification-form">
+  <form method="post" id="email-notification-form" class="hidden">
     <h2>Email notifications</h2>
     <p class="tip">
       <input type="checkbox" name="emailNotification" {% if email_notification %}checked="checked"{% endif %}>
       when someone sends you a message
     </p>
     <div id="email-notification-status"></div>
-    <button type="submit">Update</button>
     <a href="javascript:;" data-action="cancel" class="cancel">Close</a>
+    <button type="submit" class="right">Update</button>
   </form>
   <div id="message-body"></div>
 

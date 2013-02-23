@@ -3267,7 +3267,7 @@ var HttpLoader = Object.extend({
         // Only in the browser please
         var ajax = new XMLHttpRequest();
         var src = null;
-        console.log('got here')
+
         ajax.onreadystatechange = function() {
             if(ajax.readyState == 4 && ajax.status == 200) {
                 src = ajax.responseText;

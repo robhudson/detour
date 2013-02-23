@@ -127,7 +127,7 @@ define(['jquery'],
           dateDisplay(resp.data.created));
       self.messageDetail.find('.countdown').text(seconds);
       self.messageDetail.fadeIn();
-
+/*
       countdownInterval = setInterval(function () {
         self.messageDetail.find('.countdown').text(--seconds);
       }, 1000);
@@ -135,7 +135,7 @@ define(['jquery'],
       countdownDisplay = setTimeout(function () {
         self.clear();
       }, seconds * 1000);
-
+*/
     }).error(function (data) {
       body.find('#viewing-overlay').fadeOut();
     });

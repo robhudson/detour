@@ -97,8 +97,8 @@ define(['jquery', 'user', 'message', 'nunjucks'],
     var contactsForm = $('#contacts-form');
     var notificationForm = $('#email-notification-form');
     var messageDetail = $('#message-detail');
-    var apiForm = $('#api-form');
     var contacts = $('#contacts');
+    var messages = $('ol.messages');
 
     var insertContact = function (email) {
       messageForm.find('input[name="email"]').val(email);
@@ -106,11 +106,9 @@ define(['jquery', 'user', 'message', 'nunjucks'],
     };
 
     var clearFields = function () {
+      messages.addClass('hidden');
       contacts.empty();
       contactsForm.find('#contact-status')
-        .empty()
-        .removeClass('on');
-      apiForm.find('#api-status')
         .empty()
         .removeClass('on');
       notificationForm.find('#email-notification-status')
@@ -122,10 +120,9 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         .removeClass('on');
       messageForm.find('textarea, input[name="email"]').val('');
       messageForm.find('img').attr('src', '');
-      apiForm.hide();
-      contactsForm.hide();
-      messageForm.hide();
-      notificationForm.hide();
+      contactsForm.addClass('hidden');
+      messageForm.addClass('hidden');
+      notificationForm.addClass('hidden');
       body.find('#preview-img')
           .attr('src', '')
           .addClass('hidden');
@@ -144,6 +141,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         break;
 
       case 'view':
+        messages.addClass('hidden');
         message.view(self);
         break;
 
@@ -165,7 +163,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
           .attr('checked', false)
           .removeClass('on');
         insertContact(message.currentContact);
-        messageForm.show();
+        messageForm.removeClass('hidden');
         message.clear();
         body.addClass('fixed');
         break;
@@ -173,8 +171,8 @@ define(['jquery', 'user', 'message', 'nunjucks'],
       case 'contact-add':
         var email = self.data('email') || self.parent().data('email');
         insertContact(email);
-        body.find('#message-body').hide();
-        messageForm.fadeIn();
+        body.find('#message-body').addClass('hidden');
+        messageForm.removeClass('hidden');
         message.clear();
         break;
 
@@ -186,20 +184,24 @@ define(['jquery', 'user', 'message', 'nunjucks'],
       case 'add-contact-form':
         clearFields();
         body.addClass('fixed');
-        contactsForm.fadeIn();
-        notificationForm.fadeIn();
-        apiForm.fadeIn();
+        contactsForm.removeClass('hidden');
+        notificationForm.removeClass('hidden');
         break;
 
       case 'new-message':
         body.addClass('fixed');
-        apiForm.fadeOut();
-        contactsForm.fadeOut();
-        notificationForm.fadeOut();
-        messageDetail.hide();
+        contactsForm.addClass('hidden');
+        notificationForm.addClass('hidden');
+        messages.addClass('hidden');
+        messageDetail.addClass('hidden');
         user.getContacts(nunjucks);
-        //messageForm.fadeIn();
         break;
+
+      case 'messages':
+        contactsForm.addClass('hidden');
+        notificationForm.addClass('hidden');
+        messageDetail.addClass('hidden');
+        messages.removeClass('hidden');
     }
   });
 

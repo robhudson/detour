@@ -67,7 +67,6 @@ body {
 }
 
 body.fixed ol.messages {
-    display: none;
     position: fixed;
     z-index: 0;
 }
@@ -80,7 +79,7 @@ textarea {
     font-family: Helvetica, Arial, sans-serif;
 }
 
-textarea, input[type="text"], button {
+textarea, input[type="text"] {
     margin-bottom: 10px;
 }
 
@@ -94,13 +93,10 @@ a {
 }
 
 form {
-    background: rgba(3, 3, 3, 0.85);
+    background: rgba(5, 5, 5, 0.85);
     clear: both;
-    display: none;
     float: left;
     padding: 10px;
-    position: absolute;
-    top: 0;
     width: 300px;
     z-index: 2;
 }
@@ -111,7 +107,7 @@ form {
     top: 0;
 }
 
-#preview-img.hidden {
+.hidden, .messages.hidden {
     display: none;
 }
 
@@ -155,20 +151,16 @@ label.checkbox {
     float: left;
 }
 
-canvas.hidden {
-    display: none;
-}
-
 #contacts-form, #email-notification-form {
     border-bottom: 1px solid #222;
     margin: 0;
     padding-bottom: 20px;
 }
 
-#api-form, #email-notification-form {
+#email-notification-form {
     border-top: 1px solid #181818;
-    margin-top: 0;
-    padding-top: 20px;
+    margin: 0 0 45px;
+    padding: 20px 10px 10px 10px;
 }
 
 form p.tip {
@@ -273,9 +265,9 @@ ol.home li {
 }
 
 textarea, input[type="text"] {
-    background-color: #59ccdf;
-    border: 1px solid #111;
-    color: #24535b;
+    background-color: #eee;
+    border: 0;
+    color: #222;
     display: block;
     font-size: 15px;
     margin: 10px auto;
@@ -285,7 +277,6 @@ textarea, input[type="text"] {
 
 textarea:focus, input[type="text"]:focus {
     background-color: #fff;
-    border: 1px solid #fff;
     box-shadow: inset #ccc 1px 1px 2px;
 }
 
@@ -293,32 +284,6 @@ textarea {
     height: 50px;
     overflow: hidden;
     resize: none;
-}
-
-button, #message-detail .actions {
-    background-color: #85b033;
-    border: 0;
-    border-radius: 15px;
-    color: #333;
-    cursor: pointer;
-    float: right;
-    font-family: 'Oswald';
-    font-size: 16px;
-    margin: 12px 0 0;
-    padding: 2px 7px;
-    min-width: 100px;
-}
-
-button:hover, #message-detail .actions:hover {
-    background-color: #59ccdf;
-    color: #333;
-}
-
-.selectors, #message-detail .actions {
-    background-color: #ccc;
-    color: #111;
-    font-size: 14px;
-    padding: 2px 20px;
 }
 
 #message-view {
@@ -333,7 +298,7 @@ button:hover, #message-detail .actions:hover {
     display: block;
     float: left;
     height: 100%;
-    width: 100%;
+    width: 320px;
 }
 
 .messages li {
@@ -371,6 +336,11 @@ button:hover, #message-detail .actions:hover {
     color: #eee;
 }
 
+button {
+    background-color: transparent;
+    border: 0;
+}
+
 #message-detail {
     background-color: rgba(41, 41, 41, 0.55);
     clear: both;
@@ -390,28 +360,25 @@ button:hover, #message-detail .actions:hover {
 }
 
 #message-detail .actions {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 2px 5px;
-    min-width: 70px;
     width: 70px;
 }
 
-#message-detail .reply, .cancel {
-    float: left;
-}
-
-.cancel {
-    bottom: 10px;
+.cancel, button, .actions {
     color: #fff;
+    display: inline-block;
     font-family: Oswald;
-    font-size: 20px;
-    left: 10px;
-    position: absolute;
+    font-size: 24px;
+    line-height: 24px;
+    margin: 20px 0 0;
+    padding: 0;
     text-transform: uppercase;
 }
 
-#message-detail .close {
+.cancel {
+    float: left;
+}
+
+.right {
     float: right;
 }
 
@@ -526,7 +493,7 @@ time {
     text-align: center;
 }
 
-#contacts li.button button {
+#contacts li.button {
     float: none;
     padding: 2px 10px;
 }
