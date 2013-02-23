@@ -26,10 +26,20 @@ define(['jquery'],
       if (diff < 60) {
         return 'less than 1 minute ago';
       } else if (diff < 3600) {
-        return Math.floor(diff / 60) + ' minutes ago';
+        if (diff > 59 && diff < 121) {
+          return '1 minute ago';
+        } else {
+          return Math.floor(diff / 60) + ' minutes ago';
+        }
       } else {
-        return Math.floor(diff / 3600) + ' hours ago';
+        if (diff > 3599 && diff < 7200) {
+          return '1 hour ago';
+        } else {
+          return Math.floor(diff / 3600) + ' hours ago';
+        }
       }
+    } else if (dayDiff === 1) {
+      return '1 day ago';
     } else {
       return dayDiff + ' days ago';
     }

@@ -50,7 +50,7 @@ table {
 
 @font-face {
     font-family: 'Oswald';
-    src: url('../fonts/Oswald-Regular-webfont.woff') format('woff');
+    src: url('../fonts/Oswald-Light-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -73,6 +73,10 @@ body.fixed ol.messages {
 
 body.file-disabled button[data-action="upload-photo"] {
     display: none;
+}
+
+button[data-action="upload-photo"]:hover {
+    opacity: 0.6;
 }
 
 textarea {
@@ -99,10 +103,11 @@ a {
 }
 
 form {
-    background: rgba(7, 7, 7, 0.25);
+    background: rgba(6, 6, 6, 0.55);
     clear: both;
     float: left;
     padding: 10px;
+    position: fixed;
     width: 300px;
     z-index: 2;
 }
@@ -149,8 +154,11 @@ label.checkbox {
 }
 
 .button-wrapper {
+    clear: both;
     float: left;
     display: block;
+    height: 20px;
+    position: relative;
     width: 100%;
 }
 
@@ -158,14 +166,24 @@ label.checkbox {
     float: left;
 }
 
+.button-wrapper button[data-action="upload-photo"] {
+    background: url('../images/photo.png') no-repeat;
+    float: right;
+    font-size: 1px;
+    margin: 0;
+    text-indent: -9999px;
+    width: 26px;
+}
+
 #settings form {
     border-bottom: 1px solid #333;
     display: block;
     margin: 0;
     padding-bottom: 20px;
+    position: relative;
 }
 
-#email-notification-form {
+#settings #email-notification-form {
     border-bottom: none;
     margin: 0 0 45px;
     padding: 20px 10px 10px 10px;
@@ -306,6 +324,7 @@ textarea {
     display: block;
     float: left;
     height: 100%;
+    margin-bottom: 35px;
     width: 320px;
 }
 
@@ -352,14 +371,19 @@ button {
     float: left;
     font-size: 18px;
     line-height: 25px;
-    margin-top: -10px;
     padding: 10px;
+    position: fixed;
     text-align: center;
+    width: 300px;
     z-index: 2;
 }
 
 #message-detail span {
     text-align: left;
+}
+
+#message-detail time {
+    margin-bottom: 20px;
 }
 
 #message-detail .actions {
@@ -425,7 +449,7 @@ button {
     width: 50px;
 }
 
-#message-status, #contact-status, #api-status, #email-notification-status {
+#message-status, #contact-status, #email-notification-status {
     background-color: #c92020;
     color: #ffcece;
     display: none;
@@ -441,13 +465,14 @@ time {
     font-style: italic;
 }
 
-#message-status.on, #contact-status.on, #api-status.on, #email-notification-status.on {
+#message-status.on, #contact-status.on, #email-notification-status.on {
     display: inline-block;
 }
 
 #contacts {
     clear: both;
     float: left;
+    margin-bottom: 45px;
     width: 100%;
 }
 
@@ -466,7 +491,6 @@ time {
 #contacts li {
     clear: both;
     float: left;
-    margin-bottom: 2px;
     position: relative;
 }
 
@@ -526,7 +550,7 @@ time {
 }
 
 .overlay {
-    background-color: rgba(1, 1, 1, 0.7);
+    background: rgba(6, 6, 6, 0.85);
     bottom: 0;
     color: #eee;
     display: none;
@@ -554,14 +578,14 @@ time {
 }
 
 #footer a {
-    background-color: rgba(3, 3, 3, 0.5);
+    background: rgba(6, 6, 6, 0.55);
     color: #fff;
     display: block;
     float: left;
     font-family: 'Oswald';
-    font-size: 17px;
+    font-size: 18px;
     height: 37px;
-    line-height: 37px;
+    line-height: 39px;
     margin: 2px 1px 0;
     padding: 0 1px;
     text-align: center;
@@ -570,7 +594,7 @@ time {
 }
 
 #footer a:hover, #footer a:focus {
-    background-color: rgba(3, 3, 3, 0.8);
+    background-color: rgba(3, 3, 3, 0.85);
 }
 
 #footer #new-message {
@@ -588,5 +612,10 @@ time {
     #footer #new-message {
         background-image: url(/static/images/new-message@2x.png);
         background-size: auto 36px;
+    }
+
+    .button-wrapper button[data-action="upload-photo"] {
+        background-image: url(/static/images/photo@2x.png);
+        background-size: auto 26px;
     }
 }

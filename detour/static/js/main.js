@@ -89,6 +89,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
     var messageDetail = $('#message-detail');
     var contacts = $('#contacts');
     var messages = $('ol.messages');
+    var messageBody = $('#message-body');
 
     var insertContact = function (email, avatar) {
       messageForm.find('input[name="email"]').val(email);
@@ -98,6 +99,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
     };
 
     var clearFields = function () {
+      messageBody.empty();
       messages.addClass('hidden');
       contacts
         .addClass('hidden')
