@@ -329,7 +329,7 @@ textarea {
 }
 
 .messages li, #contacts li a {
-    background-color: rgba(41, 41, 41, 0.45);
+    background-color: rgba(35, 35, 35, 0.4);
     color: #fff;
     clear: both;
     float: left;
