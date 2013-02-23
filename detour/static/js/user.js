@@ -29,7 +29,7 @@ define(['jquery'],
       self.form.find('input[name="email"]').val('');
     }).error(function (data) {
       self.form.find('#contact-status')
-        .text(JSON.parse(data.responseText).message)
+        .text(JSON.parse(data.responseText).meta.message)
         .addClass('on');
     });
   };

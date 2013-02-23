@@ -368,6 +368,7 @@ button {
 
 .cancel, button, .actions {
     color: #fff;
+    cursor: pointer;
     display: inline-block;
     font-family: Oswald;
     font-size: 24px;
@@ -430,12 +431,6 @@ button {
     display: none;
     font-size: 12px;
     padding: 5px;
-    position: absolute;
-}
-
-#message-status {
-    right: 10px;
-    top: 58px;
 }
 
 time {
@@ -444,21 +439,6 @@ time {
     font-size: 12px;
     line-height: 14px;
     font-style: italic;
-}
-
-#contact-status {
-    right: 10px;
-    top: 104px;
-}
-
-#api-status {
-    right: 10px;
-    top: 97px;
-}
-
-#email-notification-status {
-    right: 10px;
-    top: 5px;
 }
 
 #message-status.on, #contact-status.on, #api-status.on, #email-notification-status.on {
@@ -545,7 +525,7 @@ time {
     color: #ffb7b7;
 }
 
-#uploading-overlay, #viewing-overlay, #loading-overlay {
+.overlay {
     background-color: rgba(1, 1, 1, 0.7);
     bottom: 0;
     color: #eee;
@@ -562,7 +542,7 @@ time {
     z-index: 4;
 }
 
-#uploading-overlay p, #viewing-overlay p, #loading-overlay p {
+.overlay p {
     margin-bottom: 20px;
 }
 

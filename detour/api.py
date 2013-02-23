@@ -60,12 +60,14 @@ def post_contact():
         except NoResultFound:
             contact = User(email=email)
             db.session.add(contact)
+
         g.user.contacts.append(contact)
         db.session.commit()
 
         return api_response(contact.to_json(), 200,
                             'contact added successfully')
-
+    else:
+        return api_response(None, 400, 'Invalid contact format')
 
 @api.route('/contact/<int:contact_id>', methods=['DELETE'])
 def delete_contact(contact_id):
