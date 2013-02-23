@@ -52,16 +52,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         cache: false,
         success: function (res, status, xhr) {
           localStorage.setItem('personaEmail', res.email);
-          $.get('/' + API_VERSION + '/messages/unread', function (resp) {
-            body.find('#inner-wrapper').html(
-              nunjucks.env.getTemplate('dashboard.html').render({
-                messages: resp.data,
-                email_notification: false // move to secondary call
-              })
-            );
-          }).done(function () {
-            body.find('#loading-overlay').fadeOut();
-          });
+          message.getAll();
         },
         error: function(res, status, xhr) {
           alert('login failure ' + res);
@@ -201,7 +192,9 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         contactsForm.addClass('hidden');
         notificationForm.addClass('hidden');
         messageDetail.addClass('hidden');
-        messages.removeClass('hidden');
+        message.getAll(function () {
+          messages.removeClass('hidden');
+        });
     }
   });
 

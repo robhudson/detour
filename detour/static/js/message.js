@@ -35,6 +35,25 @@ define(['jquery'],
     }
   };
 
+  Message.prototype.getAll = function (callback) {
+    var self = this;
+
+    $.get('/' + API_VERSION + '/messages/unread', function (resp) {
+      body.find('#inner-wrapper').html(
+        nunjucks.env.getTemplate('dashboard.html').render({
+          messages: resp.data,
+          email_notification: false // move to secondary call
+        })
+      );
+
+      if (callback) {
+        callback();
+      }
+    }).done(function () {
+      body.find('#loading-overlay').fadeOut();
+    });
+  };
+
   Message.prototype.create = function () {
     var self = this;
     this.form = $('#message-form');
