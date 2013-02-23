@@ -1,17 +1,10 @@
+{% from "macros.html" import load_messages %}
+
 <img id="preview-img" class="hidden" width="320">
 <div id="messages">
   <div id="message-view">
     <ol class="messages">
-      {% for message in messages %}
-        <li data-id="{{ message.id }}" data-email="{{ message.email }}"
-            class="message-root" data-avatar="{{ message.avatar }}">
-          <a href="javascript:;" data-action="view">
-            <img src="{{ message.avatar }}" class="avatar" data-action="view">
-            <span data-action="view">{{ message.email }}</span>
-            <time data-action="view">{{ message.created }}</time>
-          </a>
-        </li>
-      {% endfor %}
+      {{ load_messages(messages) }}
     </ol>
   </div>
 
@@ -39,29 +32,31 @@
     <button type="submit" class="right">Send</button>
   </form>
 
-  <form method="post" id="contacts-form" class="hidden">
-    <h2>Add a new contact</h2>
-    <input type="text" name="email" placeholder="add contact email">
-    <div id="contact-status"></div>
-    <button type="submit" class="right">Add</button>
-  </form>
+  <div id="settings" class="hidden">
+    <form method="post" id="contacts-form">
+      <h2>Add a new contact</h2>
+      <input type="text" name="email" placeholder="add contact email">
+      <div id="contact-status"></div>
+      <button type="submit" class="right">Add</button>
+    </form>
 
-  <form method="post" id="email-notification-form" class="hidden">
-    <h2>Email notifications</h2>
-    <p class="tip">
-      <input type="checkbox" name="emailNotification" {% if email_notification %}checked="checked"{% endif %}>
-      when someone sends you a message
-    </p>
-    <div id="email-notification-status"></div>
-    <a href="javascript:;" data-action="cancel" class="cancel">Close</a>
-    <button type="submit" class="right">Update</button>
-  </form>
+    <form method="post" id="email-notification-form">
+      <h2>Email notifications</h2>
+      <p class="tip">
+        <input type="checkbox" name="emailNotification" {% if email_notification %}checked="checked"{% endif %}>
+        when someone sends you a message
+      </p>
+      <div id="email-notification-status"></div>
+      <a href="javascript:;" data-action="cancel" class="cancel">Close</a>
+      <button type="submit" class="right">Update</button>
+    </form>
+  </div>
   <div id="message-body"></div>
 
   <div id="footer">
     <a href="javascript:;" data-action="new-message" id="new-message">New</a>
     <a href="javascript:;" data-action="messages">Messages</a>
-    <a href="javascript:;" data-action="add-contact-form">Settings</a>
+    <a href="javascript:;" data-action="settings-form">Settings</a>
     <a href="javascript:;" data-action="logout">Log out</a>
   </div>
 </div>

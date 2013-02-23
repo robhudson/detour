@@ -1,0 +1,12 @@
+{% macro load_messages(messages) %}
+  {% for message in messages %}
+    <li data-id="{{ message.id }}" data-email="{{ message.email }}"
+        class="message-root" data-avatar="{{ message.avatar }}">
+      <a href="javascript:;" data-action="view">
+        <img src="{{ message.avatar }}" class="avatar" data-action="view">
+        <span data-action="view">{{ message.email }}</span>
+        <time data-action="view">{{ message.created }}</time>
+      </a>
+    </li>
+  {% endfor %}
+{% endmacro %}

@@ -92,8 +92,14 @@ a {
     text-decoration: none;
 }
 
+#settings {
+    clear: both;
+    float: left;
+    margin-top: -10px;
+}
+
 form {
-    background: rgba(7, 7, 7, 0.65);
+    background: rgba(7, 7, 7, 0.25);
     clear: both;
     float: left;
     padding: 10px;
@@ -116,9 +122,10 @@ form.on {
 }
 
 form h2 {
-    color: #555;
+    color: #999;
     font-family: 'Oswald';
-    font-size: 18px;
+    font-size: 20px;
+    line-height: 23px;
     margin-top: 5px;
 }
 
@@ -152,13 +159,14 @@ label.checkbox {
 }
 
 #contacts-form, #email-notification-form {
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid #333;
+    display: block;
     margin: 0;
     padding-bottom: 20px;
 }
 
 #email-notification-form {
-    border-top: 1px solid #181818;
+    border-bottom: none;
     margin: 0 0 45px;
     padding: 20px 10px 10px 10px;
 }

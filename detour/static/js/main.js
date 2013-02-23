@@ -85,8 +85,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
     var self = $(ev.target);
 
     var messageForm = $('#message-form');
-    var contactsForm = $('#contacts-form');
-    var notificationForm = $('#email-notification-form');
+    var settingsForm = $('#settings');
     var messageDetail = $('#message-detail');
     var contacts = $('#contacts');
     var messages = $('ol.messages');
@@ -101,10 +100,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
     var clearFields = function () {
       messages.addClass('hidden');
       contacts.empty();
-      contactsForm.find('#contact-status')
-        .empty()
-        .removeClass('on');
-      notificationForm.find('#email-notification-status')
+      settingsForm.find('#contact-status, #email-notification-status')
         .empty()
         .removeClass('on');
       messageForm
@@ -113,9 +109,8 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         .removeClass('on');
       messageForm.find('textarea, input[name="email"]').val('');
       messageForm.find('img').attr('src', '');
-      contactsForm.addClass('hidden');
+      settingsForm.addClass('hidden');
       messageForm.addClass('hidden');
-      notificationForm.addClass('hidden');
       body.find('#preview-img')
           .attr('src', '')
           .addClass('hidden');
@@ -175,25 +170,23 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         self.closest('li').remove();
         break;
 
-      case 'add-contact-form':
+      case 'settings-form':
         clearFields();
         body.addClass('fixed');
-        contactsForm.removeClass('hidden');
-        notificationForm.removeClass('hidden');
+        settingsForm.removeClass('hidden');
         break;
 
       case 'new-message':
         body.addClass('fixed');
-        contactsForm.addClass('hidden');
-        notificationForm.addClass('hidden');
+        settingsForm.addClass('hidden');
         messages.addClass('hidden');
         messageDetail.addClass('hidden');
         user.getContacts(nunjucks);
         break;
 
       case 'messages':
-        contactsForm.addClass('hidden');
-        notificationForm.addClass('hidden');
+        body.find('#loading-overlay').fadeIn();
+        settingsForm.addClass('hidden');
         messageDetail.addClass('hidden');
         message.getAll(function () {
           messages.removeClass('hidden');
