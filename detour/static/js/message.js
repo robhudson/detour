@@ -39,6 +39,10 @@ define(['jquery'],
     var self = this;
 
     $.get('/' + API_VERSION + '/messages/unread', function (resp) {
+      for (var i = 0; i < resp.data.length; i ++) {
+        resp.data[i].created = dateDisplay(resp.data[i].created);
+      }
+
       body.find('#inner-wrapper').html(
         nunjucks.env.getTemplate('dashboard.html').render({
           messages: resp.data,
@@ -78,8 +82,11 @@ define(['jquery'],
     }).done(function (data) {
 
       self.form
-        .find('#current-contact, #contacts').empty();
-      self.form.find('input[type="file"], input[name="email"], textarea, input[type="text"], #image-width, #image-height').val('');
+        .find('#current-contact, #contacts')
+        .empty();
+      self.form
+        .find('input[type="file"], input[name="email"], textarea, input[type="text"], #image-width, #image-height')
+        .val('');
       body.find('#preview-img')
         .attr('src', '')
         .addClass('hidden');
@@ -89,16 +96,22 @@ define(['jquery'],
 
       if (data.isSelf) {
         $.get('/message/list/' + data.id, function (data) {
-          body.find('ol.messages').prepend(data);
+          body
+            .find('ol.messages')
+            .prepend(data);
         });
       }
 
       self.form.find('#message-status')
         .empty()
         .removeClass('on');
-      self.form.fadeOut();
+      self
+        .form
+        .fadeOut();
       body.removeClass('fixed');
-      body.find('#uploading-overlay').fadeOut();
+      body
+        .find('#uploading-overlay')
+        .fadeOut();
       self.clear();
 
     }).error(function (data) {
@@ -121,7 +134,7 @@ define(['jquery'],
       this.currentView = preview.parent().parent();
     }
 
-    this.messageDetail = $('#message-detail');
+    this.messageDetail = body.find('#message-detail');
 
     $.ajax({
       url: '/' + API_VERSION + '/message/' + self.currentView.data('id'),
@@ -135,18 +148,22 @@ define(['jquery'],
       self.currentContact = self.currentView.data('email');
       self.currentAvatar = self.currentView.data('avatar');
 
+      resp.data.created = dateDisplay(resp.data.created);
+      body.addClass('fixed');
+
+      self.messageDetail.html(
+        nunjucks.env.getTemplate('view.html').render({
+          message: resp.data
+        })
+      );
+
       if (resp.data.photo) {
         img.attr('src', resp.data.photo);
         img.removeClass('hidden');
       }
 
-      body.find('#viewing-overlay').fadeOut();
-      body.addClass('fixed');
-      self.messageDetail.find('p span').text(resp.data.message);
-      self.messageDetail.find('p time').append('Sent ' +
-          dateDisplay(resp.data.created));
-      self.messageDetail.find('.countdown').text(seconds);
       self.messageDetail.removeClass('hidden');
+      body.find('#viewing-overlay').fadeOut();
 
       countdownInterval = setInterval(function () {
         self.messageDetail.find('.countdown').text(--seconds);
@@ -169,14 +186,13 @@ define(['jquery'],
     this.messageDetail = $('#message-detail');
     this.messageDetail.find('p span, p time, .countdown').empty();
     this.messageDetail.removeAttr('data-email');
-    this.messageDetail.hide();
+    this.messageDetail.addClass('hidden');
     img.attr('src', '');
 
     if (this.currentView) {
       this.currentView.remove();
     }
 
-    body.find('canvas').addClass('hidden');
     body.removeClass('fixed');
     clearInterval(countdownInterval);
     clearInterval(countdownDisplay);

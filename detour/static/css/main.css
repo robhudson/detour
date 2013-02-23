@@ -349,7 +349,6 @@ button {
     background-color: rgba(41, 41, 41, 0.55);
     clear: both;
     color: #aaa;
-    display: none;
     float: left;
     font-size: 18px;
     line-height: 25px;
@@ -440,8 +439,10 @@ button {
 }
 
 time {
+    display: block;
     color: #fff;
     font-size: 12px;
+    line-height: 14px;
     font-style: italic;
 }
 
@@ -588,8 +589,8 @@ time {
     width: 90px;
 }
 
-#footer a:hover {
-    color: #fff;
+#footer a:hover, #footer a:focus {
+    background-color: rgba(3, 3, 3, 0.8);
 }
 
 #footer #new-message {
@@ -597,7 +598,15 @@ time {
     font-size: 1px;
     height: 36px;
     outline: hidden;
+    overflow: hidden;
     padding: 0;
     text-indent: -9999px;
     width: 36px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    #footer #new-message {
+        background-image: url(/static/images/new-message@2x.png);
+        background-size: auto 36px;
+    }
 }
