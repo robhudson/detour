@@ -2,7 +2,8 @@
 <ol id="contacts">
   {% for contact in contacts %}
     <li>
-      <a href="javascript:;" data-action="contact-add" data-email="{{ contact.email }}">
+      <a href="javascript:;" data-action="contact-add" data-email="{{ contact.email }}"
+        data-avatar="{{ contact.avatar }}">
         <img src="{{ contact.avatar }}" class="avatar" data-action="contact-add">
         <span data-action="contact-add">{{ contact.email }}</span>
       </a>

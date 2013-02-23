@@ -146,7 +146,7 @@ define(['jquery'],
       self.messageDetail.find('p time').append('Sent ' +
           dateDisplay(resp.data.created));
       self.messageDetail.find('.countdown').text(seconds);
-      self.messageDetail.fadeIn();
+      self.messageDetail.removeClass('hidden');
 
       countdownInterval = setInterval(function () {
         self.messageDetail.find('.countdown').text(--seconds);

@@ -53,8 +53,8 @@ define(['jquery'],
     $.ajax({
       url: '/' + API_VERSION + '/contacts',
       type: 'GET',
-      async: false,
-      cache: false,
+      dataType: 'json',
+      cache: false
     }).done(function (resp) {
       contactWrapper.html(
         nunjucks.env.getTemplate('contacts.html').render({
@@ -62,7 +62,7 @@ define(['jquery'],
         })
       );
 
-      contactWrapper.show();
+      contactWrapper.removeClass('hidden');
     }).error(function (resp) {
       self.form.find('#contact-status')
         .text(resp.meta.message)

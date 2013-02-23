@@ -99,21 +99,29 @@ define(['jquery', 'user', 'message', 'nunjucks'],
 
     var clearFields = function () {
       messages.addClass('hidden');
-      contacts.empty();
-      settingsForm.find('#contact-status, #email-notification-status')
+      contacts
+        .addClass('hidden')
+        .empty();
+      settingsForm
+        .find('#contact-status, #email-notification-status')
         .empty()
         .removeClass('on');
       messageForm
         .find('#message-status, #current-contact')
         .empty()
         .removeClass('on');
-      messageForm.find('textarea, input[name="email"]').val('');
-      messageForm.find('img').attr('src', '');
+      messageForm
+        .find('textarea, input[name="email"]')
+        .val('');
+      messageForm
+        .find('img')
+        .attr('src', '');
       settingsForm.addClass('hidden');
       messageForm.addClass('hidden');
-      body.find('#preview-img')
-          .attr('src', '')
-          .addClass('hidden');
+      body
+        .find('#preview-img')
+        .attr('src', '')
+        .addClass('hidden');
       body.removeClass('fixed');
     };
 
@@ -146,8 +154,11 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         break;
 
       case 'reply':
-        messageForm.find('textarea, input[name="email"]').val('');
-        messageForm.find('input[name="dither"]')
+        messageForm
+          .find('textarea, input[name="email"]')
+          .val('');
+        messageForm
+          .find('input[name="dither"]')
           .attr('checked', false)
           .removeClass('on');
         insertContact(message.currentContact, message.currentAvatar);
@@ -160,7 +171,9 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         var email = self.data('email') || self.parent().data('email');
         var avatar = self.data('avatar') || self.parent().data('avatar');
         insertContact(email, avatar);
-        body.find('#message-body').addClass('hidden');
+        body
+          .find('#message-body')
+          .addClass('hidden');
         messageForm.removeClass('hidden');
         message.clear();
         break;
@@ -177,6 +190,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         break;
 
       case 'new-message':
+        clearFields();
         body.addClass('fixed');
         settingsForm.addClass('hidden');
         messages.addClass('hidden');
@@ -211,8 +225,12 @@ define(['jquery', 'user', 'message', 'nunjucks'],
 
       fileReader.onload = function (evt) {
         img[0].onload = function () {
-          messageForm.find('#image-width').val(img.width());
-          messageForm.find('#image-height').val(img.height());
+          messageForm
+            .find('#image-width')
+            .val(img.width());
+          messageForm
+            .find('#image-height')
+            .val(img.height());
           img.removeClass('hidden');
         };
 
