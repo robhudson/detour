@@ -68,7 +68,7 @@ def post_contact():
         return api_response(contact.to_json(), 200,
                             'contact added successfully')
     else:
-        return api_response(None, 400, 'Invalid contact format')
+        return api_response(None, 400, 'Contact cannot be empty')
 
 
 @api.route('/contact/<int:contact_id>', methods=['DELETE'])
