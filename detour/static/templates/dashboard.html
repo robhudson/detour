@@ -25,23 +25,14 @@
   </form>
 
   <div id="settings" class="hidden">
-    <form method="post" id="contacts-form">
-      <h2>Add a new contact</h2>
-      <input type="text" name="email" placeholder="add contact email">
-      <div id="contact-status"></div>
-      <button type="submit" class="right">Add</button>
-    </form>
-
-    <form method="post" id="email-notification-form">
-      <h2>Email notifications</h2>
-      <p class="tip">
-        <input type="checkbox" name="emailNotification" {% if email_notification %}checked="checked"{% endif %}>
-        when someone sends you a message
-      </p>
-      <div id="email-notification-status"></div>
-      <a href="javascript:;" data-action="cancel" class="cancel">Close</a>
-      <button type="submit" class="right">Update</button>
-    </form>
+    <ol>
+      <li>
+        <a href="javascript:;" data-action="edit-contacts">Manage Contacts</a>
+      </li>
+      <li>
+        <a href="javascript:;" data-action="edit-profile">Manage Notifications</a>
+      </li>
+    </ol>
   </div>
   <div id="message-body"></div>
 

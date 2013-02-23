@@ -181,7 +181,8 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         break;
 
       case 'contact-delete':
-        user.deleteContact({ email: self.data('email') });
+        var userId = self.data('id') || self.parent().data('id');
+        user.deleteContact(parseInt(userId, 10));
         self.closest('li').remove();
         break;
 
@@ -197,7 +198,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         settingsForm.addClass('hidden');
         messages.addClass('hidden');
         messageDetail.addClass('hidden');
-        user.getContacts(nunjucks);
+        user.getContacts(nunjucks, 'contacts');
         break;
 
       case 'messages':
@@ -207,6 +208,16 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         message.getAll(function () {
           messages.removeClass('hidden');
         });
+        break;
+
+      case 'edit-contacts':
+        clearFields();
+        body.addClass('fixed');
+        settingsForm.addClass('hidden');
+        messages.addClass('hidden');
+        messageDetail.addClass('hidden');
+        user.getContacts(nunjucks, 'edit_contacts');
+        break;
     }
   });
 
@@ -259,7 +270,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
 
       case 'contacts-form':
         ev.preventDefault();
-        user.addContact(self.serialize());
+        user.addContact(self.serialize(), nunjucks);
         break;
 
       case 'email-notification-form':

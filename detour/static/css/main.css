@@ -96,12 +96,6 @@ a {
     text-decoration: none;
 }
 
-#settings {
-    clear: both;
-    float: left;
-    margin-top: -10px;
-}
-
 form {
     background: rgba(6, 6, 6, 0.55);
     clear: both;
@@ -110,6 +104,17 @@ form {
     position: fixed;
     width: 300px;
     z-index: 2;
+}
+
+#settings, #contacts-form {
+    clear: both;
+    float: left;
+    margin-top: -10px;
+    position: relative;
+}
+
+#contacts-form {
+    margin-bottom: 2px;
 }
 
 #preview-img {
@@ -328,7 +333,14 @@ textarea {
     width: 320px;
 }
 
-.messages li, #contacts li a {
+#settings ol li a {
+    display: block;
+    float: left;
+    padding: 15px 10px 10px 10px;
+    width: 300px;
+}
+
+.messages li, #contacts li a, #settings ol li {
     background-color: rgba(35, 35, 35, 0.4);
     color: #fff;
     clear: both;
@@ -355,7 +367,7 @@ textarea {
     padding: 6px 8px;
 }
 
-.messages li:hover, #contacts li a:hover {
+.messages li:hover, #contacts li a:hover, #settings ol li a:hover {
     background-color: #171717;
 }
 
@@ -390,16 +402,19 @@ button {
     width: 70px;
 }
 
-.cancel, button, .actions {
+#settings ol li a, .cancel, button, .actions {
     color: #fff;
-    cursor: pointer;
-    display: inline-block;
     font-family: Oswald;
     font-size: 24px;
     line-height: 24px;
+    text-transform: uppercase;
+}
+
+.cancel, button, .actions {
+    cursor: pointer;
+    display: inline-block;
     margin: 20px 0 0;
     padding: 0;
-    text-transform: uppercase;
 }
 
 .cancel {
@@ -416,20 +431,6 @@ button {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 300px;
-}
-
-#dither-view {
-    clear: both;
-    display: block;
-    float: left;
-}
-
-.dither-toggle {
-    display: none;
-}
-
-.dither-toggle.on {
-    display: block;
 }
 
 #message-detail p span {
@@ -488,7 +489,7 @@ time {
     width: 35px;
 }
 
-#contacts li {
+#contacts li, #settings ol li {
     clear: both;
     float: left;
     position: relative;
@@ -501,6 +502,8 @@ time {
     padding: 3px;
     width: 314px;
 }
+
+
 
 #contacts li.button {
     text-align: center;
@@ -530,23 +533,21 @@ time {
 }
 
 #contacts li span.delete {
-    background-color: #222;
-    color: #555;
+    background: url(/static/images/delete-contact.png) no-repeat 50% 50%;
+    background-color: #de2b2f;
     display: block;
-    font-size: 15px;
-    font-weight: bold;
-    height: 30px;
-    line-height: 32px;
+    font-size: 1px;
+    height: 35px;
     position: absolute;
     right: 0;
-    text-align: center;
-    top: 0;
-    width: 30px;
+    text-indent: -9999px;
+    top: 4px;
+    width: 35px;
 }
 
-#contacts li span.delete:hover, #contacts li:hover span.delete {
-    background-color: #e51616;
-    color: #ffb7b7;
+#contacts li span.delete:hover {
+    background-color: #333;
+    opacity: 0.7;
 }
 
 .overlay {
@@ -617,5 +618,10 @@ time {
     .button-wrapper button[data-action="upload-photo"] {
         background-image: url(/static/images/photo@2x.png);
         background-size: auto 26px;
+    }
+
+    #contacts li span.delete {
+        background: url(/static/images/delete-contact@2x.png);
+        background-size: auto 18px;
     }
 }

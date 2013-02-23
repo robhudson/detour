@@ -11,7 +11,7 @@ define(['jquery'],
     this.form = null;
   };
 
-  User.prototype.addContact = function (data) {
+  User.prototype.addContact = function (data, nunjucks) {
     var self = this;
 
     this.form = $('#contacts-form');
@@ -22,29 +22,32 @@ define(['jquery'],
       type: 'POST',
       dataType: 'json',
       cache : false
+
     }).done(function (data) {
       self.form.find('#contact-status')
         .text('Added!')
         .addClass('on');
       self.form.find('input[name="email"]').val('');
+      self.getContacts(nunjucks, 'edit_contacts');
+
     }).error(function (data) {
       self.form.find('#contact-status')
         .text(JSON.parse(data.responseText).meta.message)
         .addClass('on');
+
     });
   };
 
-  User.prototype.deleteContact = function (data) {
+  User.prototype.deleteContact = function (id) {
     $.ajax({
-      url: '/' + API_VERSION + '/contact',
-      data: data,
+      url: '/' + API_VERSION + '/contact/' + id,
       type: 'DELETE',
       dataType: 'json',
       cache : false
     });
   };
 
-  User.prototype.getContacts = function (nunjucks) {
+  User.prototype.getContacts = function (nunjucks, template) {
     var self = this;
 
     this.form = $('#message-form');
@@ -57,7 +60,7 @@ define(['jquery'],
       cache: false
     }).done(function (resp) {
       contactWrapper.html(
-        nunjucks.env.getTemplate('contacts.html').render({
+        nunjucks.env.getTemplate(template + '.html').render({
           contacts: resp.data
         })
       );
