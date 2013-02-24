@@ -8,6 +8,7 @@ from functools import wraps
 
 from flask import Blueprint, g, jsonify, request
 from PIL import Image
+from PIL.ExifTags import TAGS
 from sqlalchemy.orm.exc import NoResultFound
 
 import settings
@@ -159,6 +160,30 @@ def post_message():
             path = tempfile.mkstemp()[1]
             photo.save(path)
             img = Image.open(path)
+            # Get orientation.
+            if hasattr(img, '_getexif'):
+                exif = dict((TAGS.get(k, k), v)
+                            for k, v in img._getexif().items())
+                orientation = exif.get('Orientation')
+                if orientation:
+                    if orientation == 1:  # Horizontal (normal).
+                        pass  # Image is ok.
+                    elif orientation == 2:  # Mirrored horizontal.
+                        img = img.transpose(Image.FLIP_LEFT_RIGHT)
+                    elif orientation == 3:  # Rotated 180.
+                        img = img.transpose(Image.ROTATE_180)
+                    elif orientation == 4:  # Mirrored vertical.
+                        img = img.transpose(Image.FLIP_TOP_BOTTOM)
+                    elif orientation == 5:  # Mirrored horiz, rotated 90 CCW.
+                        img = (img.transpose(Image.FLIP_TOP_BOTTOM)
+                                  .transpose(Image.ROTATE_270))
+                    elif orientation == 6:  # Rotated 90 CW.
+                        img = img.transpose(Image.ROTATE_270)
+                    elif orientation == 7:  # Mirrored horiz, rotated 90 CW.
+                        img = (img.transpose(Image.FLIP_LEFT_RIGHT)
+                                  .transpose(Image.ROTATE_270))
+                    elif orientation == 8:  # Rotated 90 CCW.
+                        img = img.transpose(Image.ROTATE_90)
             # Find ratio to scale to IMAGE_WIDTH and keep aspect ratio.
             x, y = img.size
             ratio = float(IMAGE_WIDTH) / x
