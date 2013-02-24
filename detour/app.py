@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
-
 import browserid
 from flask import Flask, g, jsonify, render_template, request, session
 from sqlalchemy.orm.exc import NoResultFound
@@ -12,8 +10,13 @@ from models import *
 
 
 default_config = {
-    'DEBUG': getattr(settings, 'DEBUG', False),
-    'SECRET_KEY': settings.SESSION_SECRET,
+    'DEBUG': settings.DEBUG,
+    'SECRET_KEY': settings.SECRET_KEY,
+    'SERVER_NAME': settings.SERVER_NAME,
+    'SQLALCHEMY_DATABASE_URI': settings.DATABASE_URL,
+    'SQLALCHEMY_ECHO': settings.DEBUG_SQL,
+    'TRAP_HTTP_EXCEPTIONS': settings.DEBUG,
+    'TRAP_BAD_REQUEST_ERRORS': settings.DEBUG,
 }
 
 
@@ -43,7 +46,8 @@ def create_app(config):
         Upon success, create the user if it doesn't already exist and set the
         email for the user's session.
         """
-        data = browserid.verify(request.form['assertion'], settings.SITE_URL)
+        data = browserid.verify(request.form['assertion'], '%s://%s' % (
+            app.config['PREFERRED_URL_SCHEME'], app.config['SERVER_NAME']))
         email = data['email']
 
         # Create user record.
@@ -77,12 +81,5 @@ def create_app(config):
     return app
 
 if __name__ == '__main__':
-    app = create_app({
-        'DEBUG': True,
-        'TRAP_HTTP_EXCEPTIONS': True,
-        'TRAP_BAD_REQUEST_ERRORS': True,
-        'SQLALCHEMY_DATABASE_URI': os.environ.get(
-            'DATABASE_URL', 'sqlite:///detour_app.db'),
-        'SQLALCHEMY_ECHO': True  # Show SQL on console.
-    })
+    app = create_app(default_config)
     app.run()

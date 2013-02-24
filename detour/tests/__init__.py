@@ -9,7 +9,10 @@ class DetourTestCase(unittest.TestCase):
 
     def setUp(self):
         config = {
+            'DEBUG': False,
+            'SERVER_NAME': None,
             'SQLALCHEMY_DATABASE_URI': 'sqlite://',
+            'SQLALCHEMY_ECHO': False,
             'TESTING': True,
         }
         self.app = create_app(config)
