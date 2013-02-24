@@ -111,8 +111,8 @@ def get_unread_messages():
         Message.to_user==g.user).order_by('Message.created')
     return api_response(
         [dict(id=m.id, email=m.from_user.email, avatar=m.from_user.avatar,
-              created=m.created_stamp) for m in messages], 200,
-        'messages retrieved successfully')
+              has_media=bool(m.photo), created=m.created_stamp)
+         for m in messages], 200, 'messages retrieved successfully')
 
 
 @api.route('/message/<int:message_id>')

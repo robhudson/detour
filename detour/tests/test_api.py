@@ -133,11 +133,13 @@ class TestMessageApi(DetourTestCase):
 
         data = json.loads(rv.data)
         eq_(len(data['data']), 2)
+        for attr in ('email', 'avatar'):
+            eq_(data['data'][0][attr], getattr(self.contact, attr))
         # First created stamp is less than second.
         ok_(data['data'][0]['created'] < data['data'][1]['created'],
             'Messages not sorted by created descending.')
-        for attr in ('email', 'avatar'):
-            eq_(data['data'][0][attr], getattr(self.contact, attr))
+        # Photo is empty so has_media is false.
+        eq_(data['data'][0]['has_media'], False)
 
     def test_get_message(self):
         self.login(self.user.email)

@@ -156,6 +156,7 @@ Returns:
                 'id': 1,
                 'email': 'them@detourapp.com',
                 'avatar': 'https://gravatar.com/321',
+                'has_media': true,
                 'created': 12345
             }
         ],
