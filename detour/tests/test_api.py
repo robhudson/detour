@@ -45,25 +45,14 @@ class TestContactApi(DetourTestCase):
         eq_(len(user.contacts), 2)
         eq_(user.contacts[0].email, contact.email)
 
-    def test_post_invalid_null_contact(self):
+    def test_post_invalid_contact(self):
         self.login(self.user.email)
-
-        contact = User(email='')
-        rv = self.client.post('/%s/contact' % API_VERSION,
-                              data={'email': contact.email})
-        eq_(rv.status_code, 400)
-        data = json.loads(rv.data)
-        eq_(data['meta']['code'], 400)
-
-    def test_post_invalid_whitespace_contact(self):
-        self.login(self.user.email)
-
-        contact = User(email='    ')
-        rv = self.client.post('/%s/contact' % API_VERSION,
-                              data={'email': contact.email})
-        eq_(rv.status_code, 400)
-        data = json.loads(rv.data)
-        eq_(data['meta']['code'], 400)
+        for email in ('', '   ', 'not_an_email.com', '@email.com'):
+            rv = self.client.post('/%s/contact' % API_VERSION,
+                                  data={'email': email})
+            eq_(rv.status_code, 400)
+            data = json.loads(rv.data)
+            eq_(data['meta']['code'], 400)
 
     def test_delete_contact(self):
         self.login(self.user.email)

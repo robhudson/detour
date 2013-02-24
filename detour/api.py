@@ -1,6 +1,7 @@
 import base64
 import datetime
 import os
+import re
 import StringIO
 import tempfile
 from functools import wraps
@@ -16,6 +17,7 @@ from models import Message, User
 
 IMAGE_WIDTH = 300
 ALLOWED_EXTENSIONS = ('gif', 'jpg', 'jpeg', 'png')
+EMAIL_RE = re.compile('[^@]+@[^@]+\.[^@]+')
 
 
 api = Blueprint('api', __name__)
@@ -53,9 +55,12 @@ def get_me():
 @api.route('/contact', methods=['POST'])
 @login_required
 def post_contact():
-    email = request.form['email'].strip();
+    email = request.form.get('email')
 
     if email:
+        email = email.strip()
+        if not EMAIL_RE.match(email):
+            return api_response(None, 400, 'Contact not a valid email address')
         try:
             contact = User.query.filter(User.email==email).one()
         except NoResultFound:
