@@ -1,11 +1,11 @@
-define(['jquery'],
-  function($) {
+define(['jquery', 'settings'],
+  function($, settings) {
 
   'use strict';
 
-  var body = $('body');
+  var body = settings.body;
 
-  var API_VERSION = '1.0';
+  var API_VERSION = settings.API_VERSION;
 
   var User = function() {
     this.form = null;
@@ -14,6 +14,7 @@ define(['jquery'],
   User.prototype.addContact = function (data, nunjucks) {
     var self = this;
 
+    this.status = $('#status');
     this.form = $('#contacts-form');
 
     $.ajax({
@@ -24,17 +25,23 @@ define(['jquery'],
       cache : false
 
     }).done(function (data) {
-      self.form.find('#contact-status')
+      self.status
+        .removeClass('error')
         .text('Added!')
         .addClass('on');
+
+      settings.statusTimer(self.status);
+
       self.form.find('input[name="email"]').val('');
       self.getContacts(nunjucks, 'edit_contacts');
 
     }).error(function (data) {
-      self.form.find('#contact-status')
+      self.status
+        .addClass('error')
         .text(JSON.parse(data.responseText).meta.message)
         .addClass('on');
 
+      settings.statusTimer(self.status);
     });
   };
 
@@ -50,7 +57,9 @@ define(['jquery'],
   User.prototype.getContacts = function (nunjucks, template) {
     var self = this;
 
+    this.status = $('#status');
     this.form = $('#message-form');
+
     var contactWrapper = body.find('#message-body');
 
     $.ajax({
@@ -67,35 +76,82 @@ define(['jquery'],
 
       contactWrapper.removeClass('hidden');
     }).error(function (resp) {
-      self.form.find('#contact-status')
+      self.status
+        .addClass('error')
         .text(resp.meta.message)
         .addClass('on');
+
+      settings.statusTimer(self.status);
     });
   };
-  /*
-  User.prototype.addEmailNotification = function (data) {
+
+  User.prototype.getProfile = function (nunjucks, template) {
     var self = this;
 
-    this.form = $('#email-notification-form');
+    this.status = $('#status');
+    this.form = $('#message-form');
+
+    var profileWrapper = body.find('#message-body');
 
     $.ajax({
-      url: '/emailNotification',
-      data: data,
-      type: 'POST',
+      url: '/' + API_VERSION + '/me',
+      type: 'GET',
       dataType: 'json',
-      cache : false
-    }).done(function (data) {
-      var message = 'Updated!';
+      cache: false
+    }).done(function (resp) {
+      profileWrapper.html(
+        nunjucks.env.getTemplate(template + '.html').render({
+          data: resp.data
+        })
+      );
 
-      self.form.find('#email-notification-status')
-        .text(message)
+      profileWrapper.removeClass('hidden');
+    }).error(function (resp) {
+      self.status
+        .addClass('error')
+        .text(resp.meta.message)
         .addClass('on');
-    }).error(function (data) {
-      self.form.find('#email-notification-status')
-        .text(JSON.parse(data.responseText).message)
-        .addClass('on');
+
+      settings.statusTimer(self.status);
     });
   };
-  */
+
+  User.prototype.updateProfile = function (data) {
+    var self = this;
+
+    this.status = $('#status');
+    this.form = $('#message-form');
+
+    var profileWrapper = body.find('#message-body');
+
+    if (data) {
+      data = 'email_notification=true';
+    }
+
+    $.ajax({
+      url: '/' + API_VERSION + '/me',
+      type: 'PUT',
+      data: data,
+      dataType: 'json',
+      cache: false,
+      processData: false
+    }).done(function (resp) {
+      self.status
+        .removeClass('error')
+        .text('Updated!')
+        .addClass('on');
+
+      settings.statusTimer(self.status);
+
+    }).error(function (resp) {
+      self.status
+        .addClass('error')
+        .text(resp.meta.message)
+        .addClass('on');
+
+      settings.statusTimer(self.status);
+    });
+  };
+
   return User;
 });

@@ -132,10 +132,10 @@ form.on {
 }
 
 form h2 {
-    color: #999;
+    color: #fff;
     font-family: 'Oswald';
-    font-size: 20px;
-    line-height: 23px;
+    font-size: 25px;
+    line-height: 28px;
     margin-top: 5px;
 }
 
@@ -149,7 +149,7 @@ input[type="file"], textarea[name="photo_message"] {
 }
 
 label.checkbox {
-    color: #eee;
+    color: #fff;
     display: block;
     float: right;
     font-size: 11px;
@@ -238,61 +238,69 @@ h1 {
     font-family: 'Oswald';
 }
 
+#header {
+    margin: 20px 0 10px;
+}
+
+#header h1 {
+    color: #888;
+    font-size: 40px;
+}
+
 ol.home {
     clear: both;
     display: block;
-    margin: 10px auto;
+    margin: 0 auto;
     padding: 0;
     text-align: center;
-    width: 270px;
+    width: 100%;
 }
 
 ol.home li {
+    background-color: rgba(35, 35, 35, 0.35);
     color: #929292;
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 100;
-    margin-bottom: 2px;
-    padding: 5px 5px;
+    line-height: 22px;
+    margin: 2px auto;
+    padding: 5px 10px;
+    width: 300px;
 }
 
 .login {
-    background-color: #121212;
-    border: 1px solid #668790;
-    border-radius: 35px;
+    background-color: #444;
     clear: both;
-    color: #3fa6c4;
+    color: #888;
     display: block;
     font-family: 'Oswald';
-    font-size: 18px;
-    margin: 10px auto;
-    padding: 15px 5px;
+    font-size: 27px;
+    line-height: 35px;
+    margin: 20px 0 2px;
+    padding: 10px;
     text-align: center;
     text-transform: uppercase;
-    width: 245px;
+    width: 300px;
 }
 
 .login, .login:hover {
     -webkit-transition-property: background color;
-    -webkit-transition-duration: 2.3s;
+    -webkit-transition-duration: 2s;
     -webkit-transition-timing-function: ease;
     -moz-transition-property: background color;
-    -moz-transition-duration: 2.3s;
+    -moz-transition-duration: 2s;
     -moz-transition-timing-function: ease;
-    -o-transition-property: background color;
-    -o-transition-duration: 2.3s;
-    -o-transition-timing-function: ease;
     -ms-transition-property: background color;
-    -ms-transition-duration: 2.3s;
+    -ms-transition-duration: 2s;
     -ms-transition-timing-function: ease;
     transition-property: background color;
-    transition-duration: 2.3s;
+    transition-duration: 2s;
     transition-timing-function: ease;
 }
 
 .login:hover {
     background-color: #24a8cd;
-    color: #cbf4ff;
-    text-shadow: #399cac -1px -1px 0;
+    color: #c9f3ff;
+    text-shadow: #24677a 1px 1px 2px;
 }
 
 textarea, input[type="text"] {
@@ -312,7 +320,7 @@ textarea:focus, input[type="text"]:focus {
 }
 
 textarea {
-    height: 50px;
+    height: 60px;
     overflow: hidden;
     resize: none;
 }
@@ -353,7 +361,7 @@ textarea {
     display: block;
     float: left;
     font-size: 15px;
-    line-height: 22px;
+    line-height: 24px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -379,7 +387,7 @@ button {
 #message-detail {
     background-color: rgba(41, 41, 41, 0.55);
     clear: both;
-    color: #aaa;
+    color: #fff;
     float: left;
     font-size: 18px;
     line-height: 25px;
@@ -417,8 +425,19 @@ button {
     padding: 0;
 }
 
-.cancel {
+.cancel, #char-limit {
     float: left;
+}
+
+#char-limit {
+    color: #fff;
+    font-family: 'Oswald';
+    font-size: 20px;
+    line-height: 25px;
+}
+
+#char-limit.over {
+    color: #de2b2f;
 }
 
 .right {
@@ -441,7 +460,7 @@ button {
 
 #message-detail .countdown {
     bottom: 10px;
-    color: #eee;
+    color: #fff;
     font-size: 42px;
     font-weight: 400;
     left: -25px;
@@ -450,24 +469,33 @@ button {
     width: 50px;
 }
 
-#message-status, #contact-status, #email-notification-status {
-    background-color: #c92020;
-    color: #ffcece;
+#status {
+    background-color: #40995b;
+    color: #fff;
     display: none;
     font-size: 12px;
-    padding: 5px;
+    overflow: hidden;
+    padding: 10px 5px;
+    position: fixed;
+    top: 5px;
+    width: 310px;
+    z-index: 3;
+}
+
+#status.on {
+    display: block;
+}
+
+#status.error {
+    background-color: #de2b2f;
 }
 
 time {
     display: block;
     color: #fff;
     font-size: 12px;
-    line-height: 14px;
+    line-height: 13px;
     font-style: italic;
-}
-
-#message-status.on, #contact-status.on, #email-notification-status.on {
-    display: inline-block;
 }
 
 #contacts {
@@ -478,7 +506,7 @@ time {
 }
 
 #current-contact {
-    color: #eee;
+    color: #fff;
     display: block;
     line-height: 35px;
     margin: 0;
@@ -553,7 +581,7 @@ time {
 .overlay {
     background: rgba(6, 6, 6, 0.85);
     bottom: 0;
-    color: #eee;
+    color: #fff;
     display: none;
     font-family: 'Oswald';
     font-size: 25px;

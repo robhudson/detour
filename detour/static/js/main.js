@@ -14,12 +14,10 @@ requirejs.config({
   }
 });
 
-define(['jquery', 'user', 'message', 'nunjucks'],
-  function($, User, Message, nunjucks) {
+define(['jquery', 'user', 'message', 'settings', 'nunjucks'],
+  function($, User, Message, settings, nunjucks) {
 
   'use strict';
-
-  var API_VERSION = '1.0';
 
   var env = new nunjucks.Environment();
 
@@ -33,7 +31,21 @@ define(['jquery', 'user', 'message', 'nunjucks'],
 
   var nav = navigator.userAgent;
 
-  var body = $('body');
+  var body = settings.body;
+  var CHAR_MAX = settings.CHAR_MAX;
+
+  var checkCharLimit = function (text) {
+    var textLength = text.length;
+    var charLimit = $('#char-limit');
+
+    if (textLength > CHAR_MAX) {
+      charLimit.addClass('over');
+      charLimit.text('- ' + (textLength - CHAR_MAX));
+    } else {
+      charLimit.removeClass('over');
+      charLimit.text(CHAR_MAX - textLength);
+    }
+  };
 
   if (body.data('authenticated') === 'False') {
     body.find('#inner-wrapper').html(
@@ -83,6 +95,10 @@ define(['jquery', 'user', 'message', 'nunjucks'],
       nav.match(/Mobile/i) && !nav.match(/Android/i)));
   };
 
+  body.on('keyup', 'textarea', function (ev) {
+    checkCharLimit($(this).val());
+  });
+
   body.on('click', function (ev) {
     var self = $(ev.target);
 
@@ -106,14 +122,6 @@ define(['jquery', 'user', 'message', 'nunjucks'],
       contacts
         .addClass('hidden')
         .empty();
-      settingsForm
-        .find('#contact-status, #email-notification-status')
-        .empty()
-        .removeClass('on');
-      messageForm
-        .find('#message-status, #current-contact')
-        .empty()
-        .removeClass('on');
       messageForm
         .find('textarea, input[name="email"]')
         .val('');
@@ -147,6 +155,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
 
       case 'close':
         message.clear();
+        body.find('#messages-inbox').click();
         break;
 
       case 'upload-photo':
@@ -155,6 +164,7 @@ define(['jquery', 'user', 'message', 'nunjucks'],
 
       case 'cancel':
         clearFields();
+        body.find('#messages-inbox').click();
         break;
 
       case 'reply':
@@ -220,6 +230,15 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         messageDetail.addClass('hidden');
         user.getContacts(nunjucks, 'edit_contacts');
         break;
+
+      case 'edit-profile':
+        clearFields();
+        body.addClass('fixed');
+        settingsForm.addClass('hidden');
+        messages.addClass('hidden');
+        messageDetail.addClass('hidden');
+        user.getProfile(nunjucks, 'edit_profile');
+        break;
     }
   });
 
@@ -256,10 +275,6 @@ define(['jquery', 'user', 'message', 'nunjucks'],
     }
   });
 
-  body.on('focus', 'textarea, input[type="text"]', function () {
-    body.find('#message-status, #api-status, #contact-status, #email-notification-status').removeClass('on');
-  });
-
   body.on('submit', 'form', function (ev) {
     var self = $(ev.target);
 
@@ -275,9 +290,9 @@ define(['jquery', 'user', 'message', 'nunjucks'],
         user.addContact(self.serialize(), nunjucks);
         break;
 
-      case 'email-notification-form':
+      case 'profile-form':
         ev.preventDefault();
-        user.addEmailNotification(self.serialize());
+        user.updateProfile(self.serialize(), nunjucks);
         break;
     }
   });

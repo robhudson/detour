@@ -1,11 +1,11 @@
-define(['jquery'],
-  function($) {
+define(['jquery', 'settings'],
+  function($, settings) {
 
   'use strict';
 
-  var body = $('body');
+  var body = settings.body;
 
-  var API_VERSION = '1.0';
+  var API_VERSION = settings.API_VERSION;
 
   var countdownInterval;
   var countdownDisplay;
@@ -63,6 +63,7 @@ define(['jquery'],
       if (callback) {
         callback();
       }
+
     }).done(function () {
       body.find('#loading-overlay').fadeOut();
     });
@@ -70,6 +71,7 @@ define(['jquery'],
 
   Message.prototype.create = function () {
     var self = this;
+    this.status = $('#status');
     this.form = $('#message-form');
 
     var fd = new FormData(this.form[0]);
@@ -100,21 +102,13 @@ define(['jquery'],
       body.find('#preview-img')
         .attr('src', '')
         .addClass('hidden');
-      self.form.find('#message-status')
+      self.status
+        .removeClass('error')
         .text('Sent!')
         .addClass('on');
 
-      if (data.isSelf) {
-        $.get('/message/list/' + data.id, function (data) {
-          body
-            .find('ol.messages')
-            .prepend(data);
-        });
-      }
+      settings.statusTimer(self.status);
 
-      self.form.find('#message-status')
-        .empty()
-        .removeClass('on');
       self
         .form
         .fadeOut();
@@ -126,9 +120,12 @@ define(['jquery'],
 
     }).error(function (data) {
       body.find('#uploading-overlay').fadeOut();
-      self.form.find('#message-status')
+      self.status
+        .addClass('error')
         .text(JSON.parse(data.responseText).meta.message)
         .addClass('on');
+
+      settings.statusTimer(self.status);
     });
   };
 
@@ -176,11 +173,12 @@ define(['jquery'],
       body.find('#viewing-overlay').fadeOut();
 
       countdownInterval = setInterval(function () {
-        self.messageDetail.find('.countdown').text(--seconds);
+        self.messageDetail.find('.countdown').text(-- seconds);
       }, 1000);
 
       countdownDisplay = setTimeout(function () {
         self.clear();
+        body.find('#messages-inbox').click();
       }, seconds * 1000);
 
     }).error(function (data) {

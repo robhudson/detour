@@ -1,10 +1,10 @@
-<form method="post" id="email-notification-form">
+<form method="post" id="profile-form">
   <h2>Email notifications</h2>
   <p class="tip">
-    <input type="checkbox" name="emailNotification" {% if email_notification %}checked="checked"{% endif %}>
+    <input type="checkbox" name="email_notification"
+      {% if data.email_notification %}checked="checked"{% endif %}>
     when someone sends you a message
   </p>
-  <div id="email-notification-status"></div>
   <a href="javascript:;" data-action="cancel" class="cancel">Close</a>
   <button type="submit" class="right">Update</button>
 </form>
