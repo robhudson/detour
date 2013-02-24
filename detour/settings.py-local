@@ -1,9 +1,19 @@
-SESSION_SECRET = 'SESSION_SECRET'
+# Application settings.
+#
+# To override the values, create a local_settings.py and enter the
+# new values there.
 
-SITE_URL = 'http://localhost:5000'
-
+DATABASE_URL = 'sqlite:///detour_app.db'
 DEBUG = True
-
+DEBUG_SQL = True
+DEFAULT_TTL = 10  # Default time-to-live, in seconds.
 POSTMARK_API_KEY = 'postmark_key'
+# To generate a secret: import os; os.urandom(24)
+SECRET_KEY = 'SECRET_KEY'
+SERVER_NAME = 'localhost:5000'
 
-DEFAULT_TTL = 10
+
+try:
+    from settings_local import *
+except ImportError:
+    pass
