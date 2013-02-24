@@ -533,7 +533,7 @@ time {
 }
 
 #contacts li span.delete {
-    background: url(/static/images/delete-contact.png) no-repeat 50% 50%;
+    background: url(../images/delete-contact.png) no-repeat 50% 50%;
     background-color: #de2b2f;
     display: block;
     font-size: 1px;
@@ -599,7 +599,7 @@ time {
 }
 
 #footer #new-message {
-    background: url(/static/images/new-message.png) no-repeat;
+    background: url(../images/new-message.png) no-repeat;
     font-size: 1px;
     height: 36px;
     outline: hidden;
@@ -611,17 +611,17 @@ time {
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 2), (min-resolution: 2dppx) {
     #footer #new-message {
-        background-image: url(/static/images/new-message@2x.png);
+        background-image: url(../images/new-message@2x.png);
         background-size: auto 36px;
     }
 
     .button-wrapper button[data-action="upload-photo"] {
-        background-image: url(/static/images/photo@2x.png);
+        background-image: url(../images/photo@2x.png);
         background-size: auto 26px;
     }
 
     #contacts li span.delete {
-        background: url(/static/images/delete-contact@2x.png);
+        background: url(../images/delete-contact@2x.png);
         background-size: auto 18px;
     }
 }

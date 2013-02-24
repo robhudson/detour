@@ -127,7 +127,7 @@ define(['jquery'],
     }).error(function (data) {
       body.find('#uploading-overlay').fadeOut();
       self.form.find('#message-status')
-        .text(JSON.parse(data.responseText).message)
+        .text(JSON.parse(data.responseText).meta.message)
         .addClass('on');
     });
   };

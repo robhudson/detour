@@ -1,11 +1,13 @@
 requirejs.config({
-  baseUrl: '/static/js',
   enforceDefine: true,
   paths: {
-    'jquery': '/static/js/lib/jquery',
-    'nunjucks': '/static/js/lib/nunjucks'
+    'jquery': 'lib/jquery',
+    'nunjucks': 'lib/nunjucks'
   },
   shim: {
+    'jquery': {
+      exports: 'jQuery'
+    },
     'nunjucks': {
       exports: 'nunjucks'
     }
@@ -13,7 +15,7 @@ requirejs.config({
 });
 
 define(['jquery', 'user', 'message', 'nunjucks'],
-  function($, User, Message) {
+  function($, User, Message, nunjucks) {
 
   'use strict';
 

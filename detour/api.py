@@ -125,7 +125,7 @@ def get_message(message_id):
 def post_message():
     if not request.form.get('email') or not (
         request.form.get('message') or request.files.get('photo')):
-        return api_response(None, 400, 'bad request')
+        return api_response(None, 400, 'Must have text and/or photo')
 
     email = request.form.get('email')
     message = request.form.get('message')
