@@ -161,7 +161,7 @@ def post_message():
             photo.save(path)
             img = Image.open(path)
             # Get orientation.
-            if hasattr(img, '_getexif'):
+            if hasattr(img, '_getexif') and img._getexif():
                 exif = dict((TAGS.get(k, k), v)
                             for k, v in img._getexif().items())
                 orientation = exif.get('Orientation')
