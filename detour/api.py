@@ -45,11 +45,20 @@ def login_required(f):
     return decorated_function
 
 
-@api.route('/me')
+@api.route('/me', methods=['GET', 'PUT'])
 @login_required
-def get_me():
-    return api_response(g.user.to_json(), 200,
-                        'profile retrieved successfully')
+def me():
+    if request.method == 'GET':
+        return api_response(g.user.to_json(), 200,
+                            'profile retrieved successfully')
+    elif request.method == 'PUT':
+        notify = request.form.get('email_notification') == 'true'
+        if g.user.notification != notify:
+            g.user.notification = notify
+            db.session.add(g.user)
+            db.session.commit()
+        return api_response({'email_notification': g.user.notification}, 200,
+                            'profile updated successfully')
 
 
 @api.route('/contact', methods=['POST'])

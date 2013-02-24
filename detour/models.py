@@ -16,6 +16,7 @@ class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(200), unique=True)
+    notification = db.Column(db.Boolean, default=False)
     contacts = db.relationship('User', secondary=user_to_user,
                                primaryjoin=id==user_to_user.c.user_id,
                                secondaryjoin=id==user_to_user.c.contact_id,

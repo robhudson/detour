@@ -24,6 +24,26 @@ class TestMeApi(DetourTestCase):
         for attr in ('id', 'email', 'avatar'):
             eq_(data['data'][attr], getattr(self.user, attr))
 
+    def test_put_me(self):
+        self.login(self.user.email)
+
+        rv = self.client.put('/%s/me' % API_VERSION,
+                             data={'email_notification': 'true'})
+        eq_(rv.status_code, 200)
+        data = json.loads(rv.data)
+        eq_(data['meta']['code'], 200)
+        eq_(data['data']['email_notification'], True)
+        eq_(User.query.filter(User.id==self.user.id).one().notification, True)
+
+        # Now test untrue value.
+        rv = self.client.put('/%s/me' % API_VERSION,
+                             data={'email_notification': 'false'})
+        eq_(rv.status_code, 200)
+        data = json.loads(rv.data)
+        eq_(data['meta']['code'], 200)
+        eq_(data['data']['email_notification'], False)
+        eq_(User.query.filter(User.id==self.user.id).one().notification, False)
+
 
 class TestContactApi(DetourTestCase):
 
