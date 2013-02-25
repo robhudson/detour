@@ -655,12 +655,12 @@ time {
     }
 
     #contacts li span.delete {
-        background: url(../images/delete-contact@2x.png);
+        background-image: url(../images/delete-contact@2x.png);
         background-size: auto 18px;
     }
 
     .has-media {
-        background: url(../images/has-media@2x.png);
+        background-image: url(../images/has-media@2x.png);
         background-size: auto 26px;
     }
 }
