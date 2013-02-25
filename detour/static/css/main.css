@@ -651,7 +651,7 @@ time {
 
     .button-wrapper button[data-action="upload-photo"] {
         background-image: url(../images/photo@2x.png);
-        background-size: auto 26px;
+        background-size: auto 20px;
     }
 
     #contacts li span.delete {
