@@ -108,7 +108,7 @@ def get_contacts():
 @api.route('/messages/unread')
 def get_unread_messages():
     messages = Message.query.filter(
-        Message.to_user==g.user).order_by('Message.created')
+        Message.to_user==g.user).order_by('created')
     return api_response(
         [dict(id=m.id, email=m.from_user.email, avatar=m.from_user.avatar,
               has_media=bool(m.photo), created=m.created_stamp)
