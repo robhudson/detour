@@ -583,17 +583,16 @@ time {
 
 .overlay {
     background: rgba(6, 6, 6, 0.85);
-    bottom: 0;
+    bottom: -200px;
     color: #fff;
     display: none;
     font-family: 'Oswald';
-    font-size: 25px;
+    font-size: 32px;
     left: 0;
     padding-top: 150px;
     position: absolute;
     right: 0;
     text-align: center;
-    text-shadow: #067093 -2px -1px 0;
     top: 0;
     z-index: 4;
 }
