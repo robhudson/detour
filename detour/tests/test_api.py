@@ -142,6 +142,21 @@ class TestMessageApi(DetourTestCase):
         # Photo is empty so has_media is false.
         eq_(data['data'][0]['has_media'], False)
 
+        # Expire one and make sure it's gone.
+        sec_ago = datetime.datetime.now() - datetime.timedelta(seconds=1)
+        message1.expire = sec_ago
+        db.session.add(message1)
+        db.session.commit()
+
+        # Get message list from API.
+        rv = self.client.get('/%s/messages/unread' % API_VERSION)
+        eq_(rv.status_code, 200)
+
+        data = json.loads(rv.data)
+        eq_(len(data['data']), 1)
+        for attr in ('email', 'avatar'):
+            eq_(data['data'][0][attr], getattr(self.contact, attr))
+
     def test_get_message(self):
         self.login(self.user.email)
 
@@ -163,6 +178,20 @@ class TestMessageApi(DetourTestCase):
         # Verify that the message was set to expire.
         message = Message.query.filter(Message.id==message.id).one()
         ok_(message.expire is not None)
+
+    def test_get_message_expired(self):
+        self.login(self.user.email)
+
+        # Add a message expired 1 second ago.
+        sec_ago = datetime.datetime.now() - datetime.timedelta(seconds=1)
+        message = Message(from_user=self.contact, to_user=self.user,
+                          message='test message', ttl=10, expire=sec_ago)
+        db.session.add(message)
+        db.session.commit()
+
+        # Get message from API.
+        rv = self.client.get('/%s/message/%s' % (API_VERSION, message.id))
+        eq_(rv.status_code, 404)
 
     def test_get_message_404(self):
         self.login(self.user.email)

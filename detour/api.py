@@ -6,11 +6,11 @@ import StringIO
 import tempfile
 from functools import wraps
 
+import bleach
 from flask import Blueprint, g, jsonify, request
 from PIL import Image
 from PIL.ExifTags import TAGS
 from sqlalchemy.orm.exc import NoResultFound
-import bleach
 
 import settings
 from database import db
@@ -108,8 +108,12 @@ def get_contacts():
 
 @api.route('/messages/unread')
 def get_unread_messages():
-    messages = Message.query.filter(
-        Message.to_user==g.user).order_by('created')
+    messages = (
+        Message.query.filter(Message.to_user==g.user)
+                     .filter(db.or_(
+                         Message.expire == None,
+                         Message.expire > datetime.datetime.now()))
+                     .order_by('created'))
     return api_response(
         [dict(id=m.id, email=m.from_user.email, avatar=m.from_user.avatar,
               has_media=bool(m.photo), created=m.created_stamp)
@@ -119,13 +123,18 @@ def get_unread_messages():
 @api.route('/message/<int:message_id>')
 def get_message(message_id):
     try:
-        message = Message.query.filter(Message.id==message_id,
-                                       Message.to_user==g.user).one()
+        message = (
+            Message.query.filter(Message.id==message_id,
+                                 Message.to_user==g.user)
+                         .filter(db.or_(
+                             Message.expire == None,
+                             Message.expire > datetime.datetime.now()))).one()
     except NoResultFound:
         return api_response(None, 404, 'message not found')
 
     # Update message with expired to schedule it for removal.
-    message.expire = message.created + datetime.timedelta(seconds=message.ttl)
+    message.expire = (datetime.datetime.now() +
+                      datetime.timedelta(seconds=message.ttl))
     db.session.commit()
 
     return api_response(message.to_json(), 200,
