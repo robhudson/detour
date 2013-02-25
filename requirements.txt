@@ -11,3 +11,4 @@ nose==1.2.1
 python-postmark==0.3.2
 redis==2.7.2
 simplejson==3.0.7
+bleach==1.2.1

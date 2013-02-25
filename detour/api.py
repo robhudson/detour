@@ -10,6 +10,7 @@ from flask import Blueprint, g, jsonify, request
 from PIL import Image
 from PIL.ExifTags import TAGS
 from sqlalchemy.orm.exc import NoResultFound
+import bleach
 
 import settings
 from database import db
@@ -138,7 +139,7 @@ def post_message():
         return api_response(None, 400, 'Must have text and/or photo')
 
     email = request.form.get('email')
-    message = request.form.get('message')
+    message = bleach.linkify(request.form.get('message'))
     ttl = request.form.get('ttl', settings.DEFAULT_TTL)
     photo = request.files.get('photo')
 
