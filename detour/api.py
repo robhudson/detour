@@ -138,8 +138,12 @@ def post_message():
         request.form.get('message') or request.files.get('photo')):
         return api_response(None, 400, 'Must have text and/or photo')
 
+    def set_target(attrs, new=False):
+        attrs['target'] = '_blank'
+        return attrs
+
     email = request.form.get('email')
-    message = bleach.linkify(request.form.get('message'))
+    message = bleach.linkify(request.form.get('message'), [set_target])
     ttl = request.form.get('ttl', settings.DEFAULT_TTL)
     photo = request.files.get('photo')
 
