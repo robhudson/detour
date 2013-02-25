@@ -84,7 +84,7 @@ define(['jquery', 'settings'],
     }
 
     $.ajax({
-      url: '/' + API_VERSION + '/message',
+      url: '/' + API_VERSION + '/message?ts=' + ts,
       data: fd,
       type: 'POST',
       processData: false,
