@@ -23,6 +23,7 @@ class TestMeApi(DetourTestCase):
         eq_(data['meta']['code'], 200)
         for attr in ('id', 'email', 'avatar'):
             eq_(data['data'][attr], getattr(self.user, attr))
+        eq_(data['data']['email_notification'], self.user.notification)
 
     def test_put_me(self):
         self.login(self.user.email)

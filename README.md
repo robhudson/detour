@@ -34,7 +34,7 @@ Currently we are working on version 1.0. [View the documentation](https://github
 
 > \>>> from detour.app import create_app
 
-> \>>> app = create_app({'DEBUG': True, 'SQLALCHEMY_DATABASE_URI': 'sqlite:///detour_app.db'})
+> \>>> app = create_app({})
 
 > \>>> db.app = app
 
