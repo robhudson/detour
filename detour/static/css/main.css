@@ -320,7 +320,7 @@ textarea:focus, input[type="text"]:focus {
 }
 
 textarea {
-    height: 60px;
+    height: 80px;
     overflow: hidden;
     resize: none;
 }
@@ -365,7 +365,7 @@ textarea {
     display: block;
     float: left;
     font-size: 15px;
-    line-height: 24px;
+    line-height: 28px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -373,10 +373,14 @@ textarea {
 }
 
 .messages li a {
-    color: #fff;
+    color: #aaa;
     display: block;
     float: left;
     padding: 6px 8px;
+}
+
+.messages li a time {
+    color: #aaa;
 }
 
 .messages li:hover, #contacts li a:hover, #settings ol li a:hover {
@@ -466,12 +470,12 @@ button {
 #message-detail .countdown {
     bottom: 10px;
     color: #fff;
-    font-size: 42px;
+    font-size: 45px;
     font-weight: 400;
-    left: -25px;
+    left: -50px;
     margin-left: 50%;
     position: absolute;
-    width: 50px;
+    width: 100px;
 }
 
 #status {
