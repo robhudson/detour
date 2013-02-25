@@ -168,13 +168,7 @@ define(['jquery', 'user', 'message', 'settings', 'nunjucks'],
         break;
 
       case 'reply':
-        messageForm
-          .find('textarea, input[name="email"]')
-          .val('');
-        messageForm
-          .find('input[name="dither"]')
-          .attr('checked', false)
-          .removeClass('on');
+        clearFields();
         insertContact(message.currentContact, message.currentAvatar);
         messageForm.removeClass('hidden');
         message.clear();
