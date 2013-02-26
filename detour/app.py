@@ -11,6 +11,7 @@ from models import *
 
 default_config = {
     'DEBUG': settings.DEBUG,
+    'PREFERRED_URL_SCHEME': settings.PREFERRED_URL_SCHEME,
     'SECRET_KEY': settings.SECRET_KEY,
     'SERVER_NAME': settings.SERVER_NAME,
     'SQLALCHEMY_DATABASE_URI': settings.DATABASE_URL,
