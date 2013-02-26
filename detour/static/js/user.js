@@ -47,8 +47,6 @@ define(['jquery', 'settings'],
   };
 
   User.prototype.deleteContact = function (id) {
-    var self = this;
-
     $.ajax({
       url: '/' + API_VERSION + '/contact/' + id,
       type: 'DELETE',
