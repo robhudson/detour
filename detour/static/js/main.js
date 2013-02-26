@@ -208,6 +208,7 @@ define(['jquery', 'user', 'message', 'settings', 'nunjucks'],
         messages.addClass('hidden');
         messageDetail.addClass('hidden');
         user.getContacts(nunjucks, 'contacts');
+        messageBody.removeClass('hidden');
         break;
 
       case 'messages':
