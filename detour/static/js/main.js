@@ -211,6 +211,7 @@ define(['jquery', 'user', 'message', 'settings', 'nunjucks'],
         break;
 
       case 'messages':
+        clearFields();
         body.find('#loading-overlay').fadeIn();
         settingsForm.addClass('hidden');
         messageDetail.addClass('hidden');
