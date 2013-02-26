@@ -1,5 +1,4 @@
 import datetime
-import os
 
 from flask.ext.script import Manager
 
@@ -8,11 +7,7 @@ from database import db
 from models import Message
 
 
-app = create_app({
-    'SQLALCHEMY_DATABASE_URI': os.environ.get(
-        'DATABASE_URL', 'sqlite:///detour_app.db'),
-    'SQLALCHEMY_ECHO': True  # Show SQL on console.
-})
+app = create_app({})
 manager = Manager(app)
 
 
