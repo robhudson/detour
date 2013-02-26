@@ -14,14 +14,16 @@ requirejs.config({
   }
 });
 
-define(['jquery', 'user', 'message', 'settings', 'nunjucks'],
-  function($, User, Message, settings, nunjucks) {
+define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks'],
+  function($, User, Message, settings, localSettings, nunjucks) {
 
   'use strict';
 
   var env = new nunjucks.Environment();
 
-  if(!nunjucks.env) {
+  var DEBUG = localSettings.DEBUG || settings.DEBUG;
+
+  if (DEBUG || !nunjucks.env) {
       // If not precompiled, create an environment with an HTTP loader
       nunjucks.env = new nunjucks.Environment(new nunjucks.HttpLoader('/static/templates'));
   }

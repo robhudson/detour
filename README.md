@@ -36,6 +36,20 @@ Install [node](http://nodejs.org)
 
 > npm install nunjucks
 
+## Configure client-side settings
+
+If you need to override detour/static/js/settings.js, create detour/static/js/local_settings.js and return the new values. For example:
+
+    define(['jquery'],
+      function ($) {
+
+      'use strict';
+
+      return {
+        DEBUG: true
+      };
+    });
+
 ## Creating the database
 
 > python

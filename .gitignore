@@ -5,3 +5,4 @@ tmp
 .DS_Store
 detour_app.db
 node_modules
+detour/static/js/local_settings.js

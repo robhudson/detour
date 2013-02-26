@@ -3,12 +3,10 @@ define(['jquery'],
 
   'use strict';
 
-  var STATUS_TTL = 2500; // milliseconds
-
   var statusTimer = function (status) {
     setTimeout(function () {
       status.removeClass('on');
-    }, STATUS_TTL);
+    }, 2500); // milliseconds
   };
 
   return {
@@ -16,6 +14,8 @@ define(['jquery'],
     status: $('#status'),
     statusTimer: statusTimer,
     API_VERSION: '1.0',
-    CHAR_MAX: 250
+    CHAR_MAX: 250,
+    CONTACT_KEY: localStorage.getItem('personaEmail') + ':detourContacts',
+    DEBUG: false
   };
 });

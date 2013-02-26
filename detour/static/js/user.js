@@ -4,6 +4,7 @@ define(['jquery', 'settings'],
   'use strict';
 
   var body = settings.body;
+  var CONTACT_KEY = settings.CONTACT_KEY;
 
   var API_VERSION = settings.API_VERSION;
 
@@ -33,7 +34,7 @@ define(['jquery', 'settings'],
       settings.statusTimer(self.status);
 
       self.form.find('input[name="email"]').val('');
-      localStorage.removeItem('detourContacts');
+      localStorage.removeItem(contactKey);
       self.getContacts(nunjucks, 'edit_contacts');
 
     }).error(function (data) {
@@ -53,7 +54,7 @@ define(['jquery', 'settings'],
       dataType: 'json',
       cache : false
     }).done(function () {
-      localStorage.removeItem('detourContacts');
+      localStorage.removeItem(contactKey);
     });
   };
 
@@ -65,7 +66,7 @@ define(['jquery', 'settings'],
 
     var contactWrapper = body.find('#message-body');
 
-    var contacts = JSON.parse(localStorage.getItem('detourContacts'));
+    var contacts = JSON.parse(localStorage.getItem(contactKey));
 
     if (!contacts) {
       $.ajax({
@@ -80,7 +81,7 @@ define(['jquery', 'settings'],
           })
         );
 
-        localStorage.setItem('detourContacts', JSON.stringify(resp.data));
+        localStorage.setItem(contactKey, JSON.stringify(resp.data));
         contactWrapper.removeClass('hidden');
 
       }).error(function (resp) {
