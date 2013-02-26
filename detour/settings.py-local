@@ -8,6 +8,7 @@ DEBUG = True
 DEBUG_SQL = True
 DEFAULT_TTL = 10  # Default time-to-live, in seconds.
 POSTMARK_API_KEY = 'postmark_key'
+PREFERRED_URL_SCHEME = 'http'
 # To generate a secret: import os; os.urandom(24)
 SECRET_KEY = 'SECRET_KEY'
 SERVER_NAME = 'localhost:5000'
