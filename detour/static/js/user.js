@@ -33,6 +33,7 @@ define(['jquery', 'settings'],
       settings.statusTimer(self.status);
 
       self.form.find('input[name="email"]').val('');
+      localStorage.removeItem('detourContacts');
       self.getContacts(nunjucks, 'edit_contacts');
 
     }).error(function (data) {
@@ -46,11 +47,15 @@ define(['jquery', 'settings'],
   };
 
   User.prototype.deleteContact = function (id) {
+    var self = this;
+
     $.ajax({
       url: '/' + API_VERSION + '/contact/' + id,
       type: 'DELETE',
       dataType: 'json',
       cache : false
+    }).done(function () {
+      localStorage.removeItem('detourContacts');
     });
   };
 
@@ -62,27 +67,40 @@ define(['jquery', 'settings'],
 
     var contactWrapper = body.find('#message-body');
 
-    $.ajax({
-      url: '/' + API_VERSION + '/contacts',
-      type: 'GET',
-      dataType: 'json',
-      cache: false
-    }).done(function (resp) {
+    var contacts = JSON.parse(localStorage.getItem('detourContacts'));
+
+    if (!contacts) {
+      $.ajax({
+        url: '/' + API_VERSION + '/contacts',
+        type: 'GET',
+        dataType: 'json',
+        cache: false
+      }).done(function (resp) {
+        contactWrapper.html(
+          nunjucks.env.getTemplate(template + '.html').render({
+            contacts: resp.data
+          })
+        );
+
+        localStorage.setItem('detourContacts', JSON.stringify(resp.data));
+        contactWrapper.removeClass('hidden');
+
+      }).error(function (resp) {
+        self.status
+          .addClass('error')
+          .text(resp.meta.message)
+          .addClass('on');
+
+        settings.statusTimer(self.status);
+      });
+
+    } else {
       contactWrapper.html(
         nunjucks.env.getTemplate(template + '.html').render({
-          contacts: resp.data
+          contacts: contacts
         })
       );
-
-      contactWrapper.removeClass('hidden');
-    }).error(function (resp) {
-      self.status
-        .addClass('error')
-        .text(resp.meta.message)
-        .addClass('on');
-
-      settings.statusTimer(self.status);
-    });
+    }
   };
 
   User.prototype.getProfile = function (nunjucks, template) {
