@@ -26,6 +26,16 @@ Currently we are working on version 1.0. [View the documentation](https://github
 
 > cp detour/settings.py-local detour/settings.py
 
+## Setting up nunjucks
+
+This will allow you to compile your templates for production
+
+To read more about nunjucks, check out the [documentation](http://nunjucks.jlongster.com)
+
+Install [node](http://nodejs.org)
+
+> npm install nunjucks
+
 ## Creating the database
 
 > python
