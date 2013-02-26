@@ -165,9 +165,10 @@ def post_message():
     try:
         to_user = User.query.filter(User.email==email).one()
     except NoResultFound:
-        return api_response(None, 400, 'recipient not a contact')
+        return api_response(None, 400, 'recipient not a user')
     if not to_user in g.user.contacts:
-        return api_response(None, 400, 'recipient not a contact')
+        g.user.contacts.append(to_user)
+        db.session.commit()
 
     # Handle photo.
     b64photo = ''

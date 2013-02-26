@@ -229,6 +229,27 @@ class TestMessageApi(DetourTestCase):
         eq_(message.message, 'test message')
         eq_(message.ttl, 20)
 
+    def test_post_message_new_contact_is_added(self):
+        self.login(self.user.email)
+
+        # Create 'other' user.
+        other = User(email='other@detourapp.com')
+        db.session.add(other)
+        db.session.commit()
+
+        rv = self.client.post('/%s/message' % API_VERSION, data={
+            'email': other.email,
+            'message': 'test message',
+            'ttl': '20',
+        })
+        eq_(rv.status_code, 200)
+        data = json.loads(rv.data)
+        eq_(data['meta']['code'], 200)
+
+        user = User.query.filter(User.email==self.user.email).one()
+        eq_(len(user.contacts), 2)
+        eq_(user.contacts[0].email, other.email)
+
     def test_post_message_unknown_recipient(self):
         self.login(self.user.email)
 
