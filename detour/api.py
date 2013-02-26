@@ -133,8 +133,11 @@ def get_message(message_id):
         return api_response(None, 404, 'message not found')
 
     # Update message with expired to schedule it for removal.
-    message.expire = (datetime.datetime.now() +
-                      datetime.timedelta(seconds=message.ttl))
+    if message.ttl > 10:
+        message.expire = (datetime.datetime.now() +
+                          datetime.timedelta(seconds=message.ttl))
+    else:
+        message.expire = datetime.datetime.now()
     db.session.commit()
 
     return api_response(message.to_json(), 200,
