@@ -53,10 +53,9 @@ define(['jquery', 'settings'],
         resp.data[i].created = dateDisplay(resp.data[i].created);
       }
 
-      body.find('#inner-wrapper').html(
-        nunjucks.env.getTemplate('dashboard.html').render({
-          messages: resp.data,
-          email_notification: false // move to secondary call
+      body.find('ol.messages').html(
+        nunjucks.env.getTemplate('messages.html').render({
+          messages: resp.data
         })
       );
 

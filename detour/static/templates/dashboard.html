@@ -1,19 +1,7 @@
 <img id="preview-img" class="hidden" width="320">
 <div id="messages">
   <div id="message-view">
-    <ol class="messages">
-      {% for message in messages %}
-        <li data-id="{{ message.id }}" data-email="{{ message.email }}"
-            data-avatar="{{ message.avatar }}"
-            class="message-root{% if message.has_media %} has-media{% endif %}">
-          <a href="javascript:;" data-action="view">
-            <img src="{{ message.avatar }}" class="avatar" data-action="view">
-            <span data-action="view">{{ message.email }}</span>
-            <time data-action="view">{{ message.created }}</time>
-          </a>
-        </li>
-      {% endfor %}
-    </ol>
+    <ol class="messages"></ol>
   </div>
 
   <div id="message-detail" class="hidden"></div>

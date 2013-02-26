@@ -66,6 +66,9 @@ define(['jquery', 'user', 'message', 'settings', 'nunjucks'],
         cache: false,
         success: function (res, status, xhr) {
           localStorage.setItem('personaEmail', res.email);
+          body.find('#inner-wrapper').html(
+            nunjucks.env.getTemplate('dashboard.html').render()
+          );
           message.getAll();
         },
         error: function(res, status, xhr) {
