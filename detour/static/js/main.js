@@ -227,6 +227,7 @@ define(['jquery', 'user', 'message', 'settings', 'nunjucks'],
         settingsForm.addClass('hidden');
         messages.addClass('hidden');
         messageDetail.addClass('hidden');
+        messageBody.removeClass('hidden');
         user.getContacts(nunjucks, 'edit_contacts');
         break;
 
@@ -236,6 +237,7 @@ define(['jquery', 'user', 'message', 'settings', 'nunjucks'],
         settingsForm.addClass('hidden');
         messages.addClass('hidden');
         messageDetail.addClass('hidden');
+        messageBody.removeClass('hidden');
         user.getProfile(nunjucks, 'edit_profile');
         break;
     }

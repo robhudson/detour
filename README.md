@@ -40,17 +40,17 @@ Install [node](http://nodejs.org)
 
 > python
 
-> \>>> from detour.database import db
+> from detour.database import db
 
-> \>>> from detour.app import create_app
+> from detour.app import create_app
 
-> \>>> app = create_app({})
+> app = create_app({})
 
-> \>>> db.app = app
+> db.app = app
 
-> \>>> db.init_app(app)
+> db.init_app(app)
 
-> \>>> db.create_all()
+> db.create_all()
 
 ## Run the app
 
