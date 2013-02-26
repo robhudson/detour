@@ -19,13 +19,11 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks'],
 
   'use strict';
 
-  var env = new nunjucks.Environment();
-
   var DEBUG = localSettings.DEBUG || settings.DEBUG;
 
   if (DEBUG || !nunjucks.env) {
-      // If not precompiled, create an environment with an HTTP loader
-      nunjucks.env = new nunjucks.Environment(new nunjucks.HttpLoader('/static/templates'));
+    // If not precompiled, create an environment with an HTTP loader
+    nunjucks.env = new nunjucks.Environment(new nunjucks.HttpLoader('/static/templates'));
   }
 
   var message = new Message();
@@ -34,7 +32,9 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks'],
   var nav = navigator.userAgent;
 
   var body = settings.body;
+
   var CHAR_MAX = settings.CHAR_MAX;
+  var CONTACT_KEY = settings.CONTACT_KEY;
 
   var checkCharLimit = function (text) {
     var textLength = text.length;
@@ -230,6 +230,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks'],
         messages.addClass('hidden');
         messageDetail.addClass('hidden');
         messageBody.removeClass('hidden');
+        localStorage.removeItem(CONTACT_KEY);
         user.getContacts(nunjucks, 'edit_contacts');
         break;
 

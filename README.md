@@ -36,12 +36,18 @@ Install [node](http://nodejs.org)
 
 > npm install nunjucks
 
+Download nunjucks and add it to detour/static/js/lib/nunjucks.js
+
+If you are on development mode, use [nunjucks-dev.js](https://github.com/jlongster/nunjucks/blob/master/browser/nunjucks-dev.js)
+
+If you are on production and have precompiled your templates, use [nunjucks-min.js](https://github.com/jlongster/nunjucks/blob/master/browser/nunjucks-min.js)
+
 ## Configure client-side settings
 
 If you need to override detour/static/js/settings.js, create detour/static/js/local_settings.js and return the new values. For example:
 
-    define(['jquery'],
-      function ($) {
+    define([],
+      function () {
 
       'use strict';
 

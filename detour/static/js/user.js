@@ -4,9 +4,9 @@ define(['jquery', 'settings'],
   'use strict';
 
   var body = settings.body;
-  var CONTACT_KEY = settings.CONTACT_KEY;
 
   var API_VERSION = settings.API_VERSION;
+  var CONTACT_KEY = settings.CONTACT_KEY;
 
   var User = function() {
     this.form = null;
@@ -34,7 +34,7 @@ define(['jquery', 'settings'],
       settings.statusTimer(self.status);
 
       self.form.find('input[name="email"]').val('');
-      localStorage.removeItem(contactKey);
+      localStorage.removeItem(CONTACT_KEY);
       self.getContacts(nunjucks, 'edit_contacts');
 
     }).error(function (data) {
@@ -54,7 +54,7 @@ define(['jquery', 'settings'],
       dataType: 'json',
       cache : false
     }).done(function () {
-      localStorage.removeItem(contactKey);
+      localStorage.removeItem(CONTACT_KEY);
     });
   };
 
@@ -66,7 +66,7 @@ define(['jquery', 'settings'],
 
     var contactWrapper = body.find('#message-body');
 
-    var contacts = JSON.parse(localStorage.getItem(contactKey));
+    var contacts = JSON.parse(localStorage.getItem(CONTACT_KEY));
 
     if (!contacts) {
       $.ajax({
@@ -81,7 +81,7 @@ define(['jquery', 'settings'],
           })
         );
 
-        localStorage.setItem(contactKey, JSON.stringify(resp.data));
+        localStorage.setItem(CONTACT_KEY, JSON.stringify(resp.data));
         contactWrapper.removeClass('hidden');
 
       }).error(function (resp) {
