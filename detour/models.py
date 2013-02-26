@@ -33,7 +33,7 @@ class User(db.Model):
 
     @property
     def avatar(self):
-        return 'http://www.gravatar.com/avatar/%s?s=80' % (
+        return 'https://secure.gravatar.com/avatar/%s?s=80' % (
             hashlib.md5(self.email).hexdigest())
 
     def to_json(self):
