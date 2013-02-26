@@ -4,7 +4,7 @@ These are all the API calls that DetourApp will provide, after a user has succes
 
 ## Hostname
 
-https://api.detourapp.com/1.0
+http://beta.detourapp.com/1.0
 
 ## User
 
