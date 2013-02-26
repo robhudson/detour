@@ -214,4 +214,7 @@ def post_message():
     db.session.add(message)
     db.session.commit()
 
+    # TODO: Queue this instead so we don't have to wait.
+    message.send_notification()
+
     return api_response(None, 200, 'message created successfully')

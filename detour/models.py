@@ -2,6 +2,8 @@ import datetime
 import hashlib
 import time
 
+from postmark.core import PMMail
+
 import settings
 from database import db
 
@@ -67,3 +69,22 @@ class Message(db.Model):
             message=self.message if self.message else '',
             photo=self.photo if self.photo else '',
             ttl=self.ttl, created=self.created_stamp)
+
+    def send_notification(self):
+        if self.to_user.notification:
+           text_body = (
+               'View the message at https://detourapp.com\n'
+               'To stop receiving notifications, visit '
+               'https://detourapp.com to update your settings')
+           html_body = (
+               '<p>View the message at <a href="https://detourapp.com">'
+               'https://detourapp.com</a></p>'
+               '<p>To stop receiving notifications, visit '
+               '<a href="https://detourapp.com">https://detourapp.com</a> '
+               'to update your settings.</p>')
+           PMMail(api_key=settings.POSTMARK_API_KEY,
+                  subject='%s sent you a message!' % self.from_user.email,
+                  sender='detour@noodleindustries.com',
+                  to=self.to_user.email,
+                  text_body=text_body,
+                  html_body=html_body).send()
