@@ -277,6 +277,7 @@ define(['jquery', 'user', 'message', 'settings', 'nunjucks'],
         ev.preventDefault();
         body.find('#uploading-overlay').fadeIn();
         message.create();
+        body.find('#messages-inbox').click();
         break;
 
       case 'contacts-form':

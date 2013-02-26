@@ -111,7 +111,7 @@ define(['jquery', 'settings'],
 
       self
         .form
-        .fadeOut();
+        .addClass('hidden');
       body.removeClass('fixed');
       body
         .find('#uploading-overlay')
