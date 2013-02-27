@@ -113,6 +113,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks'],
     var contacts = $('#contacts');
     var messages = $('ol.messages');
     var messageBody = $('#message-body');
+    var charLimit = $('#char-limit');
 
     var insertContact = function (email, avatar) {
       messageForm.find('input[name="email"]').val(email);
@@ -130,6 +131,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks'],
       messageForm
         .find('textarea, input[name="email"]')
         .val('');
+      charLimit.text(250);
       messageForm
         .find('img')
         .attr('src', '');
