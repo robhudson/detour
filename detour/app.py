@@ -85,7 +85,7 @@ def create_app(config):
                 "128": "/static/images/logo-128.png"
               },
               "description": "Ephemeral messaging",
-              "launch_path": "/static",
+              "launch_path": "/",
               "developer": {
                 "url": "https://detourapp.com",
                 "name": "Edna Piranha"
