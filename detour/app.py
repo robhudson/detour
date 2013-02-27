@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import browserid
-from flask import Flask, g, jsonify, render_template, request, session
+from flask import Flask, g, jsonify, render_template, Response, request, session
 from sqlalchemy.orm.exc import NoResultFound
 
 import settings
@@ -70,6 +70,29 @@ def create_app(config):
         """Log the user out."""
         session.pop('email', None)
         return jsonify({'message': 'okay'})
+
+    @app.route('/detour.webapp', methods=['GET'])
+    def webapp():
+        """Loads the webapp manifest."""
+        webapp = '''
+            {
+              "version": "1.0.0",
+              "name": "Detour",
+              "default_locale": "en-US",
+              "icons": {
+                "72": "/static/images/logo-72.png",
+                "114": "/static/images/logo-114.png",
+                "128": "/static/images/logo-128.png"
+              },
+              "description": "Ephemeral messaging",
+              "launch_path": "/static",
+              "developer": {
+                "url": "https://detourapp.com",
+                "name": "Edna Piranha"
+              }
+            }
+        '''
+        return Response(webapp, mimetype='application/x-web-app-manifest+json')
 
     @app.errorhandler(404)
     def page_not_found(error):
