@@ -92,7 +92,8 @@ def create_app(config):
               }
             }
         '''
-        return Response(webapp, mimetype='application/x-web-app-manifest+json')
+        return Response(webapp,
+            mimetype='application/x-web-app-manifest+json')
 
     @app.errorhandler(404)
     def page_not_found(error):
