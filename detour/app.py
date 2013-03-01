@@ -88,7 +88,7 @@ def create_app(config):
               "launch_path": "/",
               "developer": {
                 "url": "https://detourapp.com",
-                "name": "Edna Piranha"
+                "name": "ednapiranha, robhudson"
               }
             }
         '''
