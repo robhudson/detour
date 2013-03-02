@@ -76,6 +76,27 @@ Returns:
             'message': 'contact added successfully'
         }
     }
+    
+### Update a contact
+
+Method: PUT
+
+Parameters: favorite
+
+Path
+
+`/contact`
+
+    {
+        'data': {
+            'email': 'them@detourapp.com',
+            'is_favorite': true
+        },
+        'meta': {
+            'code': 200,
+            'message': 'contact updated successfully'
+        }
+    }
 
 ### Delete an existing contact
 
@@ -110,7 +131,8 @@ Returns:
         'data': [
             {
                 'email': 'them@detourapp.com',
-                'avatar': 'https://gravatar.com/321'
+                'avatar': 'https://gravatar.com/321',
+                'is_favorite': true
             }
         ],
         'meta': {
