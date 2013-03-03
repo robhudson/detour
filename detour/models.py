@@ -71,7 +71,7 @@ class Message(db.Model):
             ttl=self.ttl, created=self.created_stamp)
 
     def send_notification(self):
-        if self.to_user.notification:
+        if self.to_user != self.from_user and self.to_user.notification:
            text_body = (
                'View the message at https://detourapp.com\n'
                'To stop receiving notifications, visit '
