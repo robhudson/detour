@@ -53,6 +53,7 @@ define(['jquery', 'settings'],
       type: 'DELETE',
       dataType: 'json',
       cache : false
+
     }).done(function () {
       localStorage.removeItem(CONTACT_KEY);
     });
@@ -115,6 +116,7 @@ define(['jquery', 'settings'],
       type: 'GET',
       dataType: 'json',
       cache: false
+
     }).done(function (resp) {
       profileWrapper.html(
         nunjucks.env.getTemplate(template + '.html').render({
@@ -150,8 +152,8 @@ define(['jquery', 'settings'],
       type: 'PUT',
       data: data,
       dataType: 'json',
-      cache: false,
-      processData: false
+      cache: false
+
     }).done(function (resp) {
       self.status
         .removeClass('error')

@@ -65,6 +65,14 @@ define(['jquery', 'settings'],
 
     }).done(function () {
       body.find('#loading-overlay').fadeOut();
+
+    }).error(function (data) {
+      self.status
+        .addClass('error')
+        .text(JSON.parse(data.responseText).meta.message)
+        .addClass('on');
+
+      settings.statusTimer(self.status);
     });
   };
 
