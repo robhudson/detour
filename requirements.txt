@@ -4,11 +4,11 @@ Flask-Script==0.5.3
 Jinja2==2.6
 PIL==1.1.7
 -e git://github.com/mozilla/PyBrowserID.git@7281da84cd9e3ca3b4f5f3073d9096d5dad32f39#egg=PyBrowserID-dev
-SQLAlchemy==0.8.0b2
+SQLAlchemy==0.7.10
 Werkzeug==0.8.3
+bleach==1.2.1
 httplib2==0.7.7
 nose==1.2.1
 python-postmark==0.3.2
-redis==2.7.2
 simplejson==3.0.7
-bleach==1.2.1
+sqlalchemy-migrate==0.7.2

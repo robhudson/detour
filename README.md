@@ -58,19 +58,11 @@ If you need to override detour/static/js/settings.js, create detour/static/js/lo
 
 ## Creating the database
 
-> python
+Copy the following steps to set up and create the initial database::
 
-> from detour.database import db
-
-> from detour.app import create_app
-
-> app = create_app({})
-
-> db.app = app
-
-> db.init_app(app)
-
-> db.create_all()
+    cd detour
+    ./migration.py version_control
+    ./migration.py upgrade
 
 ## Run the app
 
