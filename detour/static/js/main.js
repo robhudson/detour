@@ -245,6 +245,10 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks'],
         messageBody.removeClass('hidden');
         user.getProfile(nunjucks, 'edit_profile');
         break;
+
+      case 'status':
+        self.removeClass('on');
+        break;
     }
   });
 

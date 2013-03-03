@@ -120,7 +120,7 @@ form {
 #preview-img {
     left: 0;
     position: absolute;
-    top: 0;
+    top: 57px;
 }
 
 .hidden, .messages.hidden {
@@ -307,7 +307,7 @@ ol.home li {
     text-shadow: #24677a 1px 1px 2px;
 }
 
-textarea, input[type="text"] {
+textarea, input {
     background-color: #eee;
     border: 0;
     color: #222;
@@ -318,7 +318,7 @@ textarea, input[type="text"] {
     width: 290px;
 }
 
-textarea:focus, input[type="text"]:focus {
+textarea:focus, input:focus {
     background-color: #fff;
     box-shadow: inset #ccc 1px 1px 2px;
 }
@@ -403,7 +403,7 @@ button {
     float: left;
     font-size: 18px;
     line-height: 25px;
-    padding: 10px;
+    padding: 10px 10px 0;
     position: fixed;
     text-align: center;
     width: 300px;
@@ -416,10 +416,11 @@ button {
 }
 
 #message-detail time {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 #message-detail .actions {
+    margin-top: 10px;
     width: 70px;
 }
 
@@ -457,10 +458,19 @@ button {
     float: right;
 }
 
+#message-detail .action-wrapper {
+    clear: both;
+    float: left;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
 #message-detail p {
+    border-top: 1px solid #444;
     clear: both;
     float: left;
     overflow: hidden;
+    padding-top: 15px;
     text-overflow: ellipsis;
     width: 300px;
 }
@@ -472,9 +482,9 @@ button {
 }
 
 #message-detail .countdown {
-    bottom: 10px;
+    top: 20px;
     color: #fff;
-    font-size: 45px;
+    font-size: 40px;
     font-weight: 400;
     left: -50px;
     margin-left: 50%;
@@ -488,6 +498,7 @@ button {
     display: none;
     font-size: 12px;
     overflow: hidden;
+    opacity: 0.8;
     padding: 10px 5px;
     position: fixed;
     top: 5px;

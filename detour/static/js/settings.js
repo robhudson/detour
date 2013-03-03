@@ -6,7 +6,7 @@ define(['jquery'],
   var statusTimer = function (status) {
     setTimeout(function () {
       status.removeClass('on');
-    }, 2500); // milliseconds
+    }, 2200); // milliseconds
   };
 
   return {
