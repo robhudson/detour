@@ -178,7 +178,7 @@ define(['jquery', 'settings'],
 
       self.messageDetail.removeClass('hidden');
       body.find('#viewing-overlay').fadeOut();
-      /*
+
       countdownInterval = setInterval(function () {
         self.messageDetail.find('.countdown').text(-- seconds);
       }, 1000);
@@ -187,7 +187,7 @@ define(['jquery', 'settings'],
         self.clear();
         body.find('#messages-inbox').click();
       }, seconds * 1000);
-      */
+
     }).error(function (data) {
       body.find('#viewing-overlay').fadeOut();
     });
