@@ -6,3 +6,5 @@ tmp
 detour_app.db
 node_modules
 detour/static/js/local_settings.js
+detour/static/js/lib/nunjucks.js
+detour/static/js/templates.js

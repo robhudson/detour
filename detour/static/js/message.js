@@ -45,7 +45,7 @@ define(['jquery', 'settings'],
     }
   };
 
-  Message.prototype.getAll = function (callback) {
+  Message.prototype.getAll = function (nunjucks, callback) {
     var self = this;
 
     $.get('/' + API_VERSION + '/messages/unread', function (resp) {
@@ -134,7 +134,7 @@ define(['jquery', 'settings'],
     });
   };
 
-  Message.prototype.view = function (preview) {
+  Message.prototype.view = function (preview, nunjucks) {
     var self = this;
     var img = $('#preview-img');
 

@@ -71,7 +71,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks', '
           body.find('#inner-wrapper').html(
             nunjucks.env.getTemplate('dashboard.html').render()
           );
-          message.getAll();
+          message.getAll(nunjucks);
         },
         error: function(res, status, xhr) {
           alert('login failure ' + res);
@@ -157,7 +157,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks', '
 
       case 'view':
         messages.addClass('hidden');
-        message.view(self);
+        message.view(self, nunjucks);
         break;
 
       case 'close':
@@ -194,9 +194,13 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks', '
         break;
 
       case 'contact-delete':
-        var userId = self.data('id') || self.parent().data('id');
-        user.deleteContact(parseInt(userId, 10));
-        self.closest('li').remove();
+        var confirmDelete = confirm('Delete this contact?');
+
+        if (confirmDelete) {
+          var userId = self.data('id') || self.parent().data('id');
+          user.deleteContact(parseInt(userId, 10));
+          self.closest('li').remove();
+        }
         break;
 
       case 'settings-form':
@@ -220,7 +224,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks', '
         body.find('.overlay').fadeIn();
         settingsForm.addClass('hidden');
         messageDetail.addClass('hidden');
-        message.getAll(function () {
+        message.getAll(nunjucks, function () {
           messages.removeClass('hidden');
         });
         break;

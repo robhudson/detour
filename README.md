@@ -42,6 +42,15 @@ If you are on development mode, use [nunjucks-dev.js](https://github.com/jlongst
 
 If you are on production and have precompiled your templates, use [nunjucks-min.js](https://github.com/jlongster/nunjucks/blob/master/browser/nunjucks-min.js)
 
+## Precompiling templates for nunjucks
+
+In development mode, make sure detour/static/js/templates.js only has the following:
+    define(function() {});
+
+In production mode, run the following:
+
+    node_modules/nunjucks/bin/precompile detour/static/templates > detour/static/js/templates.js
+
 ## Configure client-side settings
 
 If you need to override detour/static/js/settings.js, create detour/static/js/local_settings.js and return the new values. For example:
