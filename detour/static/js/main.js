@@ -14,7 +14,7 @@ requirejs.config({
   }
 });
 
-define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks'],
+define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks', 'templates'],
   function($, User, Message, settings, localSettings, nunjucks) {
 
   'use strict';
