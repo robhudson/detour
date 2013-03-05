@@ -284,7 +284,10 @@ h1 {
 }
 
 h1.contacts-title {
+    clear: both;
+    float: left;
     margin-top: 10px;
+    width: 100%;
 }
 
 h2 {
