@@ -34,7 +34,7 @@ To read more about nunjucks, check out the [documentation](http://nunjucks.jlong
 
 Install [node](http://nodejs.org)
 
-> npm install nunjucks
+> npm install git://github.com/jlongster/nunjucks.git
 
 Download nunjucks and add it to detour/static/js/lib/nunjucks.js
 
