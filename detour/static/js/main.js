@@ -60,7 +60,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks'],
   navigator.id.watch({
     loggedInUser: currentUser,
     onlogin: function (assertion) {
-      body.find('#loading-overlay').fadeIn();
+      body.find('.overlay').fadeIn();
       $.ajax({
         type: 'POST',
         url: '/authenticate',
@@ -217,7 +217,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks'],
 
       case 'messages':
         clearFields();
-        body.find('#loading-overlay').fadeIn();
+        body.find('.overlay').fadeIn();
         settingsForm.addClass('hidden');
         messageDetail.addClass('hidden');
         message.getAll(function () {
@@ -291,7 +291,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks'],
     switch (self[0].id) {
       case 'message-form':
         ev.preventDefault();
-        body.find('#uploading-overlay').fadeIn();
+        body.find('.overlay').fadeIn();
         message.create();
         body.find('#messages-inbox').click();
         break;

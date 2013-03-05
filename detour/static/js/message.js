@@ -64,7 +64,7 @@ define(['jquery', 'settings'],
       }
 
     }).done(function () {
-      body.find('#loading-overlay').fadeOut();
+      body.find('.overlay').fadeOut();
 
     }).error(function (data) {
       self.status
@@ -120,13 +120,11 @@ define(['jquery', 'settings'],
         .form
         .addClass('hidden');
       body.removeClass('fixed');
-      body
-        .find('#uploading-overlay')
-        .fadeOut();
+      body.find('.overlay').fadeOut();
       self.clear();
 
     }).error(function (data) {
-      body.find('#uploading-overlay').fadeOut();
+      body.find('.overlay').fadeOut();
       self.status
         .addClass('error')
         .text(JSON.parse(data.responseText).meta.message)
@@ -140,7 +138,7 @@ define(['jquery', 'settings'],
     var self = this;
     var img = $('#preview-img');
 
-    body.find('#viewing-overlay').fadeIn();
+    body.find('.overlay').fadeIn();
 
     if (preview.parent().hasClass('message-root')) {
       this.currentView = preview.parent();
@@ -177,7 +175,7 @@ define(['jquery', 'settings'],
       }
 
       self.messageDetail.removeClass('hidden');
-      body.find('#viewing-overlay').fadeOut();
+      body.find('.overlay').fadeOut();
 
       countdownInterval = setInterval(function () {
         self.messageDetail.find('.countdown').text(-- seconds);
@@ -189,7 +187,7 @@ define(['jquery', 'settings'],
       }, seconds * 1000);
 
     }).error(function (data) {
-      body.find('#viewing-overlay').fadeOut();
+      body.find('.overlay').fadeOut();
     });
   };
 
