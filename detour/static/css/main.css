@@ -543,10 +543,10 @@ button {
     display: none;
     font-size: 12px;
     overflow: hidden;
-    opacity: 0.8;
+    opacity: 0.85;
     padding: 10px 5px;
     position: fixed;
-    top: 5px;
+    bottom: 5px;
     width: 310px;
     z-index: 3;
 }
