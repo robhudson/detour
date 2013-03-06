@@ -8,3 +8,4 @@ node_modules
 detour/static/js/local_settings.js
 detour/static/js/lib/nunjucks.js
 detour/static/js/templates.js
+detour/static/js/build
