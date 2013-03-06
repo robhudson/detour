@@ -16,10 +16,10 @@ module.exports = function(grunt) {
     requirejs: {
       compile: {
         options: {
-          baseUrl: "detour/static/js",
-          mainConfigFile: "detour/static/js/config.js",
-          out: "detour/static/js/build/optimized.js",
-          name: "config"
+          baseUrl: FILE_PATH,
+          mainConfigFile: FILE_PATH + 'config.js',
+          out: FILE_PATH + 'build/optimized.js',
+          name: 'config'
         }
       }
     }
