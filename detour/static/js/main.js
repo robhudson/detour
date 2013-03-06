@@ -1,19 +1,3 @@
-requirejs.config({
-  enforceDefine: true,
-  paths: {
-    'jquery': 'lib/jquery',
-    'nunjucks': 'lib/nunjucks'
-  },
-  shim: {
-    'jquery': {
-      exports: 'jQuery'
-    },
-    'nunjucks': {
-      exports: 'nunjucks'
-    }
-  }
-});
-
 define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks', 'templates'],
   function($, User, Message, settings, localSettings, nunjucks) {
 
