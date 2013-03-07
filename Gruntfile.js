@@ -22,13 +22,21 @@ module.exports = function(grunt) {
           name: 'config'
         }
       }
+    },
+    cssmin: {
+      compress: {
+        files: {
+          'detour/static/css/main-min.css': ['detour/static/css/main.css']
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-  grunt.registerTask('default', ['requirejs', 'concat']);
+  grunt.registerTask('default', ['cssmin', 'requirejs', 'concat']);
 
 };

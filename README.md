@@ -34,7 +34,7 @@ To read more about nunjucks, check out the [documentation](http://nunjucks.jlong
 
 Install [node](http://nodejs.org)
 
-> npm install git://github.com/jlongster/nunjucks.git
+> npm install
 
 Download nunjucks and add it to detour/static/js/lib/nunjucks.js
 
@@ -50,6 +50,10 @@ In development mode, make sure detour/static/js/templates.js only has the follow
 In production mode, run the following:
 
     node_modules/nunjucks/bin/precompile detour/static/templates > detour/static/js/templates.js
+
+## Minifying files with Grunt
+
+> grunt
 
 ## Configure client-side settings
 

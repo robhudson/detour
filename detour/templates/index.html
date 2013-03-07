@@ -9,7 +9,11 @@
     <link rel="apple-touch-icon" sizes="114x114" href="{{ url_for('static', filename='images/logo-114.png') }}">
     <link rel="apple-touch-icon" sizes="128x128" href="{{ url_for('static', filename='images/logo-128.png') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% if debug %}
+      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% else %}
+      <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main-min.css') }}">
+    {% endif %}
   </head>
   <body data-authenticated="{{ authenticated }}">
     <div id="wrapper">
