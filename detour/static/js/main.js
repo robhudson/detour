@@ -174,6 +174,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks', '
           .find('#message-body')
           .addClass('hidden');
         messageForm.removeClass('hidden');
+        messageForm.find('textarea').focus();
         message.clear();
         break;
 
