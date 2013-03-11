@@ -14,7 +14,7 @@ message = Table('message', meta,
     Column('id', Integer, primary_key=True, nullable=False),
     Column('from_user_id', Integer),
     Column('to_user_id', Integer),
-    Column('message', String),
+    Column('message', String(250)),
     Column('photo', Text),
     Column('ttl', Integer),
     Column('expire', DateTime),
@@ -23,7 +23,7 @@ message = Table('message', meta,
 
 user = Table('user', meta,
     Column('id', Integer, primary_key=True, nullable=False),
-    Column('email', String),
+    Column('email', String(200)),
     Column('notification', Integer),
 )
 
