@@ -413,10 +413,6 @@ textarea {
     width: 100%;
 }
 
-#contacts li {
-    z-index: 3;
-}
-
 #contacts li a {
     background-color: #212425;
 }
