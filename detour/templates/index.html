@@ -18,6 +18,11 @@
   <body data-authenticated="{{ authenticated }}">
     <div id="wrapper">
       <div id="inner-wrapper"></div>
+      {% if authenticated and not notification %}
+        <div class="tip-notice">Want to know when you get a message?
+            <a href="javascript:;" data-action="edit-profile">Update your notification settings</a>
+        </div>
+      {% endif %}
     </div>
     <div class="overlay">
       <img src="{{ url_for('static', filename='images/loading.gif') }}">

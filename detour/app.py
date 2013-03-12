@@ -38,7 +38,11 @@ def create_app(config):
     @app.route('/', methods=['GET'])
     def main():
         """Default landing page."""
+        notification = False
+        if g.user:
+            notification = bool(g.user.notification)
         return render_template('index.html', authenticated=bool(g.user),
+            notification=notification,
             debug=settings.DEBUG)
 
     @app.route('/authenticate', methods=['POST'])

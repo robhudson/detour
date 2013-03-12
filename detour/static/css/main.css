@@ -413,6 +413,14 @@ textarea {
     width: 100%;
 }
 
+#contacts li {
+    z-index: 3;
+}
+
+#contacts li a {
+    background-color: #212425;
+}
+
 .messages li.has-media {
     background: rgba(35, 35, 35, 0.4) url(../images/has-media.png) no-repeat 287px 50%;
 }
@@ -670,6 +678,19 @@ time {
 
 .overlay p {
     margin-bottom: 20px;
+}
+
+.tip-notice {
+    background-color: #fff;
+    bottom: 0;
+    color: #222;
+    font-family: Arial;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    padding: 10px;
+    position: absolute;
+    z-index: 2;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), screen and (min--moz-device-pixel-ratio: 2), (min-resolution: 2dppx) {

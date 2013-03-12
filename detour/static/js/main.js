@@ -16,6 +16,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks', '
   var nav = navigator.userAgent;
 
   var body = settings.body;
+  var notify = $('.tip-notice');
 
   var CHAR_MAX = settings.CHAR_MAX;
   var CONTACT_KEY = settings.CONTACT_KEY;
@@ -232,6 +233,7 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks', '
         messages.addClass('hidden');
         messageDetail.addClass('hidden');
         messageBody.removeClass('hidden');
+        notify.remove();
         user.getProfile(nunjucks, 'edit_profile');
         break;
 
