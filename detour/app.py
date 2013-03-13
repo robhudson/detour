@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import browserid
-from flask import Flask, g, jsonify, render_template, Response, request, session
+from flask import Flask, g, jsonify, render_template, request, session
 from sqlalchemy.orm.exc import NoResultFound
 
 import settings
@@ -79,34 +79,33 @@ def create_app(config):
     @app.route('/detour.webapp', methods=['GET'])
     def webapp():
         """Loads the webapp manifest."""
-        webapp = '''
-            {
-              "version": "1.0.0",
-              "name": "Detour",
-              "default_locale": "en-US",
-              "icons": {
-                "72": "/static/images/logo-72.png",
-                "114": "/static/images/logo-114.png",
-                "128": "/static/images/logo-128.png"
-              },
-              "description": "Ephemeral messaging",
-              "launch_path": "/",
-              "developer": {
-                "url": "https://detourapp.com",
-                "name": "ednapiranha, robhudson"
-              }
+        webapp = {
+            'version': '1.0.0',
+            'name': 'Detour',
+            'default_locale': 'en-US',
+            'icons': {
+                '72': '/static/images/logo-72.png',
+                '114': '/static/images/logo-114.png',
+                '128': '/static/images/logo-128.png',
+            },
+            'description': 'Ephemeral messaging',
+            'launch_path': '/',
+            'developer': {
+                'url': 'https://detourapp.com',
+                'name': 'ednapiranha, robhudson',
             }
-        '''
-        return Response(webapp,
-            mimetype='application/x-web-app-manifest+json')
+        }
+        resp = jsonify(webapp)
+        resp.mimetype = 'application/x-web-app-manifest+json'
+        return resp
 
     @app.errorhandler(404)
     def page_not_found(error):
-        return render_template('404.html')
+        return render_template('404.html'), 404
 
     @app.errorhandler(500)
     def something_broke(error):
-        return render_template('500.html')
+        return render_template('500.html'), 500
 
     return app
 
