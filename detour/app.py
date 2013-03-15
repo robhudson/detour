@@ -80,13 +80,14 @@ def create_app(config):
     def webapp():
         """Loads the webapp manifest."""
         webapp = {
-            'version': '1.0.0',
+            'version': '1.0.1',
             'name': 'Detour',
             'default_locale': 'en-US',
             'icons': {
                 '72': '/static/images/logo-72.png',
                 '114': '/static/images/logo-114.png',
                 '128': '/static/images/logo-128.png',
+                '256': '/static/images/logo-256.png',
             },
             'description': 'Ephemeral messaging',
             'launch_path': '/',

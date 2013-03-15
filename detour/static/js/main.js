@@ -59,7 +59,12 @@ define(['jquery', 'user', 'message', 'settings', 'local_settings', 'nunjucks', '
           message.getAll(nunjucks);
         },
         error: function(res, status, xhr) {
-          alert('login failure ' + res);
+          self.status
+            .addClass('error')
+            .text('There was an error logging in')
+            .addClass('on');
+
+          settings.statusTimer(self.status);
         }
       });
     },

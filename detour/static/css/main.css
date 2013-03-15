@@ -299,8 +299,12 @@ h2 {
 }
 
 #header h1 {
-    color: #888;
-    font-size: 40px;
+    background: url(../images/logo.png) no-repeat;
+    font-size: 1px;
+    height: 300px;
+    margin: 0 auto;
+    text-indent: -9999px;
+    width: 300px;
 }
 
 ol.home {
@@ -313,8 +317,8 @@ ol.home {
 }
 
 ol.home li {
-    background-color: rgba(35, 35, 35, 0.35);
-    color: #929292;
+    background-color: rgba(45, 45, 45, 0.25);
+    color: #555;
     font-size: 17px;
     font-weight: 100;
     line-height: 22px;
@@ -323,10 +327,13 @@ ol.home li {
     width: 300px;
 }
 
+#messages.landing {
+    margin-top: 10px;
+}
+
 .login {
-    background-color: #444;
     clear: both;
-    color: #888;
+    color: #555;
     display: block;
     font-family: 'Oswald';
     font-size: 27px;
