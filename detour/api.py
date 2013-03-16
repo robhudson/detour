@@ -88,6 +88,7 @@ def post_contact():
 
 
 @api.route('/contact/<int:contact_id>', methods=['DELETE'])
+@login_required
 def delete_contact(contact_id):
     try:
         contact = User.query.filter(User.id==contact_id).one()
@@ -101,12 +102,14 @@ def delete_contact(contact_id):
 
 
 @api.route('/contacts')
+@login_required
 def get_contacts():
     return api_response([c.to_json() for c in g.user.contacts], 200,
                         'contacts retrieved successfully')
 
 
 @api.route('/messages/unread')
+@login_required
 def get_unread_messages():
     messages = (
         Message.query.filter(Message.to_user==g.user)
@@ -121,6 +124,7 @@ def get_unread_messages():
 
 
 @api.route('/message/<int:message_id>')
+@login_required
 def get_message(message_id):
     try:
         message = (
@@ -145,6 +149,7 @@ def get_message(message_id):
 
 
 @api.route('/message', methods=['POST'])
+@login_required
 def post_message():
     if not request.form.get('email') or not (
         request.form.get('message') or request.files.get('photo')):
