@@ -647,7 +647,7 @@ time {
 
 #contacts li span.delete {
     background: url(../images/delete-contact.png) no-repeat 50% 50%;
-    background-color: #de2b2f;
+    background-color: #333;
     display: block;
     font-size: 1px;
     height: 35px;
@@ -659,7 +659,7 @@ time {
 }
 
 #contacts li span.delete:hover {
-    background-color: #333;
+    background-color: #c13a3d;
     opacity: 0.7;
 }
 
