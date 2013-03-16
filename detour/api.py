@@ -151,9 +151,11 @@ def get_message(message_id):
 @api.route('/message', methods=['POST'])
 @login_required
 def post_message():
-    if not request.form.get('email') or not (
-        request.form.get('message') or request.files.get('photo')):
-        return api_response(None, 400, 'Must have text and/or photo')
+    if not request.form.get('email'):
+        return api_response(None, 400, 'Must specify `email` to send to.')
+    if not (request.form.get('message') or request.files.get('photo')):
+        return api_response(None, 400,
+                            'Must specify `message` and/or `photo`.')
 
     def set_target(attrs, new=False):
         attrs['target'] = '_blank'
